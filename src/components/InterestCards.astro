@@ -1,0 +1,17 @@
+---
+import { url } from '../utils/url-utils';
+---
+<section class="card-base p-6 md:p-8 mb-4">
+<p class="text-sm font-medium tracking-widest text-[var(--primary)] mb-3">丢丢的学习手记</p>
+<h1 class="text-2xl md:text-3xl font-bold text-90 mb-3">在光与行动之间，保持好奇。</h1>
+<p class="text-60 leading-relaxed">这里记录光学与具身智能的学习、阅读与探索。把每一次理解，都留下一点痕迹。</p>
+<div class="grid sm:grid-cols-2 gap-3 mt-6">
+<a href={url('/optics/')} class="block rounded-xl p-5 transition bg-[var(--btn-regular-bg)] hover:bg-[var(--btn-regular-bg-hover)]">
+<span class="text-xs tracking-widest text-[var(--primary)]">OPTICS</span>
+<h2 class="font-bold text-xl text-90 mt-2 mb-2">光学 <span aria-hidden="true">↗</span></h2>
+<p class="text-sm text-60 leading-relaxed">从光的传播，到成像与计算。</p></a>
+<a href={url('/embodied-ai/')} class="block rounded-xl p-5 transition bg-[var(--btn-regular-bg)] hover:bg-[var(--btn-regular-bg-hover)]">
+<span class="text-xs tracking-widest text-[var(--primary)]">EMBODIED AI</span>
+<h2 class="font-bold text-xl text-90 mt-2 mb-2">具身智能 <span aria-hidden="true">↗</span></h2>
+<p class="text-sm text-60 leading-relaxed">从感知世界，到学习与行动。</p></a>
+</div></section>

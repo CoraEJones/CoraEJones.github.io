@@ -1,0 +1,21 @@
+---
+import MainGridLayout from '../layouts/MainGridLayout.astro';
+import { getSortedPosts } from '../utils/content-utils';
+import { url } from '../utils/url-utils';
+interface Props { title: string; english: string; description: string; topics: string[]; }
+const { title, english, description, topics } = Astro.props;
+const posts = (await getSortedPosts()).filter(p => p.data.category === title);
+---
+<MainGridLayout title={title} description={description}>
+<section class="card-base p-6 md:p-8 mb-4">
+<p class="text-sm tracking-widest text-[var(--primary)] mb-3">{english}</p>
+<h1 class="text-3xl font-bold text-90 mb-4">{title}</h1>
+<p class="text-60 leading-relaxed">{description}</p>
+<h2 class="font-bold text-lg text-90 mt-7 mb-3">关注的主题</h2>
+<div class="flex flex-wrap gap-2">{topics.map(t => <span class="rounded-lg px-3 py-2 text-sm bg-[var(--btn-regular-bg)] text-[var(--primary)]">{t}</span>)}</div>
+</section>
+<section class="card-base p-6 md:p-8">
+<h2 class="font-bold text-xl text-90 mb-5">学习笔记 <span class="text-sm font-normal text-50">· {posts.length} 篇</span></h2>
+{posts.length ? posts.map(p => <a href={url('/posts/' + p.slug + '/')} class="block rounded-xl p-4 -mx-4 transition hover:bg-[var(--btn-regular-bg)]"><p class="text-xs text-50 mb-2">{p.data.published.toISOString().slice(0,10)}</p><h3 class="font-bold text-lg text-90">{p.data.title} →</h3><p class="text-sm text-60 mt-2 leading-relaxed">{p.data.description}</p></a>) : <div class="rounded-xl p-6 bg-[var(--btn-regular-bg)]"><p class="text-90 font-medium mb-2">笔记正在慢慢积累。</p><p class="text-60 text-sm leading-relaxed">这里将记录光学的概念梳理、公式推导与阅读心得。新的文章会出现在这里。</p></div>}
+</section>
+</MainGridLayout>
