@@ -1,4 +1,4 @@
-# 丢丢的博客
+# 陈逸妤的博客
 
 光学与具身智能的个人学习记录。基于 [Fuwari](https://github.com/saicaca/fuwari) / Astro。
 

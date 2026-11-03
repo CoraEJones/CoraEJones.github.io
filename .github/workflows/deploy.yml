@@ -1,4 +1,4 @@
-name: Deploy 丢丢的博客
+name: Deploy 陈逸妤的博客
 on:
   push:
     branches: [master]
