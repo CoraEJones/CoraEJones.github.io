@@ -1,4 +1,33 @@
 ---
 import TopicPage from '../components/TopicPage.astro';
+import { getSortedPostsList } from '../utils/content-utils';
+import { formatDateToYYYYMMDD } from '../utils/date-utils';
+import { getPostUrlBySlug } from '../utils/url-utils';
+
+const category = '具身智能';
+const topic = '单图相机标定与位姿';
+const readings = (await getSortedPostsList()).filter(
+  ({ data }) => data.category === category && data.tags.includes(topic),
+);
 ---
-<TopicPage title="具身智能" english="EMBODIED AI" description="探索智能体如何感知环境、学习动作，并在与世界的交互中形成能力。" topics={['机器学习基础', '视觉感知', '机器人学习', '模仿学习', '强化学习', '视觉语言动作模型']} />
+<TopicPage title={category} english="EMBODIED AI" description="探索智能体如何感知环境、学习动作，并在与世界的交互中形成能力。" topics={['机器学习基础', '视觉感知', '机器人学习', '模仿学习', '强化学习', '视觉语言动作模型']}>
+  <section slot="reading" id="visual-foundations" aria-labelledby="visual-foundations-title" class="card-base p-6 md:p-8 mb-4 scroll-mt-24">
+    <h2 id="visual-foundations-title" class="font-bold text-xl text-90 mb-4">视觉基础文献阅读</h2>
+    <h3 id="single-image-camera-calibration-and-pose" class="font-bold text-lg text-90 scroll-mt-24">{topic}</h3>
+    <ul class="mt-2">
+      {readings.map(({ slug, data }) => (
+        <li>
+          <a href={getPostUrlBySlug(slug)} class="block rounded-xl p-4 -mx-4 transition hover:bg-[var(--btn-regular-bg)]">
+            {data.readingDate && (
+              <p class="text-xs text-60 mb-2">
+                阅读日期 · <time datetime={formatDateToYYYYMMDD(data.readingDate)}>{formatDateToYYYYMMDD(data.readingDate)}</time>
+              </p>
+            )}
+            <span class="font-bold text-90">{data.title} <span aria-hidden="true">→</span></span>
+            <p class="text-sm text-60 mt-2 leading-relaxed">{data.description}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</TopicPage>

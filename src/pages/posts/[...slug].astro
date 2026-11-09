@@ -103,6 +103,11 @@ const jsonLd = {
 
 
             <Markdown class="mb-6 markdown-content onload-animation">
+                {entry.data.readingDate && (
+                    <p class="text-sm text-60">
+                        阅读日期 · <time datetime={formatDateToYYYYMMDD(entry.data.readingDate)}>{formatDateToYYYYMMDD(entry.data.readingDate)}</time>
+                    </p>
+                )}
                 <Content />
             </Markdown>
 
