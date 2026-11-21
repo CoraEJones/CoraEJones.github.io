@@ -295,3 +295,5 @@ $$
 我现在看到 $3\times128$ 和 $3\times32$，会先问行和列各在数什么。下一步可以用同一个问题读 $QK^\top$，看看两个 3 分别是谁的位置。
 
 进一步读原论文时，可以从 §3.2.1 的式（1）找出权重和 Value 汇总，再到 §3.2.2 对照每头投影、Concat 和输出投影。 [Vaswani 等，《Attention Is All You Need》](https://arxiv.org/abs/1706.03762)
+
+下一篇跟着「I love cats → 我喜欢猫」读完整个 Encoder–Decoder，并用 PyTorch 写出一个能运行的小模型。 [Transformer 学习笔记（二）](/posts/transformer-notes-02/)
