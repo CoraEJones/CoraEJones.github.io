@@ -1,0 +1,220 @@
+.transformer-figure {
+    --transformer-token: #116653;
+    --transformer-model: #245b97;
+    --transformer-head: #77449b;
+    --transformer-error: #a12530;
+    display: block;
+    margin: 1.5rem 0;
+    padding: clamp(0.85rem, 2.5vw, 1.35rem);
+    border: 1px solid var(--line-divider);
+    border-radius: 1rem;
+    background: var(--btn-plain-bg-active);
+    font-size: 1rem;
+    line-height: 1.55;
+}
+
+.dark .transformer-figure {
+    --transformer-token: #79d8b5;
+    --transformer-model: #9ecbff;
+    --transformer-head: #ddaff5;
+    --transformer-error: #ffacb4;
+}
+
+.transformer-token { color: var(--transformer-token); }
+.transformer-model { color: var(--transformer-model); }
+.transformer-head { color: var(--transformer-head); }
+
+.transformer-figure figcaption,
+.transformer-caption {
+    margin: 0.9rem 0 0;
+    font-size: 0.95rem;
+}
+
+.transformer-token-flow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+    gap: 0.6rem 1.1rem;
+}
+
+.transformer-token-flow > div {
+    display: grid;
+    gap: 0.2rem;
+    border-block-start: 1px solid var(--line-divider);
+    padding-block-start: 0.5rem;
+}
+
+.transformer-token-flow span,
+.transformer-legend {
+    font-size: 0.95rem;
+}
+
+.transformer-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1rem;
+}
+
+.transformer-matrix {
+    width: 100%;
+    margin-block-start: 0.9rem;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+}
+
+.transformer-matrix caption {
+    text-align: start;
+    font-weight: 700;
+    margin-block-end: 0.4rem;
+}
+
+.transformer-matrix :is(th, td) {
+    text-align: start;
+    padding: 0.42rem 0.35rem;
+    border-block-end: 1px solid var(--line-divider);
+}
+
+.transformer-matrix td {
+    overflow-wrap: anywhere;
+}
+
+.transformer-head-flow {
+    display: grid;
+    gap: 0.6rem;
+    text-align: center;
+}
+
+.transformer-head-flow p {
+    font-weight: 600;
+}
+
+.transformer-head-flow ol {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 5.3rem), 1fr));
+    list-style: none;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0.5rem 0;
+    border-block: 1px solid var(--line-divider);
+    font-variant-numeric: tabular-nums;
+}
+
+.transformer-head-flow li {
+    background: var(--card-bg);
+    border-radius: 0.4rem;
+    padding: 0.4rem;
+}
+
+.transformer-head-flow li strong {
+    display: block;
+}
+
+.transformer-figure legend {
+    padding: 0;
+    margin-block-end: 0.8rem;
+    font-weight: 700;
+}
+
+.transformer-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 8.2rem), 1fr));
+    gap: 0.55rem 0.8rem;
+}
+
+.transformer-controls label {
+    display: grid;
+    align-content: start;
+    gap: 0.3rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.transformer-controls label span {
+    display: block;
+}
+
+.transformer-controls input,
+.transformer-figure button {
+    min-height: 2.75rem;
+    border: 1px solid var(--line-divider);
+    border-radius: 0.55rem;
+    color: inherit;
+    font: inherit;
+}
+
+.transformer-controls input {
+    width: 100%;
+    padding: 0.35rem 0.55rem;
+    background: var(--card-bg);
+    color: var(--tw-prose-body, inherit);
+    font-variant-numeric: tabular-nums;
+}
+
+.transformer-controls input[aria-invalid="true"] {
+    border-color: var(--transformer-error);
+}
+
+.transformer-figure button {
+    margin-block-start: 0.7rem;
+    padding: 0.35rem 0.75rem;
+    background: var(--btn-regular-bg);
+    font-size: 0.95rem;
+}
+
+.transformer-figure button:hover:enabled {
+    background: var(--btn-regular-bg-hover);
+}
+
+.transformer-figure fieldset:disabled :is(input, button) {
+    opacity: 0.65;
+}
+
+.transformer-figure :focus-visible,
+.transformer-question summary:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.transformer-error {
+    margin: 0.55rem 0 0;
+    color: var(--transformer-error);
+}
+
+.transformer-results {
+    margin: 0.85rem 0 0;
+}
+
+.transformer-results > div {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0 0.7rem;
+    padding: 0.45rem 0;
+    border-block-start: 1px solid var(--line-divider);
+}
+
+.transformer-results dd {
+    margin: 0;
+    font-family: "JetBrains Mono Variable", ui-monospace, monospace;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.transformer-question {
+    margin: 0.65rem 0;
+}
+
+.transformer-question summary {
+    cursor: pointer;
+    padding: 0.55rem 0;
+    border-block-start: 1px solid var(--line-divider);
+    font-weight: 600;
+}
+
+.transformer-question > p {
+    margin-block: 0.15rem 0.75rem;
+}
+
+.transformer-extra {
+    margin-block-start: 1.2rem;
+}
