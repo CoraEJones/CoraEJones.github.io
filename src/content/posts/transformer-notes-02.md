@@ -1,6 +1,7 @@
 ---
 title: "Transformer 学习笔记（二）：精读《Attention Is All You Need》，从手算注意力到手写 Transformer"
 published: 2026-11-21
+updated: 2026-11-22
 description: "沿着 I love cats → 我喜欢猫 走完原版 Transformer。结合论文原图、手算、实验表和可运行的 PyTorch 实现，理解位置编码、Encoder、Decoder、训练与生成。"
 category: "深度学习"
 tags: ["Transformer", "论文精读", "PyTorch"]
@@ -13,7 +14,7 @@ lang: "zh_CN"
 
 正文的手算、分词和玩具训练都标为**教学示例**。论文配置和实验结果会注明出处，图表采用 NeurIPS 2017 会议版。 [官方论文 PDF](https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf)
 
-[手算注意力](#03缩放点积注意力怎样手算一遍) · [看 Decoder 的两种注意力](#07decoder-为什么需要两种注意力) · [读论文实验](#11原论文的实验支持哪些结论) · [运行代码](#12怎样从公式写出最小-transformer) · [综合自测](#13综合自测)
+[手算注意力](#03缩放点积注意力怎样手算一遍) · [看 Decoder 的两种注意力](#07decoder-为什么需要两种注意力) · [读论文实验](#11原论文的实验支持哪些结论) · [运行代码](#12怎样从公式写出最小-transformer) · [综合自测](#13综合自测) · [课后大题](#attention-interview)
 
 <a id="paper-architecture"></a>
 
@@ -543,6 +544,90 @@ I love cats -> 我 喜欢 猫 <eos>
 </details>
 
 能答 1–3 题，可以用自己的话讲清模块。能做 4–8 题，可以追踪形状并判断掩码是否正确。能独立完成 9–11 题，就可以把同一套检查迁移到自己写的模型上。
+
+<a id="attention-interview"></a>
+
+### 课后大题｜Transformer / Attention 技术面试
+
+这套题按大模型算法工程师面试的方式练习。每问都先给出明确结论，再用公式、维度或反例说明依据。推导不确定时，标出具体哪一步卡住了。
+
+<details>
+<summary>六轮考察范围</summary>
+
+| 轮次 | 重点 | 难度 |
+| --- | --- | --- |
+| 1 | Self-Attention 的数学性质、Q/K/V 与矩阵维度 | 困难 |
+| 2 | 缩放点积、Softmax 与梯度 | 困难 |
+| 3 | Multi-Head Attention 的设计与表达能力 | 很困难 |
+| 4 | Positional Encoding、Mask 与序列顺序 | 很困难 |
+| 5 | Encoder、Decoder 与 Cross-Attention | 困难 |
+| 6 | 训练信息泄漏、计算复杂度与实现错误 | 很困难 |
+
+</details>
+
+**第一轮满分 100 分。** 先独立回答 **Q1.1–Q1.4**，逐问复盘后再做第二题。第一遍先不查资料，从题目给出的 Attention 公式出发。
+
+#### 大题 1｜没有位置编码的 Self-Attention 真的不知道顺序吗？（35 分）
+
+设一个标准的 Encoder Self-Attention 层，三个互不相同的向量 $x_A,x_B,x_C$ 按行排成 $X$。不使用位置编码、Attention Mask 或 Dropout，$W_Q,W_K,W_V$ 固定。现在交换 B 和 C 两行。
+
+$$
+X=\begin{bmatrix}x_A\\x_B\\x_C\end{bmatrix},
+\qquad X'=\begin{bmatrix}x_A\\x_C\\x_B\end{bmatrix}.
+$$
+
+- **Q1.1**　交换之后，A 位置的注意力输出向量会发生变化吗？为什么？
+- **Q1.2**　原来 B、C 两个位置的输出向量与交换后的输出向量之间有什么严格关系？
+- **Q1.3**　写出满足 $X'=PX$ 的置换矩阵 $P$，结合下面的公式证明你的结论。Softmax 按行计算。
+
+$$
+\operatorname{Attention}(X)
+=\operatorname{softmax}\!\left(
+\frac{XW_Q(XW_K)^\top}{\sqrt{d_k}}
+\right)XW_V .
+$$
+
+- **Q1.4（追问）**　改用带 Causal Mask 的 Decoder Self-Attention。交换输入时沿用同一个按位置构造的掩码，你在前面得到的置换关系是否仍然成立？说明依据。
+
+#### 大题 2｜统一平移 Key 或 Query 会怎样？（30 分）
+
+设单个 Query 为 $q\in\mathbb R^{d_k}$，三条 Key 分别为 $k_1,k_2,k_3$。考虑给每条 Key 加同一个 $c\in\mathbb R^{d_k}$，即 $k_i'=k_i+c$，Value 保持不变。
+
+- **Q2.1**　Attention 权重会改变吗？
+- **Q2.2**　Attention 的最终输出会改变吗？
+- **Q2.3**　恢复原来的 Key，只把 Query 改成 $q'=q+c$。Attention 权重是否一定保持不变？
+
+用 **Softmax 的数学性质**解释。写出平移前后的 logits，再判断归一化结果会怎样变化。
+
+#### 大题 3｜Cross-Attention 的维度与信息泄漏（35 分）
+
+实现原始的 Encoder–Decoder Transformer。张量顺序采用「批次、头、序列位置、特征」。
+
+| 参数 | 给定值 |
+| --- | ---: |
+| Batch Size $B$ | 2 |
+| Encoder 输入长度 $n$ | 7 |
+| Decoder 输入长度 $m$ | 4 |
+| 模型宽度 $d_{\mathrm{model}}$ | 512 |
+| 头数 $h$ | 8 |
+| 每头 Q/K/V 宽度 $d_k=d_v$ | 64 |
+
+- **Q3.1**　Decoder 的 Cross-Attention 经过线性投影并拆分 Head 后，Q、K、V 各是什么形状？
+- **Q3.2**　计算 $S=QK^\top/\sqrt{d_k}$ 后，分数张量是什么形状？每一维对应什么？
+- **Q3.3**　拼接各头并做最终线性投影后，输出是什么形状？
+- **Q3.4（追问）**　训练时，Decoder 的 Cross-Attention 是否需要用 Causal Mask 屏蔽未来位置？结合这个子层的 Q、K、V 各自来自哪条序列说明。
+- **Q3.5**　训练时 Decoder 输入已经右移了一位，为什么 Masked Self-Attention 还要使用 Causal Mask？只右移能防止信息泄漏吗？选一个预测位置，说明它会读到什么。
+
+#### 第一轮评分与复盘
+
+| 分数 | 档位 | 评价依据 |
+| --- | --- | --- |
+| 90–100 | 优秀 | 能解释机制、完成数学证明并识别反例 |
+| 75–89 | 良好 | 核心机制正确，个别边界条件或推导步骤待补齐 |
+| 60–74 | 基础合格 | 能追踪主要流程，仍需要把公式和推理连起来 |
+| 低于 60 | 需要补强 | 有关键概念混淆，需要回到对应小节复习 |
+
+复盘时逐问标为「完全正确」「推导不完整」或「概念性错误」，写出第一个出错或跳过的步骤。再改一个条件追问，例如换一种掩码或改变 Query 与 Key 的长度，最后记下要补的知识点。
 
 ## 回看最初的翻译例子
 
