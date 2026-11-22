@@ -2,8 +2,8 @@
 title: "把图像变成 16×16 的“词”｜ViT 论文互动精读"
 published: 2026-11-22
 description: "把一张 224×224 的图像切成 Patch，看看序列有多长，再亲手调节注意力权重。用 7 章、21 道自测和论文原图读懂 Vision Transformer。"
-category: "深度学习"
-tags: ["Transformer", "Vision Transformer", "计算机视觉", "论文精读"]
+category: "机器学习"
+tags: ["机器学习", "Transformer", "Vision Transformer", "计算机视觉", "论文精读"]
 lang: "zh_CN"
 ---
 
