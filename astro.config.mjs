@@ -40,7 +40,6 @@ export default defineConfig({
 			// the default value `transition-` cause transition delay
 			// when the Tailwind class `transition-all` is used
 			containers: ["main", "#toc"],
-			ignore: ["/posts/interactive/"],
 			smoothScrolling: true,
 			cache: true,
 			preload: true,

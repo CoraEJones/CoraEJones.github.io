@@ -24,14 +24,16 @@ export async function GET(context: APIContext) {
 		description: siteConfig.subtitle || "No description",
 		site: context.site ?? "https://fuwari.vercel.app",
 		items: blog.map((post) => {
-			const content =
-				typeof post.body === "string" ? post.body : String(post.body || "");
+			const link = url(`/posts/${post.slug}/`);
+			const content = post.slug.startsWith("interactive/")
+				? `${post.data.description}\n\n[阅读互动全文](${new URL(link, context.site ?? context.url)})`
+				: String(post.body || "");
 			const cleanedContent = stripInvalidXmlChars(content);
 			return {
 				title: post.data.title,
 				pubDate: post.data.published,
 				description: post.data.description || "",
-				link: url(`/posts/${post.slug}/`),
+				link,
 				content: sanitizeHtml(parser.render(cleanedContent), {
 					allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img"]),
 				}),
