@@ -23,6 +23,17 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
+if (entry.slug.startsWith("interactive/")) {
+	const readers = import.meta.glob<string>("../../readers/interactive/*.html", {
+		query: "?raw",
+		import: "default",
+	});
+	const loadReader = readers[`../../readers/${entry.slug}.html`];
+	if (!loadReader) throw new Error(`Missing interactive article: ${entry.slug}`);
+	return new Response(await loadReader(), {
+		headers: { "Content-Type": "text/html; charset=utf-8" },
+	});
+}
 const { Content, headings } = await entry.render();
 
 const { remarkPluginFrontmatter } = await entry.render();
