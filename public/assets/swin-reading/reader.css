@@ -1,0 +1,105 @@
+.swin-tools, .swin-lab, .swin-quiz, .swin-tasks {
+    display: block;
+    margin-block: 1.5rem;
+    padding: clamp(1rem, 2.5vw, 1.35rem);
+    border: 1px solid var(--line-divider);
+    border-radius: var(--radius-large);
+    background: var(--btn-plain-bg-active);
+    color: var(--tw-prose-body);
+    line-height: 1.65;
+    accent-color: var(--btn-content);
+}
+.swin-source, .swin-lab :is(small, .instruction, .legend) {
+    color: var(--tw-prose-captions);
+    font-size: .875rem;
+}
+.swin-tools summary { cursor: pointer; font-weight: 650; color: var(--btn-content); }
+.swin-tools ol { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: .4rem 1rem; padding: 0; margin-block: .75rem; list-style: none; }
+.swin-tools progress { display: block; width: 100%; height: .3rem; margin-top: .8rem; }
+.swin-tools button, .swin-lab .lab-controls button, .swin-quiz button {
+    min-height: 2.65rem;
+    padding: .35rem .75rem;
+    border: 1px solid var(--line-color);
+    border-radius: .55rem;
+    color: inherit;
+    background: var(--card-bg);
+    font: inherit;
+}
+.swin-tools button:hover, .swin-quiz button:hover, .swin-lab .lab-controls button:hover { background: var(--btn-regular-bg-hover); }
+:is(.swin-tools, .swin-lab, .swin-quiz, .swin-tasks) :focus-visible { outline: 2px solid var(--btn-content); outline-offset: 2px; }
+.swin-lab .lab-controls, .swin-quiz .quiz-actions { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; }
+.swin-lab .lab-controls button[aria-pressed="true"] { color: var(--btn-content); border-color: currentColor; background: var(--btn-regular-bg); font-weight: 650; }
+.swin-lab .lab-body, .swin-lab .pos-lab {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    align-items: center;
+    gap: 1.2rem;
+    margin-top: 1rem;
+}
+.swin-lab { --window-allow: #17704f; --window-mask: #ab354d; --window-grid-ink: #24354a; }
+.swin-lab .grid-mat {
+    width: min(100%, 19rem);
+    margin-inline: auto;
+    display: grid;
+    grid-template: repeat(8, 1fr) / repeat(8, minmax(0, 1fr));
+    aspect-ratio: 1;
+    position: relative;
+    isolation: isolate;
+    gap: 1px;
+    background: var(--card-bg);
+    border: 1px solid var(--line-color);
+}
+.swin-lab .tile {
+    position: relative;
+    color: var(--window-grid-ink);
+    font-size: .85rem;
+    line-height: 1;
+    font-weight: 650;
+    min-width: 0;
+}
+.swin-lab .tile[data-group="A"] { background: #d2e4f3; }
+.swin-lab .tile[data-group="B"] { background: #f0d8df; }
+.swin-lab .tile[data-group="C"] { background: #cfe5d9; }
+.swin-lab .tile[data-group="D"] { background: #efdfbd; }
+.swin-lab .tile.allowed { box-shadow: inset 0 0 0 2px var(--window-allow); }
+.swin-lab .tile.blocked { border: 2px dashed var(--window-mask); }
+.swin-lab .tile[aria-pressed="true"]::after { content: ""; position: absolute; inset: 4px; border: 2px solid var(--window-grid-ink); }
+.swin-lab .tile:focus-visible { outline-offset: -2px; outline: 3px solid var(--window-grid-ink); z-index: 2; }
+.swin-guides { position: absolute; inset: 0; pointer-events: none; }
+.swin-guides span { position: absolute; border-color: var(--window-grid-ink); border-style: dashed; }
+.swin-guides .row { top: var(--offset); left: 0; right: 0; border-top-width: 2px; }
+.swin-guides .col { left: var(--offset); top: 0; bottom: 0; border-left-width: 2px; }
+.swin-guides .mask-boundary { border-color: var(--window-mask); border-style: dotted; }
+.swin-lab .legend { display: flex; flex-wrap: wrap; justify-content: center; gap: .3rem .8rem; margin-top: .5rem; }
+.swin-lab .legend-i { display: inline-block; width: .85em; aspect-ratio: 1; margin-right: .25em; vertical-align: baseline; border: 2px solid; }
+.swin-lab .legend span:first-child i { border-color: var(--window-allow); }
+.swin-lab .legend span:nth-child(2) i { border-color: var(--window-mask); border-style: dashed; }
+.dark .swin-lab .legend span:first-child i { border-color: #89cfb0; }
+.dark .swin-lab .legend span:nth-child(2) i { border-color: #ffacb6; }
+.swin-lab h4, .swin-lab strong, .swin-quiz legend { color: var(--tw-prose-headings); font-weight: 650; }
+.swin-lab .lab-description > * + *, .swin-lab .pos-details p { margin-top: .55rem; }
+.swin-lab .stat, .swin-quiz output { color: var(--btn-content); font-weight: 600; font-variant-numeric: tabular-nums; }
+.swin-lab .pos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .4rem; width: min(100%, 12.5rem); margin-inline: auto; }
+.swin-lab .pos-grid button { aspect-ratio: 1; border: 1px solid var(--line-color); border-radius: .45rem; background: var(--card-bg); font-weight: 650; }
+.swin-lab .pos-grid .query { outline: 2px solid #3074b5; outline-offset: -2px; }
+.swin-lab .pos-grid .key { box-shadow: inset 0 0 0 4px #ce802a; }
+.swin-lab .pos-grid :focus-visible { outline: 2px solid var(--btn-content); outline-offset: 1px; }
+.swin-quiz fieldset { margin: 0 0 1.25rem; min-width: 0; }
+.swin-quiz legend { margin-bottom: .4rem; }
+.swin-quiz label, .swin-tasks label { display: flex; align-items: baseline; gap: .6rem; cursor: pointer; padding: .45rem .65rem; }
+.swin-quiz label { margin-block: .3rem; background: var(--card-bg); border: 1px solid var(--line-color); border-radius: .55rem; }
+.swin-quiz label:has(:checked) { border-color: var(--btn-content); }
+.swin-quiz .quiz-result:not(:empty) { margin-block: .5rem; }
+.swin-tasks .task + .task { border-top: 1px solid var(--line-divider); }
+.swin-tasks input:checked + span { text-decoration: line-through; color: var(--tw-prose-captions); }
+.markdown-content:has(swin-handbook-tools) :is(.swin-lab, h2 span[id]) { scroll-margin-top: 6rem; }
+.markdown-content:has(swin-handbook-tools) :is(.katex-display, table) { overflow-x: auto; }
+.markdown-content:has(swin-handbook-tools) .katex-display { overflow-y: hidden; padding-block: .3rem; }
+@media (max-width: 600px) {
+    .markdown-content:has(swin-handbook-tools) table { display: block; }
+}
+@media print {
+    body:has(swin-handbook-tools) :is(#top-row, #sidebar, #banner-wrapper, #toc, #back-to-top, .footer, .swin-tools, .copy-btn) { display: none !important; }
+    body:has(swin-handbook-tools) :is(.absolute:has(#main-grid), #main-grid, #post-container, #main-grid main) { position: static; display: block; overflow: visible; }
+    body:has(swin-handbook-tools) :is(figure, pre, fieldset) { break-inside: avoid; }
+}
