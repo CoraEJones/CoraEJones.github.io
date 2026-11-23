@@ -3,7 +3,7 @@ title: "PRML 学习笔记"
 published: 2024-07-02
 description: "从线性模型、支持向量机到概率学习，整理机器学习基础概念与推导。"
 tags: ["PRML", "机器学习", "数学基础"]
-category: "具身智能"
+category: "深度学习"
 lang: "zh_CN"
 ---
 

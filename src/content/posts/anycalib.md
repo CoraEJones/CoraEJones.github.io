@@ -3,12 +3,12 @@ title: "AnyCalib｜从单张图像估计相机内参"
 published: 2026-11-09
 readingDate: 2026-11-09
 description: "先预测每个像素对应的射线，再用闭式求解和几何优化拟合所选相机模型的内参。"
-category: "具身智能"
+category: "深度学习"
 tags: ["单图相机标定与位姿", "相机内参"]
 lang: "zh_CN"
 ---
 
-[具身智能 / 视觉基础文献阅读 / 单图相机标定与位姿](/embodied-ai/#single-image-camera-calibration-and-pose)
+[深度学习 / 视觉基础文献阅读 / 单图相机标定与位姿](/deep-learning/#single-image-camera-calibration-and-pose)
 
 **论文**　*AnyCalib: On-Manifold Learning for Model-Agnostic Single-View Camera Calibration*，Javier Tirado-Garín、Javier Civera，ICCV 2025。
 

@@ -11,7 +11,9 @@ export let sortedPosts: Post[] = [];
 
 const params = new URLSearchParams(window.location.search);
 tags = params.has("tag") ? params.getAll("tag") : [];
-categories = params.has("category") ? params.getAll("category") : [];
+categories = params.getAll("category").map((category) =>
+	category === "具身智能" ? "深度学习" : category,
+);
 const uncategorized = params.get("uncategorized");
 
 interface Post {

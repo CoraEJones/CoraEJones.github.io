@@ -1,6 +1,6 @@
 # 陈逸妤的博客
 
-光学与具身智能的个人学习记录。基于 [Fuwari](https://github.com/saicaca/fuwari) / Astro。
+光学与深度学习的个人学习记录。基于 [Fuwari](https://github.com/saicaca/fuwari) / Astro。
 
 网站：https://coraejones.github.io/
 
@@ -19,7 +19,7 @@ draft: false
 ---
 ```
 
-category 使用「光学」或「具身智能」，文章会自动出现在对应专题。正文支持 Markdown、LaTeX 数学公式与代码块。设 draft: true 可隐藏草稿。
+category 使用「光学」或「深度学习」，文章会自动出现在对应专题。正文支持 Markdown、LaTeX 数学公式与代码块。设 draft: true 可隐藏草稿。
 
 ## 本地预览
 

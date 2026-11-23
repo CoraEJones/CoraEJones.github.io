@@ -7,7 +7,7 @@ export const siteConfig: SiteConfig = {
  toc: { enable: true, depth: 3 },
  favicon: [{src: '/favicon.svg'}],
 };
-export const navBarConfig: NavBarConfig = { links: [ LinkPreset.Home, {name: '光学', url: '/optics/'}, {name: '具身智能', url: '/embodied-ai/'}, LinkPreset.Archive, LinkPreset.About ] };
+export const navBarConfig: NavBarConfig = { links: [ LinkPreset.Home, {name: '光学', url: '/optics/'}, {name: '深度学习', url: '/deep-learning/'}, LinkPreset.Archive, LinkPreset.About ] };
 export const profileConfig: ProfileConfig = {
  avatar: 'assets/images/diudiu-avatar.webp', name: '陈逸妤',
  bio: 'THU本2022-2026\nTHU博 2026-\n专业：计算成像',
