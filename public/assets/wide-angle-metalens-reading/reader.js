@@ -1,4 +1,4 @@
-function mountLabs(reader, signal) {
+function mountLabs(article, signal) {
 	const NS = "http://www.w3.org/2000/svg";
 	const pi = Math.PI;
 	const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
@@ -9,11 +9,13 @@ function mountLabs(reader, signal) {
 	const signed = (x, digits = 3) =>
 		(x > Math.pow(10, -digits) / 2 ? "+" : "") + fmt(x, digits);
 	const plotColors = {
-		ink: "#172e38",
-		teal: "#007f80",
-		orange: "#ba572c",
-		border: "#d7e2e5",
-		muted: "#536771",
+		ink: "var(--tw-prose-body)",
+		accent: "var(--btn-content)",
+		comparison: "var(--admonitions-color-warning)",
+		border: "var(--line-color)",
+		muted: "var(--tw-prose-captions)",
+		surface: "var(--card-bg)",
+		panel: "var(--btn-plain-bg-active)",
 	};
 	const node = (tag, attrs = {}, text) => {
 		const n = document.createElementNS(NS, tag);
@@ -135,7 +137,7 @@ function mountLabs(reader, signal) {
 			.join(" ");
 
 	function initPhase() {
-		const root = reader.querySelector("#lab-phase");
+		const root = article.querySelector("#lab-phase");
 		if (!root) return;
 		const canvas = root.querySelector("#phase-canvas");
 		const ctx = canvas.getContext("2d");
@@ -203,18 +205,19 @@ function mountLabs(reader, signal) {
 					}
 				mapCtx.putImageData(pixels, 0, 0);
 			}
-			const colors = plotColors,
-				u = Number(angle.value),
+			const style = getComputedStyle(canvas);
+			const u = Number(angle.value),
 				q = Number(position.value);
+			const selectionInk = "#172e38";
 			const sx = (x) => box.l + ((x + 0.99) / 1.98) * box.w,
 				sy = (y) => box.t + ((1.25 - y) / 2.5) * box.h;
 			ctx.clearRect(0, 0, width, height);
 			ctx.drawImage(mapCanvas, box.l, box.t, box.w, box.h);
-			ctx.strokeStyle = colors.border;
+			ctx.strokeStyle = style.getPropertyValue("--line-color").trim();
 			ctx.lineWidth = 1;
 			ctx.strokeRect(box.l, box.t, box.w, box.h);
-			ctx.font = "14px system-ui, sans-serif";
-			ctx.fillStyle = colors.ink;
+			ctx.font = "14px " + style.fontFamily;
+			ctx.fillStyle = style.color;
 			ctx.textBaseline = "middle";
 			ctx.textAlign = "center";
 			[-0.9, -0.5, 0, 0.5, 0.9].forEach((x) => {
@@ -247,7 +250,7 @@ function mountLabs(reader, signal) {
 			ctx.stroke();
 			ctx.setLineDash([4, 4]);
 			ctx.lineWidth = 1;
-			ctx.strokeStyle = colors.ink;
+			ctx.strokeStyle = selectionInk;
 			ctx.beginPath();
 			ctx.moveTo(sx(u), box.t);
 			ctx.lineTo(sx(u), box.t + box.h);
@@ -257,7 +260,7 @@ function mountLabs(reader, signal) {
 			ctx.arc(sx(u), sy(q), 6, 0, 2 * pi);
 			ctx.fillStyle = "#fff";
 			ctx.fill();
-			ctx.strokeStyle = colors.ink;
+			ctx.strokeStyle = selectionInk;
 			ctx.lineWidth = 2;
 			ctx.stroke();
 			ctx.restore();
@@ -295,11 +298,23 @@ function mountLabs(reader, signal) {
 			{ signal },
 		);
 		watch(root, draw);
+		const themeRoot = document.documentElement;
+		let isDark = themeRoot.classList.contains("dark");
+		const theme = new MutationObserver(() => {
+			const dark = themeRoot.classList.contains("dark");
+			if (dark === isDark) return;
+			isDark = dark;
+			draw();
+		});
+		theme.observe(themeRoot, { attributes: true, attributeFilter: ["class"] });
+		signal.addEventListener("abort", () => theme.disconnect(), { once: true });
+		window.addEventListener("beforeprint", draw, { signal });
+		window.addEventListener("afterprint", draw, { signal });
 		draw();
 	}
 
 	function initAperture() {
-		const root = reader.querySelector("#lab-aperture");
+		const root = article.querySelector("#lab-aperture");
 		if (!root) return;
 		const svg = root.querySelector("#aperture-svg"),
 			angle = root.querySelector("#aperture-angle"),
@@ -344,8 +359,11 @@ function mountLabs(reader, signal) {
 					(_, i) => -0.985 + (1.97 * i) / 320,
 				);
 			const curves = [
-				{ color: "#8a9ba1", fn: (x) => (-d * x) / Math.sqrt(1 - x * x) },
-				{ color: colors.teal, fn: (x) => (-d * x) / Math.sqrt(n * n - x * x) },
+				{ color: colors.muted, fn: (x) => (-d * x) / Math.sqrt(1 - x * x) },
+				{
+					color: colors.accent,
+					fn: (x) => (-d * x) / Math.sqrt(n * n - x * x),
+				},
 				{ color: colors.ink, fn: (x) => -x, dash: "6 5" },
 			];
 			curves.forEach((c) =>
@@ -371,15 +389,15 @@ function mountLabs(reader, signal) {
 				"stroke-dasharray": "3 4",
 			});
 			[
-				[air, "#8a9ba1"],
-				[plate, colors.teal],
+				[air, colors.muted],
+				[plate, colors.accent],
 				[ideal, colors.ink],
 			].forEach(([y, color]) =>
 				add(group, "circle", {
 					cx: sx(u),
 					cy: sy(y),
 					r: 5.5,
-					fill: "#fff",
+					fill: colors.surface,
 					stroke: color,
 					"stroke-width": 2.5,
 				}),
@@ -407,7 +425,7 @@ function mountLabs(reader, signal) {
 	}
 
 	function initSampling() {
-		const root = reader.querySelector("#lab-sampling");
+		const root = article.querySelector("#lab-sampling");
 		if (!root) return;
 		const svg = root.querySelector("#sampling-svg"),
 			input = root.querySelector("#sampling-levels");
@@ -449,7 +467,7 @@ function mountLabs(reader, signal) {
 			add(group, "path", {
 				d: pathFrom(points, sx, sy),
 				fill: "none",
-				stroke: colors.orange,
+				stroke: colors.comparison,
 				"stroke-width": 2.8,
 			});
 			for (let k = 0; k < n; k++)
@@ -457,7 +475,7 @@ function mountLabs(reader, signal) {
 					cx: sx((k + 0.5) / n),
 					cy: sy((k + 0.5) / n),
 					r: n > 8 ? 2.2 : 3.2,
-					fill: colors.orange,
+					fill: colors.comparison,
 				});
 			const eta = Math.pow(Math.sin(pi / n) / (pi / n), 2);
 			root.querySelector("#sampling-n").textContent = String(n);
@@ -471,7 +489,7 @@ function mountLabs(reader, signal) {
 	}
 
 	function initAdjoint() {
-		const root = reader.querySelector("#lab-adjoint");
+		const root = article.querySelector("#lab-adjoint");
 		if (!root) return;
 		const svg = root.querySelector("#adjoint-svg"),
 			fwd = root.querySelector("#adjoint-forward"),
@@ -496,7 +514,7 @@ function mountLabs(reader, signal) {
 			});
 			add(marker, "path", {
 				d: "M0,0 L10,5 L0,10 Z",
-				fill: forward ? colors.teal : colors.orange,
+				fill: forward ? colors.accent : colors.comparison,
 			});
 			add(
 				svg,
@@ -508,7 +526,7 @@ function mountLabs(reader, signal) {
 				cx: center,
 				cy: 49,
 				r: 7,
-				fill: colors.teal,
+				fill: colors.accent,
 				opacity: forward ? 1 : 0.2,
 			});
 			add(svg, "text", { x: 20, y: 128 }, width < 400 ? "器件" : "设计区域");
@@ -518,7 +536,7 @@ function mountLabs(reader, signal) {
 				width: width - 40,
 				height: 61,
 				rx: 7,
-				fill: "#e8f0f2",
+				fill: colors.panel,
 				stroke: colors.border,
 			});
 			const xs = [width * 0.24, width * 0.5, width * 0.76];
@@ -526,14 +544,14 @@ function mountLabs(reader, signal) {
 				if (forward) {
 					add(svg, "path", {
 						d: `M${center},59 L${x},139`,
-						stroke: colors.teal,
+						stroke: colors.accent,
 						"stroke-width": 2,
 						fill: "none",
 						"marker-end": "url(#adjoint-relation-arrow)",
 					});
 					add(svg, "path", {
 						d: `M${x},209 L${center},281`,
-						stroke: colors.teal,
+						stroke: colors.accent,
 						"stroke-width": 2,
 						fill: "none",
 						"marker-end": "url(#adjoint-relation-arrow)",
@@ -541,7 +559,7 @@ function mountLabs(reader, signal) {
 				} else
 					add(svg, "path", {
 						d: `M${center},281 L${x},209`,
-						stroke: colors.orange,
+						stroke: colors.comparison,
 						"stroke-width": 2,
 						fill: "none",
 						"marker-end": "url(#adjoint-relation-arrow)",
@@ -552,7 +570,7 @@ function mountLabs(reader, signal) {
 					width: 34,
 					height: 40,
 					rx: 4,
-					fill: "#fff",
+					fill: colors.surface,
 					stroke: colors.ink,
 					"stroke-width": 1.2,
 				});
@@ -567,7 +585,7 @@ function mountLabs(reader, signal) {
 				cx: center,
 				cy: 292,
 				r: 8,
-				fill: forward ? colors.teal : colors.orange,
+				fill: forward ? colors.accent : colors.comparison,
 			});
 			add(
 				svg,
@@ -602,7 +620,7 @@ function mountLabs(reader, signal) {
 	}
 
 	function initCatenary() {
-		const root = reader.querySelector("#lab-catenary");
+		const root = article.querySelector("#lab-catenary");
 		if (!root) return;
 		const svg = root.querySelector("#catenary-svg"),
 			position = root.querySelector("#catenary-position"),
@@ -636,7 +654,7 @@ function mountLabs(reader, signal) {
 			add(group, "path", {
 				d: pathFrom(points, sx, sy),
 				fill: "none",
-				stroke: colors.teal,
+				stroke: colors.accent,
 				"stroke-width": 2.8,
 			});
 			const tangent = 0.13,
@@ -645,7 +663,7 @@ function mountLabs(reader, signal) {
 			add(group, "path", {
 				d: pathFrom([a, b], sx, sy),
 				fill: "none",
-				stroke: colors.orange,
+				stroke: colors.comparison,
 				"stroke-width": 3,
 			});
 			add(group, "line", {
@@ -664,7 +682,7 @@ function mountLabs(reader, signal) {
 				add(group, "path", {
 					d: `M${sx(q) + radius},${sy(y(q))} A${radius},${radius} 0 0 ${xi > 0 ? 0 : 1} ${ex},${ey}`,
 					fill: "none",
-					stroke: colors.orange,
+					stroke: colors.comparison,
 					"stroke-width": 1.6,
 				});
 			}
@@ -672,8 +690,8 @@ function mountLabs(reader, signal) {
 				cx: sx(q),
 				cy: sy(y(q)),
 				r: 5.2,
-				fill: "#fff",
-				stroke: colors.teal,
+				fill: colors.surface,
+				stroke: colors.accent,
 				"stroke-width": 2.5,
 			});
 			const phasePi = -2 * sigma * q,
@@ -720,8 +738,8 @@ function mountLabs(reader, signal) {
 				cx: barX + ((phasePi + 1) / 2) * barW,
 				cy: barY,
 				r: 6,
-				fill: colors.orange,
-				stroke: "#fff",
+				fill: colors.comparison,
+				stroke: colors.surface,
 				"stroke-width": 2,
 			});
 			root.querySelector("#catenary-position-label").textContent = fmt(q, 3);
@@ -744,12 +762,11 @@ function mountLabs(reader, signal) {
 	initCatenary();
 }
 
-function mountReaderTools(reader, signal) {
-	const content = reader.querySelector("#metalens-content");
-	const toc = reader.querySelector("#metalens-toc");
-	const progress = reader.querySelector("#toc-progress");
-	const percent = reader.querySelector("#reading-percent");
-	const chapters = [...content.querySelectorAll(".article-section")];
+function mountReaderTools(article, tools, signal) {
+	const toc = tools.querySelector("#metalens-toc");
+	const progress = tools.querySelector("#toc-progress");
+	const percent = tools.querySelector("#reading-percent");
+	const chapters = [...article.querySelectorAll("[data-metalens-chapter]")];
 	const links = [...toc.querySelectorAll('a[href^="#"]')];
 	const readingOffset = 100;
 	let frame = 0;
@@ -757,7 +774,7 @@ function mountReaderTools(reader, signal) {
 
 	function updateReading() {
 		frame = 0;
-		const { top, height } = content.getBoundingClientRect();
+		const { top, height } = article.getBoundingClientRect();
 		const distance = Math.max(1, height - window.innerHeight + readingOffset);
 		const ratio = Math.max(0, Math.min(1, (readingOffset - top) / distance));
 		progress.value = ratio * 100;
@@ -780,7 +797,7 @@ function mountReaderTools(reader, signal) {
 	function queueReadingUpdate() {
 		if (!frame) frame = requestAnimationFrame(updateReading);
 	}
-	reader.addEventListener("toggle", queueReadingUpdate, {
+	article.addEventListener("toggle", queueReadingUpdate, {
 		signal,
 		capture: true,
 	});
@@ -805,8 +822,8 @@ function mountReaderTools(reader, signal) {
 		{ signal },
 	);
 
-	const expand = reader.querySelector("#expand-derivations");
-	const derivations = [...reader.querySelectorAll(".derivation")];
+	const expand = article.querySelector("#expand-derivations");
+	const derivations = [...article.querySelectorAll(".metalens-derivation")];
 	expand.addEventListener(
 		"click",
 		() => {
@@ -819,8 +836,8 @@ function mountReaderTools(reader, signal) {
 	);
 
 	let printStates;
-	const figures = [...reader.querySelectorAll(".paper-figure img")];
-	const printButton = reader.querySelector("#print-page");
+	const figures = [...article.querySelectorAll(".paper-figure img")];
+	const printButton = tools.querySelector("#print-page");
 	window.addEventListener(
 		"beforeprint",
 		() => {
@@ -862,14 +879,14 @@ function mountReaderTools(reader, signal) {
 		{ signal },
 	);
 
-	const dialog = reader.querySelector("#figure-dialog");
-	const image = reader.querySelector("#dialog-image");
-	const label = reader.querySelector("#dialog-title");
-	const wrap = reader.querySelector("#dialog-image-wrap");
-	const sizeToggle = reader.querySelector(".dialog-image-toggle");
+	const dialog = article.querySelector("#figure-dialog");
+	const image = dialog.querySelector("#dialog-image");
+	const label = dialog.querySelector("#dialog-title");
+	const wrap = dialog.querySelector("#dialog-image-wrap");
+	const sizeToggle = dialog.querySelector(".dialog-image-toggle");
 
 	// Use the reader's original-size dialog for these figures.
-	reader.addEventListener(
+	article.addEventListener(
 		"click",
 		(event) => {
 			const button = event.target.closest(".zoom-button");
@@ -896,7 +913,7 @@ function mountReaderTools(reader, signal) {
 		},
 		{ signal, capture: true },
 	);
-	reader
+	dialog
 		.querySelector("#close-figure")
 		.addEventListener("click", () => dialog.close(), { signal });
 	dialog.addEventListener(
@@ -920,9 +937,11 @@ class MetalensReader extends HTMLElement {
 	connectedCallback() {
 		this.controller = new AbortController();
 		this.frame = requestAnimationFrame(() => {
+			const article = this.closest(".markdown-content");
+			if (!article) return;
 			const { signal } = this.controller;
-			mountLabs(this, signal);
-			mountReaderTools(this, signal);
+			mountLabs(article, signal);
+			mountReaderTools(article, this, signal);
 		});
 	}
 

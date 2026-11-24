@@ -8,57 +8,82 @@ lang: "zh_CN"
 draft: false
 ---
 
-<link rel="stylesheet" href="/assets/wide-angle-metalens-reading/reader.css">
+<link rel="stylesheet" href="/assets/wide-angle-metalens-reading/reader.css?v=2">
 
-<metalens-reader class="metalens-reader not-prose" id="metalens-top">
-  <header class="reader-intro">
-    <p class="hero-summary">把视场、孔径、采样、耦合与优化放进同一条设计逻辑。循着论文的十幅图，读清一片超透镜怎样在不同入射方向下工作。</p>
-    <aside class="paper-reference" aria-label="研读文献信息">
-    <span class="small">所读综述</span>
-    <p class="paper-title">Recent advances of wide-angle metalenses</p>
-    <p>Principle, design, and applications<br>X. Luo et al.<br><em>Nanophotonics</em> 11(1), 1–20 (2022)</p>
-    <a class="no-styling" href="https://doi.org/10.1515/nanoph-2021-0583" target="_blank" rel="noopener noreferrer">10.1515/nanoph-2021-0583 ↗</a>
-  </aside>
-  </header>
-  <div class="reader-toolbar" data-pagefind-ignore>
-    <details class="reader-toc" id="metalens-toc"><summary>文章目录 · 12 个阅读单元</summary><ol><li><a class="no-styling" href="#start"><span class="toc-number">01</span><span>从正入射走向整个视场</span></a></li><li><a class="no-styling" href="#ideal-phase"><span class="toc-number">02</span><span>理想相位与角度需求</span></a></li><li><a class="no-styling" href="#quadratic"><span class="toc-number">03</span><span>二次相位的平移性质</span></a></li><li><a class="no-styling" href="#aperture"><span class="toc-number">04</span><span>光阑、空气与介质间隔</span></a></li><li><a class="no-styling" href="#implementation"><span class="toc-number">05</span><span>理想目标与真实响应</span></a></li><li><a class="no-styling" href="#sampling"><span class="toc-number">06</span><span>采样、模式与邻近耦合</span></a></li><li><a class="no-styling" href="#adjoint"><span class="toc-number">07</span><span>伴随计算与数值优化</span></a></li><li><a class="no-styling" href="#catenary"><span class="toc-number">08</span><span>悬链线与几何相位</span></a></li><li><a class="no-styling" href="#streamlines"><span class="toc-number">09</span><span>二维流线与传播相位</span></a></li><li><a class="no-styling" href="#applications"><span class="toc-number">10</span><span>成像、傅里叶与角动量</span></a></li><li><a class="no-styling" href="#outlook"><span class="toc-number">11</span><span>设计取舍与研究边界</span></a></li><li><a class="no-styling" href="#reading-notes"><span class="toc-number">12</span><span>符号与校读说明</span></a></li></ol></details>
-    <nav class="reader-actions" aria-label="阅读工具">
-      <a class="no-styling" href="#reading-map">阅读地图</a>
-      <a class="no-styling" href="#references">参考文献</a>
-      <button class="utility-button" type="button" id="print-page">打印 / PDF</button>
+<span id="metalens-top"></span>
+
+把视场、孔径、采样、耦合与优化放进同一条设计逻辑。循着论文的十幅图，读清一片超透镜怎样在不同入射方向下工作。
+
+<p class="metalens-source"><strong>所读综述</strong>　<a href="https://doi.org/10.1515/nanoph-2021-0583" target="_blank" rel="noopener noreferrer">Recent advances of wide-angle metalenses: principle, design, and applications</a>。X. Luo et al.，<em>Nanophotonics</em> 11(1), 1–20 (2022)。</p>
+
+<metalens-reader class="metalens-tools not-prose" data-pagefind-ignore>
+  <details class="metalens-toc" id="metalens-toc">
+    <summary>文章目录 · 12 个阅读单元</summary>
+    <ol>
+      <li><a href="#start"><span>从正入射走向整个视场</span></a></li>
+      <li><a href="#ideal-phase"><span>理想相位与角度需求</span></a></li>
+      <li><a href="#quadratic"><span>二次相位的平移性质</span></a></li>
+      <li><a href="#aperture"><span>光阑、空气与介质间隔</span></a></li>
+      <li><a href="#implementation"><span>理想目标与真实响应</span></a></li>
+      <li><a href="#sampling"><span>采样、模式与邻近耦合</span></a></li>
+      <li><a href="#adjoint"><span>伴随计算与数值优化</span></a></li>
+      <li><a href="#catenary"><span>悬链线与几何相位</span></a></li>
+      <li><a href="#streamlines"><span>二维流线与传播相位</span></a></li>
+      <li><a href="#applications"><span>成像、傅里叶与角动量</span></a></li>
+      <li><a href="#outlook"><span>设计取舍与研究边界</span></a></li>
+      <li><a href="#reading-notes"><span>符号与校读说明</span></a></li>
+    </ol>
+  </details>
+  <nav class="metalens-actions" aria-label="阅读工具">
+      <a href="#reading-map">阅读地图</a>
+      <a href="#references">参考文献</a>
+      <button class="metalens-button" type="button" id="print-page">打印 / PDF</button>
     </nav>
-    <p class="toc-reading">阅读进度 <span id="reading-percent">0%</span><progress id="toc-progress" value="0" max="100" aria-label="阅读进度"></progress></p>
-  </div>
-  <div class="metalens-content" id="metalens-content">
-<section class="reading-map" id="reading-map" aria-labelledby="reading-map-title">
-      <p class="map-title" id="reading-map-title">如何使用这篇研读</p>
-      <p><strong>默认读者：</strong>理解相位、干涉和透镜聚焦，做过少量超表面设计。前半篇把理想波前与系统几何连起来；后半篇进入真实结构、数值方法和应用。关键推导放在正文，进一步的代数步骤可按需展开。</p>
-      <div class="reading-legend"><span>原文事实 · 带章节 / 图号来源</span><span>补充推导 · 明确假设与步骤</span><span>阅读分析 · 解释适用范围</span></div>
-      <p><strong>阅读边界：</strong>这是一篇针对原综述的解释性研读，研究进展以论文形成时的文献为准。交互是解析模型或示意，不是新器件的实验结果。</p>
-      <button class="utility-button" id="expand-derivations" type="button" aria-pressed="false">展开补充推导</button>
-    </section>
-    <section id="start" class="article-section">
-  <p class="section-kicker"><span class="chapter-num">01</span>阅读入口</p>
-  <h2>从一次正入射设计，走向整个视场</h2>
-  <p>如果已经做过几次超表面设计，一个熟悉的流程通常是：先确定目标相位，再扫描单元尺寸建立相位库，按照位置选择结构，最后检验焦点或远场。把同一片器件用于宽视场成像时，这个流程需要增加一个维度：<strong>同一片结构必须面对许多入射方向，而且各个方向的成像质量都要可用。</strong></p>
-  <p>本文研读的 <cite>Recent advances of wide-angle metalenses: principle, design, and applications</cite> 是一篇综述。它于 <strong>2021 年 12 月在线发表，收入 Nanophotonics 2022 年第 11 卷第 1 期</strong>，讨论了宽角度超透镜的基本原理、系统构型、微结构实现与应用。文中的性能纪录和研究展望属于当时的文献背景，本文也以这一背景为边界。<a class="cite no-styling" href="#ref-review">[综述：摘要与第 1 节]</a></p>
-  <div class="insight"><span class="note-label">本文的分析主线</span><p><strong>宽视场设计同时包含两项任务：在系统层面找到多角度下可用的相位与孔径方案，在微结构层面实现这些方案所需要的振幅、相位和偏振响应。</strong>前一层成立，不代表后一层自动成立；微结构效率高，也不代表整套成像系统已经校正像差。</p></div>
-  <p>正文按“理想要求—系统方案—实现困难—改进方法—应用证据”的顺序展开。五个交互模块用于重算公式或展示计算关系；它们是<strong>教学模型</strong>，不提供全波电磁仿真或成像质量预测。文中将论文陈述、补充推导和阅读分析分别注明。</p>
-  <div class="table-wrap" tabindex="0" role="region" aria-label="对照表，可横向滚动查看"><table><caption>开始阅读前，先区分四个常见指标</caption><thead><tr><th>量或指标</th><th>本文中的含义</th><th>阅读时应确认的条件</th></tr></thead><tbody>
+  <p class="metalens-progress">阅读进度 <span id="reading-percent">0%</span><progress id="toc-progress" value="0" max="100" aria-label="阅读进度"></progress></p>
+</metalens-reader>
+
+## <span id="reading-map"></span>如何使用这篇研读
+
+<p><strong>默认读者：</strong>理解相位、干涉和透镜聚焦，做过少量超表面设计。前半篇把理想波前与系统几何连起来；后半篇进入真实结构、数值方法和应用。关键推导放在正文，进一步的代数步骤可按需展开。</p>
+
+- 原文事实 · 带章节 / 图号来源
+- 补充推导 · 明确假设与步骤
+- 阅读分析 · 解释适用范围
+
+<p><strong>阅读边界：</strong>这是一篇针对原综述的解释性研读，研究进展以论文形成时的文献为准。交互是解析模型或示意，不是新器件的实验结果。</p>
+
+<button class="metalens-button" id="expand-derivations" type="button" aria-pressed="false">展开补充推导</button>
+
+## <span id="start" data-metalens-chapter></span>从一次正入射设计，走向整个视场
+
+<p>如果已经做过几次超表面设计，一个熟悉的流程通常是：先确定目标相位，再扫描单元尺寸建立相位库，按照位置选择结构，最后检验焦点或远场。把同一片器件用于宽视场成像时，这个流程需要增加一个维度：<strong>同一片结构必须面对许多入射方向，而且各个方向的成像质量都要可用。</strong></p>
+
+<p>本文研读的 <cite>Recent advances of wide-angle metalenses: principle, design, and applications</cite> 是一篇综述。它于 <strong>2021 年 12 月在线发表，收入 Nanophotonics 2022 年第 11 卷第 1 期</strong>，讨论了宽角度超透镜的基本原理、系统构型、微结构实现与应用。文中的性能纪录和研究展望属于当时的文献背景，本文也以这一背景为边界。<a class="metalens-citation" href="#ref-review">[综述：摘要与第 1 节]</a></p>
+
+<blockquote class="admonition bdm-note">
+<p class="bdm-title">本文的分析主线</p><p><strong>宽视场设计同时包含两项任务：在系统层面找到多角度下可用的相位与孔径方案，在微结构层面实现这些方案所需要的振幅、相位和偏振响应。</strong>前一层成立，不代表后一层自动成立；微结构效率高，也不代表整套成像系统已经校正像差。</p>
+</blockquote>
+
+<p>正文按“理想要求—系统方案—实现困难—改进方法—应用证据”的顺序展开。五个交互模块用于重算公式或展示计算关系；它们是<strong>教学模型</strong>，不提供全波电磁仿真或成像质量预测。文中将论文陈述、补充推导和阅读分析分别注明。</p>
+
+<div class="metalens-table-wrap" tabindex="0" role="region" aria-label="对照表，可横向滚动查看"><table><caption>开始阅读前，先区分四个常见指标</caption><thead><tr><th>量或指标</th><th>本文中的含义</th><th>阅读时应确认的条件</th></tr></thead><tbody>
     <tr><td><strong>视场 FOV</strong></td><td>系统接受并形成可用图像的角度范围</td><td>全视场还是半视场；一维角度还是两个方向；“可用”的像差与分辨率标准</td></tr>
     <tr><td><strong>有效数值孔径</strong></td><td>某个视场下实际参与成像的光束所对应的 NA</td><td>口径受到光阑、投影、渐晕等因素限制；不能只由整片结构外径判断</td></tr>
     <tr><td><strong>聚焦效率</strong></td><td>进入指定焦斑区域的功率与参考功率之比</td><td>分母、焦斑积分区域、偏振、波长与入射角</td></tr>
     <tr><td><strong>畸变与点像模糊</strong></td><td>畸变主要改变像点的位置映射；球差、彗差等像差会使点像扩展或变形</td><td>畸变也是像差的一种；规则的非线性映射可校正，不等于模糊也能被无损恢复</td></tr>
   </tbody></table></div>
-  <p class="source-note">指标区分是本文的阅读整理，具体讨论见综述 §2.1–2.2、§4.1 和 §5。除单独说明外，<var>f</var> 是设计波长下的焦距，<var>k₀=2π/λ</var>，角度进入三角函数时使用弧度。</p>
-</section>
-<section id="ideal-phase" class="article-section">
-  <p class="section-kicker"><span class="chapter-num">02</span>理想要求</p>
-  <h2>理想相位首先是一个“位置 × 角度”的目标</h2>
-  <h3>从等相位到焦点，写出器件需要补偿的量</h3>
-  <p>在透镜平面取横向位置 <var>x</var>，目标焦平面与透镜相距 <var>f</var>，指定入射角 <var>θᵢ</var> 对应的像点横坐标为 <var>s(θᵢ)</var>。来自透镜不同位置的光，到达同一个目标像点时应该具有相同的总相位。总相位中既有入射波已经携带的横向相位，也有透镜提供的相位和出射传播相位。</p>
-  <p>采用原文式（1）的横向入射相位约定 <var>+k₀x sinθᵢ</var>，以透镜中心为相位参考，理想器件相位为：</p>
-  <div class="math" data-tex="\phi_m(x;\theta_i)=-k_0\left[x\sin\theta_i+\sqrt{(x-s)^2+f^2}-\sqrt{s^2+f^2}\right]+C" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="352pt" height="25pt" viewBox="0 0 352 25" version="1.1" role="img" aria-label="φₘ(x;θᵢ)=−k₀[x sinθᵢ+√((x−s)²+f²)−√(s²+f²)]+C" focusable="false">
+
+<p class="metalens-source">指标区分是本文的阅读整理，具体讨论见综述 §2.1–2.2、§4.1 和 §5。除单独说明外，<var>f</var> 是设计波长下的焦距，<var>k₀=2π/λ</var>，角度进入三角函数时使用弧度。</p>
+
+## <span id="ideal-phase" data-metalens-chapter></span>理想相位首先是一个“位置 × 角度”的目标
+
+### 从等相位到焦点，写出器件需要补偿的量
+
+<p>在透镜平面取横向位置 <var>x</var>，目标焦平面与透镜相距 <var>f</var>，指定入射角 <var>θᵢ</var> 对应的像点横坐标为 <var>s(θᵢ)</var>。来自透镜不同位置的光，到达同一个目标像点时应该具有相同的总相位。总相位中既有入射波已经携带的横向相位，也有透镜提供的相位和出射传播相位。</p>
+
+<p>采用原文式（1）的横向入射相位约定 <var>+k₀x sinθᵢ</var>，以透镜中心为相位参考，理想器件相位为：</p>
+
+<div class="metalens-equation" data-tex="\phi_m(x;\theta_i)=-k_0\left[x\sin\theta_i+\sqrt{(x-s)^2+f^2}-\sqrt{s^2+f^2}\right]+C" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="352pt" height="25pt" viewBox="0 0 352 25" version="1.1" role="img" aria-label="φₘ(x;θᵢ)=−k₀[x sinθᵢ+√((x−s)²+f²)−√(s²+f²)]+C" focusable="false">
  <title>φₘ(x;θᵢ)=−k₀[x sinθᵢ+√((x−s)²+f²)−√(s²+f²)]+C</title><defs>
  </defs>
  <g id="eq-1-figure_1">
@@ -139,9 +164,12 @@ draft: false
   </g>
  </g>
 </svg></div>
-  <p><strong>这里的 φₘ 是透镜本身需要提供的相位。</strong>常数 <var>C</var> 可以随入射条件选择，但不随 <var>x</var> 变化，因此不改变该入射条件下的相对波前。式中的 <var>s</var> 也不是自由忽略的参数：它规定了一个方向应该成像到哪里。<a class="cite no-styling" href="#ref-review">[综述 §2.1，式（1），p.2–3]</a></p>
-  <p>当正入射且像点位于轴上时，上式退化为常见的双曲相位：</p>
-  <div class="math" data-tex="\phi_m(x;0)=-k_0\left(\sqrt{x^2+f^2}-f\right)+C" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="212pt" height="25pt" viewBox="0 0 212 25" version="1.1" role="img" aria-label="φₘ(x;0)=−k₀(√(x²+f²)−f)+C" focusable="false">
+
+<p><strong>这里的 φₘ 是透镜本身需要提供的相位。</strong>常数 <var>C</var> 可以随入射条件选择，但不随 <var>x</var> 变化，因此不改变该入射条件下的相对波前。式中的 <var>s</var> 也不是自由忽略的参数：它规定了一个方向应该成像到哪里。<a class="metalens-citation" href="#ref-review">[综述 §2.1，式（1），p.2–3]</a></p>
+
+<p>当正入射且像点位于轴上时，上式退化为常见的双曲相位：</p>
+
+<div class="metalens-equation" data-tex="\phi_m(x;0)=-k_0\left(\sqrt{x^2+f^2}-f\right)+C" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="212pt" height="25pt" viewBox="0 0 212 25" version="1.1" role="img" aria-label="φₘ(x;0)=−k₀(√(x²+f²)−f)+C" focusable="false">
  <title>φₘ(x;0)=−k₀(√(x²+f²)−f)+C</title><defs>
  </defs>
  <g id="eq-2-figure_1">
@@ -198,21 +226,30 @@ draft: false
   </g>
  </g>
 </svg></div>
-  <p>从这一式子设计出良好的轴上焦点，只完成了多角度目标中的一个截面。宽视场问题要求检查 <strong>φₘ(x;θᵢ) 如何同时随位置和入射角变化</strong>。</p>
-  <figure class="paper-figure" id="figure-1"><button type="button" class="zoom-button" data-title="图 1 · 理想相位与成像映射" aria-label="放大查看图 1 · 理想相位与成像映射"><img src="/assets/wide-angle-metalens-reading/figure-1.png" loading="lazy" width="1328" height="1068" alt="图 1 · 理想相位与成像映射" decoding="async" data-figure-key="1"><span class="zoom-hint" aria-hidden="true">点击放大 ↗</span></button><figcaption><strong>图 1 · 理想相位与成像映射。</strong>A：斜入射平面波通过透镜，在指定横向位置聚焦。B：三种像点映射对应的理想相位。横轴是入射角正弦，纵轴是透镜位置，颜色为包裹后的相对相位。<span class="figure-source">论文原图 · <a class="no-styling" href="#ref-review">[R1 p.3，图 1]</a> · 保留原图中的引文与来源标注。</span></figcaption></figure>
-  <h3>图 1B 的三个面板，分别改变了成像映射</h3>
-  <div class="table-wrap" tabindex="0" role="region" aria-label="对照表，可横向滚动查看"><table><thead><tr><th>目标映射</th><th>主要含义</th><th>读图时的关注点</th></tr></thead><tbody>
+
+<p>从这一式子设计出良好的轴上焦点，只完成了多角度目标中的一个截面。宽视场问题要求检查 <strong>φₘ(x;θᵢ) 如何同时随位置和入射角变化</strong>。</p>
+
+<figure class="paper-figure" id="figure-1"><button type="button" class="zoom-button" data-title="图 1 · 理想相位与成像映射" aria-label="放大查看图 1 · 理想相位与成像映射"><img src="/assets/wide-angle-metalens-reading/figure-1.png" loading="lazy" width="1328" height="1068" alt="图 1 · 理想相位与成像映射" decoding="async" data-figure-key="1"><span class="zoom-hint" aria-hidden="true">点击放大 ↗</span></button><figcaption><strong>图 1 · 理想相位与成像映射。</strong>A：斜入射平面波通过透镜，在指定横向位置聚焦。B：三种像点映射对应的理想相位。横轴是入射角正弦，纵轴是透镜位置，颜色为包裹后的相对相位。<span class="metalens-source">论文原图 · <a href="#ref-review">[R1 p.3，图 1]</a> · 保留原图中的引文与来源标注。</span></figcaption></figure>
+
+### 图 1B 的三个面板，分别改变了成像映射
+
+<div class="metalens-table-wrap" tabindex="0" role="region" aria-label="对照表，可横向滚动查看"><table><thead><tr><th>目标映射</th><th>主要含义</th><th>读图时的关注点</th></tr></thead><tbody>
     <tr><td><var>s=f tanθᵢ</var></td><td>常见的透视投影关系</td><td>理想相位随角度的变化较强</td></tr>
     <tr><td><var>s=f sinθᵢ</var></td><td>与入射横向波矢成正比，适合联系傅里叶映射</td><td>部分区域中的角度变化较缓，仍不能视为全局恒定</td></tr>
     <tr><td><var>s=f θᵢ</var></td><td>与角度成正比的 f-theta 映射</td><td>规定了另一种像点分布；改变映射也会改变相位需求</td></tr>
   </tbody></table></div>
-  <p>这三种映射对应的是不同的系统目标。图中的颜色经过 <strong>2π 包裹</strong>，显示的是模 <var>2π</var> 的理想相位；它并不是某个已制成单元的角度响应。论文使用 <var>f=15λ</var>、透镜范围约为 <var>−1.25f 到 1.25f</var> 展示这些分布。<a class="cite no-styling" href="#ref-review">[综述 图 1及正文]</a></p>
-  <h3>沿一个固定位置横向读，才能看见“同一处结构”的压力</h3>
-  <ol><li><strong>竖着读：</strong>固定入射角，观察不同位置所需的相位，这是常规相位设计熟悉的读法。</li><li><strong>横着读：</strong>固定一个非中心位置，改变入射角，观察同一物理位置所需相位如何变化。</li><li><strong>检查整段曲线：</strong>相隔很远的两个点同色，只说明它们在模 <var>2π</var> 意义下相同，不能证明中间没有变化。</li></ol>
-  <p>下方交互按原文式（1）重新计算理想需求。拖动位置线后，注意该行是否经历多次颜色循环；再切换映射，比较同一物理位置的角度依赖。中心行接近零，是参考相位选取的结果，不代表中心单元在所有角度下没有电磁响应。</p>
-  <section class="lab" id="lab-phase" aria-labelledby="lab-phase-heading">
-  <p class="lab-kicker">互动实验 · 理想相位 <span class="lab-disclaimer">解析模型，非器件仿真</span></p>
+
+<p>这三种映射对应的是不同的系统目标。图中的颜色经过 <strong>2π 包裹</strong>，显示的是模 <var>2π</var> 的理想相位；它并不是某个已制成单元的角度响应。论文使用 <var>f=15λ</var>、透镜范围约为 <var>−1.25f 到 1.25f</var> 展示这些分布。<a class="metalens-citation" href="#ref-review">[综述 图 1及正文]</a></p>
+
+### 沿一个固定位置横向读，才能看见“同一处结构”的压力
+
+<ol><li><strong>竖着读：</strong>固定入射角，观察不同位置所需的相位，这是常规相位设计熟悉的读法。</li><li><strong>横着读：</strong>固定一个非中心位置，改变入射角，观察同一物理位置所需相位如何变化。</li><li><strong>检查整段曲线：</strong>相隔很远的两个点同色，只说明它们在模 <var>2π</var> 意义下相同，不能证明中间没有变化。</li></ol>
+
+<p>下方交互按原文式（1）重新计算理想需求。拖动位置线后，注意该行是否经历多次颜色循环；再切换映射，比较同一物理位置的角度依赖。中心行接近零，是参考相位选取的结果，不代表中心单元在所有角度下没有电磁响应。</p>
+
+<section class="metalens-lab not-prose" id="lab-phase" aria-labelledby="lab-phase-heading">
   <h3 id="lab-phase-heading">固定同一个透镜位置，横向读入射角</h3>
+  <p class="lab-context">互动实验 · 理想相位 <span class="lab-disclaimer">解析模型，非器件仿真</span></p>
   <p class="lab-intro">颜色表示实现理想聚焦所需的相对相位。选择像点映射，拖动位置与角度；白色横线始终固定在同一个透镜位置。这里计算的是目标要求，不是某个元胞已经实现的响应。</p>
   <div class="lab-controls">
     <label class="lab-field"><span class="lab-label">像点映射 s/f</span><select id="phase-mapping"><option value="sin" selected>sin θᵢ</option><option value="tan">tan θᵢ</option><option value="theta">θᵢ（弧度）</option></select></label>
@@ -225,14 +262,18 @@ draft: false
   <p class="lab-note">相位按 [−π, π) 折回。红蓝交界可能只是 2π 包裹，不能当成电磁场的物理不连续。横轴仅绘制 |sin θᵢ| &lt; 0.99，以避开掠入射端点。</p>
   <noscript>启用 JavaScript 后可切换映射与位置；正文和论文原图仍可直接阅读。</noscript>
 </section>
-  <div class="insight"><span class="note-label">阅读分析</span><p>宽视场设计可以有两种思考入口：让器件本身具有所需的角度相关响应，或调整相位形式与系统构型，使不同角度只需使用一个适合的局部区域。后文中的多层优化、二次相位与孔径配置，可以放在这两个入口下理解。</p></div>
-</section>
-<section id="quadratic" class="article-section">
-  <p class="section-kicker"><span class="chapter-num">03</span>系统方案</p>
-  <h2>二次相位：把斜入射写成横向平移</h2>
-  <h3>先分清器件相位与出射总相位</h3>
-  <p>固定的二次透镜相位可以写成 <var>φq=−k₀(x²+y²)/(2f)</var>。现在采用原文式（2）的入射横向相位 <var>−k₀x sinθᵢ</var>，将两者相加得到出射总相位 <strong>Φout</strong>：</p>
-  <div class="math" data-tex="\Phi_{\mathrm{out}}(x,y;\theta_i)=-\frac{k_0}{2f}(x^2+y^2)-k_0x\sin\theta_i" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="239pt" height="25pt" viewBox="0 0 239 25" version="1.1" role="img" aria-label="Φout=−k₀(x²+y²)/(2f)−k₀x sinθᵢ" focusable="false">
+
+<blockquote class="admonition bdm-note">
+<p class="bdm-title">阅读分析</p><p>宽视场设计可以有两种思考入口：让器件本身具有所需的角度相关响应，或调整相位形式与系统构型，使不同角度只需使用一个适合的局部区域。后文中的多层优化、二次相位与孔径配置，可以放在这两个入口下理解。</p>
+</blockquote>
+
+## <span id="quadratic" data-metalens-chapter></span>二次相位：把斜入射写成横向平移
+
+### 先分清器件相位与出射总相位
+
+<p>固定的二次透镜相位可以写成 <var>φq=−k₀(x²+y²)/(2f)</var>。现在采用原文式（2）的入射横向相位 <var>−k₀x sinθᵢ</var>，将两者相加得到出射总相位 <strong>Φout</strong>：</p>
+
+<div class="metalens-equation" data-tex="\Phi_{\mathrm{out}}(x,y;\theta_i)=-\frac{k_0}{2f}(x^2+y^2)-k_0x\sin\theta_i" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="239pt" height="25pt" viewBox="0 0 239 25" version="1.1" role="img" aria-label="Φout=−k₀(x²+y²)/(2f)−k₀x sinθᵢ" focusable="false">
  <title>Φout=−k₀(x²+y²)/(2f)−k₀x sinθᵢ</title><defs>
  </defs>
  <g id="eq-3-figure_1">
@@ -305,7 +346,8 @@ draft: false
   </g>
  </g>
 </svg></div>
-  <div class="math" data-tex="\Phi_{\mathrm{out}}=-\frac{k_0}{2f}\left[(x+f\sin\theta_i)^2+y^2\right]+\frac{k_0f}{2}\sin^2\theta_i" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="251pt" height="26pt" viewBox="0 0 251 26" version="1.1" role="img" aria-label="Φout=−k₀[(x+f sinθᵢ)²+y²]/(2f)+(k₀f/2)sin²θᵢ" focusable="false">
+
+<div class="metalens-equation" data-tex="\Phi_{\mathrm{out}}=-\frac{k_0}{2f}\left[(x+f\sin\theta_i)^2+y^2\right]+\frac{k_0f}{2}\sin^2\theta_i" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="251pt" height="26pt" viewBox="0 0 251 26" version="1.1" role="img" aria-label="Φout=−k₀[(x+f sinθᵢ)²+y²]/(2f)+(k₀f/2)sin²θᵢ" focusable="false">
  <title>Φout=−k₀[(x+f sinθᵢ)²+y²]/(2f)+(k₀f/2)sin²θᵢ</title><defs>
  </defs>
  <g id="eq-4-figure_1">
@@ -382,13 +424,20 @@ draft: false
   </g>
  </g>
 </svg></div>
-  <p>最后一项只依赖入射角，在同一次照明中是空间常数。完成平方后，二次形式保留下来，其中心平移到 <strong>x=−f sinθᵢ</strong>。这就是本文反复使用的“角度变化转化为横向平移”的数学性质。<a class="cite no-styling" href="#ref-review">[综述 §2.2，式（2），p.4]</a></p>
-  <div class="note"><span class="note-label">符号说明</span><p>上一节按式（1）复现理想相位热图，这一节按式（2）复现二次相位。原文两处入射线性相位写法的符号不同，因此本文明确保留各自约定，不将两个模块的正角方向直接混用。尤其要区分 <strong>φₘ：理想器件相位</strong>和<strong>Φout：器件与入射波叠加后的总相位</strong>；Φout 随角度变化，不意味着固定二次透镜自动具备所需的角度色散。</p></div>
-  <h3>完成平方揭示了结构性质，还没有完成像差验证</h3>
-  <p>二次形式与严格球面聚焦波前之间仍有差异。直接让大口径二次透镜面对物体，会出现明显球差及背景噪声；缩小实际参与聚焦的区域，可以让局部近似更好，但会改变有效数值孔径、通光量和分辨率。<a class="cite no-styling" href="#ref-review">[综述 §2.2，p.5–6]</a></p>
-  <details class="derivation"><summary>补充推导：二次相位为什么是双曲相位的近轴项</summary>
+
+<p>最后一项只依赖入射角，在同一次照明中是空间常数。完成平方后，二次形式保留下来，其中心平移到 <strong>x=−f sinθᵢ</strong>。这就是本文反复使用的“角度变化转化为横向平移”的数学性质。<a class="metalens-citation" href="#ref-review">[综述 §2.2，式（2），p.4]</a></p>
+
+<blockquote class="admonition bdm-note">
+<p class="bdm-title">符号说明</p><p>上一节按式（1）复现理想相位热图，这一节按式（2）复现二次相位。原文两处入射线性相位写法的符号不同，因此本文明确保留各自约定，不将两个模块的正角方向直接混用。尤其要区分 <strong>φₘ：理想器件相位</strong>和<strong>Φout：器件与入射波叠加后的总相位</strong>；Φout 随角度变化，不意味着固定二次透镜自动具备所需的角度色散。</p>
+</blockquote>
+
+### 完成平方揭示了结构性质，还没有完成像差验证
+
+<p>二次形式与严格球面聚焦波前之间仍有差异。直接让大口径二次透镜面对物体，会出现明显球差及背景噪声；缩小实际参与聚焦的区域，可以让局部近似更好，但会改变有效数值孔径、通光量和分辨率。<a class="metalens-citation" href="#ref-review">[综述 §2.2，p.5–6]</a></p>
+
+<details class="metalens-derivation"><summary>补充推导：二次相位为什么是双曲相位的近轴项</summary>
     <p>把双曲相位中的路程展开，得到：</p>
-    <div class="math" data-tex="\sqrt{f^2+r^2}-f=\frac{r^2}{2f}-\frac{r^4}{8f^3}+\cdots" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="168pt" height="31pt" viewBox="0 0 168 31" version="1.1" role="img" aria-label="√(f²+r²)−f=r²/(2f)−r⁴/(8f³)+…" focusable="false">
+    <div class="metalens-equation" data-tex="\sqrt{f^2+r^2}-f=\frac{r^2}{2f}-\frac{r^4}{8f^3}+\cdots" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="168pt" height="31pt" viewBox="0 0 168 31" version="1.1" role="img" aria-label="√(f²+r²)−f=r²/(2f)−r⁴/(8f³)+…" focusable="false">
  <title>√(f²+r²)−f=r²/(2f)−r⁴/(8f³)+…</title><defs>
  </defs>
  <g id="eq-5-figure_1">
@@ -441,23 +490,28 @@ draft: false
 </svg></div>
     <p>二次相位保留了最前面的二次项，忽略了更高阶项。对于有限波长，是否可以忽略，最终应按波前误差或点扩散函数等指标判断。这个展开解释了局部区域缩小时近似改善的原因，并不把宽角度的全部行为简化为近轴模型。</p>
   </details>
-  <figure class="paper-figure" id="figure-2"><button type="button" class="zoom-button" data-title="图 2 · 宽视场透镜的五类系统构型" aria-label="放大查看图 2 · 宽视场透镜的五类系统构型"><img src="/assets/wide-angle-metalens-reading/figure-2.jpg" loading="lazy" width="1328" height="796" alt="图 2 · 宽视场透镜的五类系统构型" decoding="async" data-figure-key="2"><span class="zoom-hint" aria-hidden="true">点击放大 ↗</span></button><figcaption><strong>图 2 · 宽视场透镜的五类系统构型。</strong>A：角度色散设计；B：二次相位；C：光阑与空气间隔；D：光阑与介质间隔；E：超透镜双片。构型的区别在于增加了哪些可用的设计自由度。<span class="figure-source">论文原图 · <a class="no-styling" href="#ref-review">[R1 p.4，图 2]</a> · 保留原图中的引文与来源标注。</span></figcaption></figure>
-  <div class="table-wrap" tabindex="0" role="region" aria-label="对照表，可横向滚动查看"><table><caption>图 2 的五类构型，应按它们增加了什么设计自由度来读</caption><thead><tr><th>构型</th><th>主要作用</th><th>需要同时考虑的条件</th></tr></thead><tbody>
+
+<figure class="paper-figure" id="figure-2"><button type="button" class="zoom-button" data-title="图 2 · 宽视场透镜的五类系统构型" aria-label="放大查看图 2 · 宽视场透镜的五类系统构型"><img src="/assets/wide-angle-metalens-reading/figure-2.jpg" loading="lazy" width="1328" height="796" alt="图 2 · 宽视场透镜的五类系统构型" decoding="async" data-figure-key="2"><span class="zoom-hint" aria-hidden="true">点击放大 ↗</span></button><figcaption><strong>图 2 · 宽视场透镜的五类系统构型。</strong>A：角度色散设计；B：二次相位；C：光阑与空气间隔；D：光阑与介质间隔；E：超透镜双片。构型的区别在于增加了哪些可用的设计自由度。<span class="metalens-source">论文原图 · <a href="#ref-review">[R1 p.4，图 2]</a> · 保留原图中的引文与来源标注。</span></figcaption></figure>
+
+<div class="metalens-table-wrap" tabindex="0" role="region" aria-label="对照表，可横向滚动查看"><table><caption>图 2 的五类构型，应按它们增加了什么设计自由度来读</caption><thead><tr><th>构型</th><th>主要作用</th><th>需要同时考虑的条件</th></tr></thead><tbody>
     <tr><td><strong>A：角度响应优化</strong></td><td>通过复杂、多层或多参数结构调整角度相关响应</td><td>优化角度采样、计算规模与制造复杂度；图示案例并非仅一层结构</td></tr>
     <tr><td><strong>B：二次相位</strong></td><td>利用斜入射与横向平移之间的关系</td><td>大口径直接工作时的球差和背景</td></tr>
     <tr><td><strong>C：光阑与空气间隔</strong></td><td>各入射角选择透镜上的局部区域</td><td>实际照明中心与理想中心的角度依赖不完全匹配</td></tr>
     <tr><td><strong>D：光阑与介质间隔</strong></td><td>通过折射改善照明中心随角度的移动关系</td><td>厚度、折射率、有效孔径与像差需要联合设计</td></tr>
     <tr><td><strong>E：超透镜双片</strong></td><td>增加像差校正自由度</td><td>层间作用、加工和对准；更复杂结构的实现成本</td></tr>
   </tbody></table></div>
-  <p class="source-note">依据综述 §2.2、图 2；“单结构侧/双结构侧”是综述的系统分类，不宜直接等同于单层/双层微结构。</p>
-</section>
-<section id="aperture" class="article-section">
-  <p class="section-kicker"><span class="chapter-num">04</span>从相位走到光路</p>
-  <h2>孔径与介质：让实际照明区域跟上理想关系</h2>
-  <h3>先给两个位置不同的名字</h3>
-  <p>本节用 <strong>xc</strong> 表示<strong>透镜平面上的受照区域中心</strong>，用 <strong>s</strong> 表示<strong>焦平面上的像点位置</strong>。在本节约定中，两者的理想横坐标可能具有相同的函数形式，但它们处在不同平面，物理意义也不同。</p>
-  <p>光阑限制某个入射方向能照亮透镜上的哪一块区域。对于二次透镜，作者希望受照中心接近完成平方所指示的局部中心：</p>
-  <div class="math" data-tex="x_c^\ast=-f\sin\theta_i" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="81pt" height="16pt" viewBox="0 0 81 16" version="1.1" role="img" aria-label="x*c=−f sinθᵢ" focusable="false">
+
+<p class="metalens-source">依据综述 §2.2、图 2；“单结构侧/双结构侧”是综述的系统分类，不宜直接等同于单层/双层微结构。</p>
+
+## <span id="aperture" data-metalens-chapter></span>孔径与介质：让实际照明区域跟上理想关系
+
+### 先给两个位置不同的名字
+
+<p>本节用 <strong>xc</strong> 表示<strong>透镜平面上的受照区域中心</strong>，用 <strong>s</strong> 表示<strong>焦平面上的像点位置</strong>。在本节约定中，两者的理想横坐标可能具有相同的函数形式，但它们处在不同平面，物理意义也不同。</p>
+
+<p>光阑限制某个入射方向能照亮透镜上的哪一块区域。对于二次透镜，作者希望受照中心接近完成平方所指示的局部中心：</p>
+
+<div class="metalens-equation" data-tex="x_c^\ast=-f\sin\theta_i" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="81pt" height="16pt" viewBox="0 0 81 16" version="1.1" role="img" aria-label="x*c=−f sinθᵢ" focusable="false">
  <title>x*c=−f sinθᵢ</title><defs>
  </defs>
  <g id="eq-6-figure_1">
@@ -495,9 +549,12 @@ draft: false
   </g>
  </g>
 </svg></div>
-  <h3>空气间隔为什么给出 tan，而不是 sin</h3>
-  <p>设光阑到透镜的<strong>轴向间隔</strong>为 <var>d</var>。一条倾斜主光线与光轴构成直角三角形：轴向间隔是邻边，横向位移是对边，因此 <var>|xc|/d=tan|θᵢ|</var>。按本节横向方向约定：</p>
-  <div class="math" data-tex="x_{c,\mathrm{air}}=-d\tan\theta_i" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="97pt" height="15pt" viewBox="0 0 97 15" version="1.1" role="img" aria-label="xc,air=−d tanθᵢ" focusable="false">
+
+### 空气间隔为什么给出 tan，而不是 sin
+
+<p>设光阑到透镜的<strong>轴向间隔</strong>为 <var>d</var>。一条倾斜主光线与光轴构成直角三角形：轴向间隔是邻边，横向位移是对边，因此 <var>|xc|/d=tan|θᵢ|</var>。按本节横向方向约定：</p>
+
+<div class="metalens-equation" data-tex="x_{c,\mathrm{air}}=-d\tan\theta_i" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="97pt" height="15pt" viewBox="0 0 97 15" version="1.1" role="img" aria-label="xc,air=−d tanθᵢ" focusable="false">
  <title>xc,air=−d tanθᵢ</title><defs>
  </defs>
  <g id="eq-7-figure_1">
@@ -540,10 +597,14 @@ draft: false
   </g>
  </g>
 </svg></div>
-  <p>如果采用的是斜线传播长度而不是轴向间隔，表达式会出现正弦；这里的 <var>d</var> 明确是两个平面之间的轴向距离。大角度下，正切的增长比正弦快，所以空气间隔的实际落点曲线逐渐离开理想直线。<a class="cite no-styling" href="#ref-review">[综述 p.5–6，图 3C]</a></p>
-  <h3>加入介质后，折射压缩了内部传播角</h3>
-  <p>设外部为空气，平板折射率为 <var>n</var>，板内角度为 <var>θt</var>。由斯涅尔定律 <var>sinθt=sinθᵢ/n</var>，可得：</p>
-  <div class="math" data-tex="x_{c,\mathrm{plate}}=-d\tan\theta_t=-\frac{d\sin\theta_i}{\sqrt{n^2-\sin^2\theta_i}}" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="197pt" height="30pt" viewBox="0 0 197 30" version="1.1" role="img" aria-label="xc,plate=−d tanθt=−d sinθᵢ/√(n²−sin²θᵢ)" focusable="false">
+
+<p>如果采用的是斜线传播长度而不是轴向间隔，表达式会出现正弦；这里的 <var>d</var> 明确是两个平面之间的轴向距离。大角度下，正切的增长比正弦快，所以空气间隔的实际落点曲线逐渐离开理想直线。<a class="metalens-citation" href="#ref-review">[综述 p.5–6，图 3C]</a></p>
+
+### 加入介质后，折射压缩了内部传播角
+
+<p>设外部为空气，平板折射率为 <var>n</var>，板内角度为 <var>θt</var>。由斯涅尔定律 <var>sinθt=sinθᵢ/n</var>，可得：</p>
+
+<div class="metalens-equation" data-tex="x_{c,\mathrm{plate}}=-d\tan\theta_t=-\frac{d\sin\theta_i}{\sqrt{n^2-\sin^2\theta_i}}" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="197pt" height="30pt" viewBox="0 0 197 30" version="1.1" role="img" aria-label="xc,plate=−d tanθt=−d sinθᵢ/√(n²−sin²θᵢ)" focusable="false">
  <title>xc,plate=−d tanθt=−d sinθᵢ/√(n²−sin²θᵢ)</title><defs>
  </defs>
  <g id="eq-8-figure_1">
@@ -615,12 +676,16 @@ draft: false
   </g>
  </g>
 </svg></div>
-  <p>令 <var>u=sinθᵢ</var> 后，理想关系为 <var>xc*/f=−u</var>，所以图 3 中的黑色参考线是一条直线。介质方案可以在合适厚度下，让实际曲线在较宽角域内接近它；这种匹配改善仍需要与具体孔径和像差条件一起评价。<a class="cite no-styling" href="#ref-review">[综述 §2.2，图 3D]</a></p>
-  <figure class="paper-figure" id="figure-3"><button type="button" class="zoom-button" data-title="图 3 · 角谱与受照中心的移动" aria-label="放大查看图 3 · 角谱与受照中心的移动"><img src="/assets/wide-angle-metalens-reading/figure-3.png" loading="lazy" width="1328" height="1261" alt="图 3 · 角谱与受照中心的移动" decoding="async" data-figure-key="3"><span class="zoom-hint" aria-hidden="true">点击放大 ↗</span></button><figcaption><strong>图 3 · 角谱与受照中心的移动。</strong>A、B：不同几何 NA 下的归一化傅里叶振幅及斜入射时的角谱变化。C、D：空气间隔与介质间隔的透镜面落点，与理想 −sinθᵢ 关系比较。<span class="figure-source">论文原图 · <a class="no-styling" href="#ref-review">[R1 p.5，图 3]</a> · 保留原图中的引文与来源标注。</span></figcaption></figure>
-  <p>图 3A、B 从角谱角度说明二次相位的宽角度性质。这里要看的是<strong>可传播波矢窗口内的谱形与覆盖</strong>，不能把图理解为整个傅里叶谱在任意平移后都不变。图注使用的几何 NA 也应与实际受照区域决定的有效 NA 分开。C、D 则把系统问题转成了可直接比较的落点曲线。</p>
-  <section class="lab" id="lab-aperture" aria-labelledby="lab-aperture-heading">
-  <p class="lab-kicker">互动实验 · 孔径与间隔 <span class="lab-disclaimer">几何落点模型</span></p>
+
+<p>令 <var>u=sinθᵢ</var> 后，理想关系为 <var>xc*/f=−u</var>，所以图 3 中的黑色参考线是一条直线。介质方案可以在合适厚度下，让实际曲线在较宽角域内接近它；这种匹配改善仍需要与具体孔径和像差条件一起评价。<a class="metalens-citation" href="#ref-review">[综述 §2.2，图 3D]</a></p>
+
+<figure class="paper-figure" id="figure-3"><button type="button" class="zoom-button" data-title="图 3 · 角谱与受照中心的移动" aria-label="放大查看图 3 · 角谱与受照中心的移动"><img src="/assets/wide-angle-metalens-reading/figure-3.png" loading="lazy" width="1328" height="1261" alt="图 3 · 角谱与受照中心的移动" decoding="async" data-figure-key="3"><span class="zoom-hint" aria-hidden="true">点击放大 ↗</span></button><figcaption><strong>图 3 · 角谱与受照中心的移动。</strong>A、B：不同几何 NA 下的归一化傅里叶振幅及斜入射时的角谱变化。C、D：空气间隔与介质间隔的透镜面落点，与理想 −sinθᵢ 关系比较。<span class="metalens-source">论文原图 · <a href="#ref-review">[R1 p.5，图 3]</a> · 保留原图中的引文与来源标注。</span></figcaption></figure>
+
+<p>图 3A、B 从角谱角度说明二次相位的宽角度性质。这里要看的是<strong>可传播波矢窗口内的谱形与覆盖</strong>，不能把图理解为整个傅里叶谱在任意平移后都不变。图注使用的几何 NA 也应与实际受照区域决定的有效 NA 分开。C、D 则把系统问题转成了可直接比较的落点曲线。</p>
+
+<section class="metalens-lab not-prose" id="lab-aperture" aria-labelledby="lab-aperture-heading">
   <h3 id="lab-aperture-heading">空气与介质怎样改变透镜面的受照中心</h3>
+  <p class="lab-context">互动实验 · 孔径与间隔 <span class="lab-disclaimer">几何落点模型</span></p>
   <p class="lab-intro">三条曲线比较透镜面上的光束中心 x<sub>c</sub>/f。理想位置为 −sin θᵢ；空气间隔产生 −(d/f) tan θᵢ；介质内折射使实际位移发生改变。</p>
   <div class="lab-controls">
     <label class="lab-field"><span class="lab-label">入射角 θᵢ <output id="aperture-angle-label">45°</output></span><input id="aperture-angle" type="range" min="-80" max="80" step="1" value="45"></label>
@@ -633,9 +698,13 @@ draft: false
   <p class="lab-note">误差为实际中心减理想中心，单位为 f。纵轴随当前角度自动扩展，超出绘图区的曲线段被截断。此模型只检验几何位置匹配，不计算焦斑、成像像差或聚焦效率。</p>
   <noscript>启用 JavaScript 后可调整入射角、厚度和折射率。</noscript>
 </section>
-  <div class="worked"><span class="note-label">补充计算</span><p>取 <strong>u=0.8、d/f=1.2、n=1.45</strong>，理想受照中心为 <strong>−0.8f</strong>，空气间隔为 <strong>−1.6f</strong>，介质间隔约为 <strong>−0.794f</strong>。这是一组展示匹配原理的参数，不是对所有角度最优的系统设计。交互中的中心偏差不能直接换算为 Strehl 比、分辨率或聚焦效率。</p></div>
-  <details class="derivation"><summary>补充推导：小角度下的厚度选择与剩余误差</summary>
-    <div class="math" data-tex="\frac{x_{c,\mathrm{plate}}}{f}=-\frac{d}{nf}u\left(1+\frac{u^2}{2n^2}+\cdots\right)" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="163pt" height="25pt" viewBox="0 0 163 25" version="1.1" role="img" aria-label="xc,plate/f=−(d/nf)u[1+u²/(2n²)+…]" focusable="false">
+
+<blockquote class="admonition bdm-tip">
+<p class="bdm-title">补充计算</p><p>取 <strong>u=0.8、d/f=1.2、n=1.45</strong>，理想受照中心为 <strong>−0.8f</strong>，空气间隔为 <strong>−1.6f</strong>，介质间隔约为 <strong>−0.794f</strong>。这是一组展示匹配原理的参数，不是对所有角度最优的系统设计。交互中的中心偏差不能直接换算为 Strehl 比、分辨率或聚焦效率。</p>
+</blockquote>
+
+<details class="metalens-derivation"><summary>补充推导：小角度下的厚度选择与剩余误差</summary>
+    <div class="metalens-equation" data-tex="\frac{x_{c,\mathrm{plate}}}{f}=-\frac{d}{nf}u\left(1+\frac{u^2}{2n^2}+\cdots\right)" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="163pt" height="25pt" viewBox="0 0 163 25" version="1.1" role="img" aria-label="xc,plate/f=−(d/nf)u[1+u²/(2n²)+…]" focusable="false">
  <title>xc,plate/f=−(d/nf)u[1+u²/(2n²)+…]</title><defs>
  </defs>
  <g id="eq-9-figure_1">
@@ -702,17 +771,24 @@ draft: false
 </svg></div>
     <p>小角度希望一次项与 <var>−u</var> 匹配，会得到 <var>d≈nf</var>。但有限角域的实际优化还要处理高阶项，最优厚度不必恰好等于这个近轴估计。折射率增大可减弱此展开中的非线性项，但材料、厚度和器件整体要求仍需要共同考虑。</p>
   </details>
-  <div class="insight"><span class="note-label">阅读分析</span><p>这一组图说明，相位函数与系统几何必须配套。评价方案时应同时记录视场和有效孔径：限制局部受照区域有助于控制像差，也改变了分辨率与收光能力。双片结构提供进一步校正的自由度，代价则转移到制造和对准。</p></div>
-</section>
-<section id="implementation" class="article-section">
-  <p class="section-kicker"><span class="chapter-num">05</span>从连续目标走到实际器件</p>
-  <h2>理想相位相同，实际角度响应仍可能不同</h2>
-  <h3>图 4 比较的是具体结构的斜入射行为</h3>
-  <p>第 3.1 节强调：轴上或近轴相位相似的体透镜和二次超透镜，在斜入射下不一定表现相同。图 4 对比了 <strong>0°、15°、30°</strong> 入射时的聚焦行为；在所比较的结构中，二次超透镜保持图示的轴向焦平面关系，而体二次透镜的最佳聚焦位置随角度移动。<a class="cite no-styling" href="#ref-review">[综述 §3.1，图 4；原文参考文献 85]</a></p>
-  <figure class="paper-figure" id="figure-4"><button type="button" class="zoom-button" data-title="图 4 · 体二次透镜与二次超透镜" aria-label="放大查看图 4 · 体二次透镜与二次超透镜"><img src="/assets/wide-angle-metalens-reading/figure-4.png" loading="lazy" width="809" height="1242" alt="图 4 · 体二次透镜与二次超透镜" decoding="async" data-figure-key="4"><span class="zoom-hint" aria-hidden="true">点击放大 ↗</span></button><figcaption><strong>图 4 · 体二次透镜与二次超透镜。</strong>原文在三个入射角下比较两种具体结构的聚焦行为。读图时同时查看焦斑形态和轴向位置，不把这一结构比较推广成全部体光学与全部超表面的优劣判断。<span class="figure-source">论文原图 · <a class="no-styling" href="#ref-review">[R1 p.6，图 4]</a> · 保留原图中的引文与来源标注。</span></figcaption></figure>
-  <p>这一比较提示我们关注<strong>器件的真实角度响应</strong>。它不能被推广为“所有体光学系统都无法广角成像”，也不意味着任何平面结构天然角度鲁棒。对于复杂折射系统，多片设计本身就提供了像差校正的自由度。</p>
-  <h3>相位按 2π 折回，与实体边界是两件事</h3>
-  <div class="math" data-tex="\exp[i(\phi+2\pi m)]=\exp(i\phi),\qquad m\in\mathbb{Z}" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="235pt" height="15pt" viewBox="0 0 235 15" version="1.1" role="img" aria-label="exp[i(φ+2πm)]=exp(iφ)，m 为整数" focusable="false">
+
+<blockquote class="admonition bdm-note">
+<p class="bdm-title">阅读分析</p><p>这一组图说明，相位函数与系统几何必须配套。评价方案时应同时记录视场和有效孔径：限制局部受照区域有助于控制像差，也改变了分辨率与收光能力。双片结构提供进一步校正的自由度，代价则转移到制造和对准。</p>
+</blockquote>
+
+## <span id="implementation" data-metalens-chapter></span>理想相位相同，实际角度响应仍可能不同
+
+### 图 4 比较的是具体结构的斜入射行为
+
+<p>第 3.1 节强调：轴上或近轴相位相似的体透镜和二次超透镜，在斜入射下不一定表现相同。图 4 对比了 <strong>0°、15°、30°</strong> 入射时的聚焦行为；在所比较的结构中，二次超透镜保持图示的轴向焦平面关系，而体二次透镜的最佳聚焦位置随角度移动。<a class="metalens-citation" href="#ref-review">[综述 §3.1，图 4；原文参考文献 85]</a></p>
+
+<figure class="paper-figure" id="figure-4"><button type="button" class="zoom-button" data-title="图 4 · 体二次透镜与二次超透镜" aria-label="放大查看图 4 · 体二次透镜与二次超透镜"><img src="/assets/wide-angle-metalens-reading/figure-4.png" loading="lazy" width="809" height="1242" alt="图 4 · 体二次透镜与二次超透镜" decoding="async" data-figure-key="4"><span class="zoom-hint" aria-hidden="true">点击放大 ↗</span></button><figcaption><strong>图 4 · 体二次透镜与二次超透镜。</strong>原文在三个入射角下比较两种具体结构的聚焦行为。读图时同时查看焦斑形态和轴向位置，不把这一结构比较推广成全部体光学与全部超表面的优劣判断。<span class="metalens-source">论文原图 · <a href="#ref-review">[R1 p.6，图 4]</a> · 保留原图中的引文与来源标注。</span></figcaption></figure>
+
+<p>这一比较提示我们关注<strong>器件的真实角度响应</strong>。它不能被推广为“所有体光学系统都无法广角成像”，也不意味着任何平面结构天然角度鲁棒。对于复杂折射系统，多片设计本身就提供了像差校正的自由度。</p>
+
+### 相位按 2π 折回，与实体边界是两件事
+
+<div class="metalens-equation" data-tex="\exp[i(\phi+2\pi m)]=\exp(i\phi),\qquad m\in\mathbb{Z}" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="235pt" height="15pt" viewBox="0 0 235 15" version="1.1" role="img" aria-label="exp[i(φ+2πm)]=exp(iφ)，m 为整数" focusable="false">
  <title>exp[i(φ+2πm)]=exp(iφ)，m 为整数</title><defs>
  </defs>
  <g id="eq-10-figure_1">
@@ -770,10 +846,12 @@ draft: false
   </g>
  </g>
 </svg></div>
-  <p>在设计波长下，理想相位掩模中的整数圈相位等价。传统浮雕衍射结构把相位延迟转换成材料厚度时，折回可能对应实体表面的高度突变。真实台阶与侧壁会带来遮挡、散射和非目标衍射级次，短周期结构尤其需要超出简单标量相位屏的分析。<strong>数学上的取模本身不产生阴影；困难来自具体物理实现。</strong><a class="cite no-styling" href="#ref-review">[综述 §3.1末，p.6–7]</a></p>
-  <details class="derivation"><summary>补充推导：曲率、厚度差与二次相位的薄透镜关系</summary>
+
+<p>在设计波长下，理想相位掩模中的整数圈相位等价。传统浮雕衍射结构把相位延迟转换成材料厚度时，折回可能对应实体表面的高度突变。真实台阶与侧壁会带来遮挡、散射和非目标衍射级次，短周期结构尤其需要超出简单标量相位屏的分析。<strong>数学上的取模本身不产生阴影；困难来自具体物理实现。</strong><a class="metalens-citation" href="#ref-review">[综述 §3.1末，p.6–7]</a></p>
+
+<details class="metalens-derivation"><summary>补充推导：曲率、厚度差与二次相位的薄透镜关系</summary>
     <p>用空气中的对称双凸薄透镜作独立示例，半径为 <var>R</var> 的球面在径向位置 <var>r</var> 的矢高为：</p>
-    <div class="math" data-tex="h(r)=R-\sqrt{R^2-r^2}\simeq\frac{r^2}{2R}" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="162pt" height="24pt" viewBox="0 0 162 24" version="1.1" role="img" aria-label="h(r)=R−√(R²−r²)≈r²/(2R)" focusable="false">
+    <div class="metalens-equation" data-tex="h(r)=R-\sqrt{R^2-r^2}\simeq\frac{r^2}{2R}" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="162pt" height="24pt" viewBox="0 0 162 24" version="1.1" role="img" aria-label="h(r)=R−√(R²−r²)≈r²/(2R)" focusable="false">
  <title>h(r)=R−√(R²−r²)≈r²/(2R)</title><defs>
  </defs>
  <g id="eq-11-figure_1">
@@ -819,7 +897,7 @@ draft: false
   </g>
  </g>
 </svg></div>
-    <div class="math" data-tex="\Delta\phi\simeq-2k_0(n-1)h(r)=-\frac{k_0(n-1)}{R}r^2" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="223pt" height="23pt" viewBox="0 0 223 23" version="1.1" role="img" aria-label="Δφ≈−2k₀(n−1)h(r)=−k₀(n−1)r²/R" focusable="false">
+    <div class="metalens-equation" data-tex="\Delta\phi\simeq-2k_0(n-1)h(r)=-\frac{k_0(n-1)}{R}r^2" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="223pt" height="23pt" viewBox="0 0 223 23" version="1.1" role="img" aria-label="Δφ≈−2k₀(n−1)h(r)=−k₀(n−1)r²/R" focusable="false">
  <title>Δφ≈−2k₀(n−1)h(r)=−k₀(n−1)r²/R</title><defs>
  </defs>
  <g id="eq-12-figure_1">
@@ -881,13 +959,14 @@ draft: false
 </svg></div>
     <p>若 <var>f=R/[2(n−1)]</var>，就得到二次项 <var>−k₀r²/(2f)</var>。这仅用于说明相位项如何出现；斜入射的厚度路径、界面折射和像差行为需要另行计算。本篇采用这一独立推导，不把原文式（3）的疑似符号问题当作已确认勘误，详见文末校读说明。</p>
   </details>
-</section>
-<section id="sampling" class="article-section">
-  <p class="section-kicker"><span class="chapter-num">06</span>实现困难</p>
-  <h2>采样与耦合：单元越密，问题并不只剩制造精度</h2>
-  <h3>先区分局部相位周期与单元间距</h3>
-  <p>对于二次相位，径向相位梯度的绝对值为：</p>
-  <div class="math" data-tex="\left|\frac{d\phi_q}{dr}\right|=\frac{k_0r}{f},\qquad \Lambda_{\mathrm{loc}}(r)\simeq\frac{2\pi}{|d\phi_q/dr|}=\frac{\lambda f}{r}" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="215pt" height="27pt" viewBox="0 0 215 27" version="1.1" role="img" aria-label="|dφq/dr|=k₀r/f；Λloc≈λf/r" focusable="false">
+
+## <span id="sampling" data-metalens-chapter></span>采样与耦合：单元越密，问题并不只剩制造精度
+
+### 先区分局部相位周期与单元间距
+
+<p>对于二次相位，径向相位梯度的绝对值为：</p>
+
+<div class="metalens-equation" data-tex="\left|\frac{d\phi_q}{dr}\right|=\frac{k_0r}{f},\qquad \Lambda_{\mathrm{loc}}(r)\simeq\frac{2\pi}{|d\phi_q/dr|}=\frac{\lambda f}{r}" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="215pt" height="27pt" viewBox="0 0 215 27" version="1.1" role="img" aria-label="|dφq/dr|=k₀r/f；Λloc≈λf/r" focusable="false">
  <title>|dφq/dr|=k₀r/f；Λloc≈λf/r</title><defs>
  </defs>
  <g id="eq-13-figure_1">
@@ -963,11 +1042,18 @@ draft: false
   </g>
  </g>
 </svg></div>
-  <p><strong>Λloc</strong> 是相位在局部变化一圈 <var>2π</var> 所需的距离，<strong>p</strong> 是相邻单元中心间距。两者的比值 <var>M≈Λloc/p</var> 可以粗略表示每个局部相位周期内有多少个采样间隔。这里的 <var>M</var> 可以是非整数，只是密度估计。</p>
-  <div class="worked"><span class="note-label">补充计算</span><p>原文在 <strong>r=1.2f</strong> 处讨论大相位梯度。此时 <strong>Λloc≈0.833λ</strong>。若 <strong>p=0.5λ</strong>，一个相位周期大约只有 <strong>1.67 个采样间隔</strong>。若用 <strong>p=0.4λ</strong>，则约为 <strong>2.08 个</strong>。因此，这个例子适合概括为“每圈相位只有约两格”，不能把整段参数范围都写成严格少于两格。<a class="cite no-styling" href="#ref-review">[综述 p.7；比值为补充推导]</a></p></div>
-  <h3>N 级量化公式说明什么</h3>
-  <p>原文用等宽、均匀量化的理想相位斜坡讨论采样损失。在该标量模型中，<strong>整数相位级数 N</strong> 对应的目标衍射级效率为：</p>
-  <div class="math" data-tex="\eta_N=\left[\frac{N}{\pi}\sin\left(\frac{\pi}{N}\right)\right]^2" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="104pt" height="21pt" viewBox="0 0 104 21" version="1.1" role="img" aria-label="ηN=[(N/π)sin(π/N)]²" focusable="false">
+
+<p><strong>Λloc</strong> 是相位在局部变化一圈 <var>2π</var> 所需的距离，<strong>p</strong> 是相邻单元中心间距。两者的比值 <var>M≈Λloc/p</var> 可以粗略表示每个局部相位周期内有多少个采样间隔。这里的 <var>M</var> 可以是非整数，只是密度估计。</p>
+
+<blockquote class="admonition bdm-tip">
+<p class="bdm-title">补充计算</p><p>原文在 <strong>r=1.2f</strong> 处讨论大相位梯度。此时 <strong>Λloc≈0.833λ</strong>。若 <strong>p=0.5λ</strong>，一个相位周期大约只有 <strong>1.67 个采样间隔</strong>。若用 <strong>p=0.4λ</strong>，则约为 <strong>2.08 个</strong>。因此，这个例子适合概括为“每圈相位只有约两格”，不能把整段参数范围都写成严格少于两格。<a class="metalens-citation" href="#ref-review">[综述 p.7；比值为补充推导]</a></p>
+</blockquote>
+
+### N 级量化公式说明什么
+
+<p>原文用等宽、均匀量化的理想相位斜坡讨论采样损失。在该标量模型中，<strong>整数相位级数 N</strong> 对应的目标衍射级效率为：</p>
+
+<div class="metalens-equation" data-tex="\eta_N=\left[\frac{N}{\pi}\sin\left(\frac{\pi}{N}\right)\right]^2" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="104pt" height="21pt" viewBox="0 0 104 21" version="1.1" role="img" aria-label="ηN=[(N/π)sin(π/N)]²" focusable="false">
  <title>ηN=[(N/π)sin(π/N)]²</title><defs>
  </defs>
  <g id="eq-14-figure_1">
@@ -1012,14 +1098,17 @@ draft: false
   </g>
  </g>
 </svg></div>
-  <div class="table-wrap" tabindex="0" role="region" aria-label="对照表，可横向滚动查看"><table><thead><tr><th>N</th><th>理想目标级次效率</th><th>该数值的范围</th></tr></thead><tbody>
+
+<div class="metalens-table-wrap" tabindex="0" role="region" aria-label="对照表，可横向滚动查看"><table><thead><tr><th>N</th><th>理想目标级次效率</th><th>该数值的范围</th></tr></thead><tbody>
   <tr><td>2</td><td>40.5%</td><td rowspan="4">理想量化模型；不包含真实器件的反射、吸收、非均匀振幅与实际耦合等影响</td></tr>
   <tr><td>4</td><td>81.1%</td></tr><tr><td>8</td><td>95.0%</td></tr><tr><td>16</td><td>98.7%</td></tr>
   </tbody></table></div>
-  <p>这个公式适合解释相位量化这一项损失。它不是任意超透镜的通用效率上限，也不能把前面的非整数 <var>M=1.67</var> 直接代入作为实际器件效率。<a class="cite no-styling" href="#ref-review">[综述 §3.2，p.7]</a></p>
-  <section class="lab" id="lab-sampling" aria-labelledby="lab-sampling-heading">
-  <p class="lab-kicker">互动实验 · 相位量化 <span class="lab-disclaimer">理想标量模型</span></p>
+
+<p>这个公式适合解释相位量化这一项损失。它不是任意超透镜的通用效率上限，也不能把前面的非整数 <var>M=1.67</var> 直接代入作为实际器件效率。<a class="metalens-citation" href="#ref-review">[综述 §3.2，p.7]</a></p>
+
+<section class="metalens-lab not-prose" id="lab-sampling" aria-labelledby="lab-sampling-heading">
   <h3 id="lab-sampling-heading">用有限级相位逼近一个完整的 2π 斜坡</h3>
+  <p class="lab-context">互动实验 · 相位量化 <span class="lab-disclaimer">理想标量模型</span></p>
   <p class="lab-intro">将一个周期划分为 N 个等宽区域，每格使用该格中心的相位。级数增加时，台阶更接近连续斜坡；这里单独观察量化误差。</p>
   <div class="lab-controls"><label class="lab-field"><span class="lab-label">整数相位级数 N</span><select id="sampling-levels"><option value="2">2 级</option><option value="4" selected>4 级</option><option value="8">8 级</option><option value="16">16 级</option></select></label></div>
   <div class="lab-legend"><span><i class="lab-swatch target" aria-hidden="true"></i>连续相位</span><span><i class="lab-swatch quantized" aria-hidden="true"></i>N 级相位</span></div>
@@ -1028,28 +1117,42 @@ draft: false
   <p class="lab-note">效率按 η<sub>N</sub> = [sin(π/N)/(π/N)]² 计算，未计入反射、吸收、偏振转换、邻近耦合等影响。它不是实际超透镜的聚焦效率。N 是整数相位级数，不能直接替换为局部采样密度 Λ/p 的非整数估计。</p>
   <noscript>2、4、8、16 级对应的理想效率约为 40.5%、81.1%、95.0%、98.7%。</noscript>
 </section>
-  <h3>图 5 展示另一侧的代价：结构间相互作用</h3>
-  <figure class="paper-figure" id="figure-5"><button type="button" class="zoom-button" data-title="图 5 · 间距、传播超模与耦合" aria-label="放大查看图 5 · 间距、传播超模与耦合"><img src="/assets/wide-angle-metalens-reading/figure-5.jpg" loading="lazy" width="1328" height="430" alt="图 5 · 间距、传播超模与耦合" decoding="async" data-figure-key="5"><span class="zoom-hint" aria-hidden="true">点击放大 ↗</span></button><figcaption><strong>图 5 · 间距、传播超模与耦合。</strong>大、中、小三类单元间距对应不同的场分布与模式色散。右侧 k∥ 与 kz 的关系连接了入射方向、阵列模式与传播相位。<span class="figure-source">论文原图 · <a class="no-styling" href="#ref-review">[R1 p.7，图 5]</a> · 保留原图中的引文与来源标注。</span></figcaption></figure>
-  <div class="table-wrap" tabindex="0" role="region" aria-label="对照表，可横向滚动查看"><table><thead><tr><th>图示间距</th><th>电磁模式示意</th><th>对设计的影响</th></tr></thead><tbody>
+
+### 图 5 展示另一侧的代价：结构间相互作用
+
+<figure class="paper-figure" id="figure-5"><button type="button" class="zoom-button" data-title="图 5 · 间距、传播超模与耦合" aria-label="放大查看图 5 · 间距、传播超模与耦合"><img src="/assets/wide-angle-metalens-reading/figure-5.jpg" loading="lazy" width="1328" height="430" alt="图 5 · 间距、传播超模与耦合" decoding="async" data-figure-key="5"><span class="zoom-hint" aria-hidden="true">点击放大 ↗</span></button><figcaption><strong>图 5 · 间距、传播超模与耦合。</strong>大、中、小三类单元间距对应不同的场分布与模式色散。右侧 k∥ 与 kz 的关系连接了入射方向、阵列模式与传播相位。<span class="metalens-source">论文原图 · <a href="#ref-review">[R1 p.7，图 5]</a> · 保留原图中的引文与来源标注。</span></figcaption></figure>
+
+<div class="metalens-table-wrap" tabindex="0" role="region" aria-label="对照表，可横向滚动查看"><table><thead><tr><th>图示间距</th><th>电磁模式示意</th><th>对设计的影响</th></tr></thead><tbody>
   <tr><td><strong>大间距</strong></td><td>图示存在两种传播超模</td><td>多个模式共同贡献，使相位及其角度响应更难控制</td></tr>
   <tr><td><strong>中等间距</strong></td><td>场较局域于各个柱体，耦合较弱</td><td>在图示条件下更接近单一主导、角度较稳定的响应</td></tr>
   <tr><td><strong>小间距</strong></td><td>相邻柱的场显著重叠，形成耦合响应</td><td>采样更细，但模式传播常数会依赖入射面内波矢</td></tr>
   </tbody></table></div>
-  <p>图中 <strong>k∥</strong> 是入射面内波矢，<strong>kz</strong> 是阵列传播模式沿柱高方向的传播常数。对于传播相位主导的结构，柱内相位项可近似理解为 <var>kzh</var>。因此，<var>kz</var> 随 <var>k∥</var> 变化，意味着入射角改变时相位延迟也可能改变。这里的 <var>kz</var> 不能直接套用自由空间的 <var>k₀cosθ</var>。<a class="cite no-styling" href="#ref-review">[综述 图 5与 §3.2]</a></p>
-  <p>这些是文中波导型结构的典型工作状态，并非所有材料和几何的普遍间距定律。文中提及的 <strong>p/λ≈0.4–0.5</strong> 也需要结合具体结构理解。</p>
-  <h3>为什么把周期单元库拼起来，还会产生相位误差</h3>
-  <p>周期单元仿真通常计算“相同单元不断重复”的邻域，它已经包含这种邻域中的相互作用。实际透镜中，相邻单元可能具有不同尺寸。当目标相位变化较慢时，局部周期近似比较容易成立；当相位和几何变化很快时，真实非周期邻域与库中的环境差异增大，单元的相位、振幅及偏振响应都可能偏离预期。<a class="cite no-styling" href="#ref-review">[综述 p.7末–8首]</a></p>
-  <div class="insight"><span class="note-label">设计分析</span><p>“把 p 做小”主要改善几何采样；“把实际邻域算对”改善电磁建模。它们是相关但不同的任务。耦合也可以被设计利用，关键是模型和优化目标能否描述、约束或利用实际响应。</p></div>
-</section>
-<section id="adjoint" class="article-section">
-  <p class="section-kicker"><span class="chapter-num">07</span>设计方法之一</p>
-  <h2>伴随优化：让整体电磁响应指导结构修改</h2>
-  <h3>优化目标先于算法</h3>
-  <p>将可调参数记为 <var>a₁,a₂,…</var>，可以是柱宽、边界位置或材料分布。先定义<strong>目标函数 J</strong>，例如进入指定焦斑区域的功率比例，再计算各参数的敏感度 <var>∂J/∂aⱼ</var>。如果需要多角度成像，应让目标与约束覆盖相应角度；只优化轴上指标，不会自动保证整个视场。</p>
-  <p>逐个扰动大量参数，需要反复求解电磁场。<strong>伴随方法</strong>在固定激励、固定频率及一个标量目标下，通过一次正向场和一次伴随场计算，就能获得许多参数的梯度。这里的“两次”是获取一次梯度的核心场求解数；整个优化仍需迭代，独立入射条件和线搜索等步骤也可能增加求解。<a class="cite no-styling" href="#ref-review">[综述 §3.3.1]</a><a class="cite no-styling" href="#ref-111">[Lalau-Keraly 等，2013]</a></p>
-  <h3>为什么在目标位置放一个辅助源有用</h3>
-  <p>用单频、线性、互易的标量模型解释。设要提高焦点 <var>F</var> 的场强，在位置 <var>A</var> 做一小块材料改动。首先，原有正向场决定这处改动会激发怎样的微小散射；其次，需要知道这份扰动怎样传播到 <var>F</var>。后一个信息就是从 <var>A</var> 到 <var>F</var> 的复数传递关系。</p>
-  <div class="math" data-tex="\delta E_F\propto G_{A\to F}\,E_{\mathrm{fwd}}(A)\,\delta\epsilon(A)" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="167pt" height="14pt" viewBox="0 0 167 14" version="1.1" role="img" aria-label="δEF ∝ GA→F · Efwd(A) · δε(A)" focusable="false">
+
+<p>图中 <strong>k∥</strong> 是入射面内波矢，<strong>kz</strong> 是阵列传播模式沿柱高方向的传播常数。对于传播相位主导的结构，柱内相位项可近似理解为 <var>kzh</var>。因此，<var>kz</var> 随 <var>k∥</var> 变化，意味着入射角改变时相位延迟也可能改变。这里的 <var>kz</var> 不能直接套用自由空间的 <var>k₀cosθ</var>。<a class="metalens-citation" href="#ref-review">[综述 图 5与 §3.2]</a></p>
+
+<p>这些是文中波导型结构的典型工作状态，并非所有材料和几何的普遍间距定律。文中提及的 <strong>p/λ≈0.4–0.5</strong> 也需要结合具体结构理解。</p>
+
+### 为什么把周期单元库拼起来，还会产生相位误差
+
+<p>周期单元仿真通常计算“相同单元不断重复”的邻域，它已经包含这种邻域中的相互作用。实际透镜中，相邻单元可能具有不同尺寸。当目标相位变化较慢时，局部周期近似比较容易成立；当相位和几何变化很快时，真实非周期邻域与库中的环境差异增大，单元的相位、振幅及偏振响应都可能偏离预期。<a class="metalens-citation" href="#ref-review">[综述 p.7末–8首]</a></p>
+
+<blockquote class="admonition bdm-note">
+<p class="bdm-title">设计分析</p><p>“把 p 做小”主要改善几何采样；“把实际邻域算对”改善电磁建模。它们是相关但不同的任务。耦合也可以被设计利用，关键是模型和优化目标能否描述、约束或利用实际响应。</p>
+</blockquote>
+
+## <span id="adjoint" data-metalens-chapter></span>伴随优化：让整体电磁响应指导结构修改
+
+### 优化目标先于算法
+
+<p>将可调参数记为 <var>a₁,a₂,…</var>，可以是柱宽、边界位置或材料分布。先定义<strong>目标函数 J</strong>，例如进入指定焦斑区域的功率比例，再计算各参数的敏感度 <var>∂J/∂aⱼ</var>。如果需要多角度成像，应让目标与约束覆盖相应角度；只优化轴上指标，不会自动保证整个视场。</p>
+
+<p>逐个扰动大量参数，需要反复求解电磁场。<strong>伴随方法</strong>在固定激励、固定频率及一个标量目标下，通过一次正向场和一次伴随场计算，就能获得许多参数的梯度。这里的“两次”是获取一次梯度的核心场求解数；整个优化仍需迭代，独立入射条件和线搜索等步骤也可能增加求解。<a class="metalens-citation" href="#ref-review">[综述 §3.3.1]</a><a class="metalens-citation" href="#ref-111">[Lalau-Keraly 等，2013]</a></p>
+
+### 为什么在目标位置放一个辅助源有用
+
+<p>用单频、线性、互易的标量模型解释。设要提高焦点 <var>F</var> 的场强，在位置 <var>A</var> 做一小块材料改动。首先，原有正向场决定这处改动会激发怎样的微小散射；其次，需要知道这份扰动怎样传播到 <var>F</var>。后一个信息就是从 <var>A</var> 到 <var>F</var> 的复数传递关系。</p>
+
+<div class="metalens-equation" data-tex="\delta E_F\propto G_{A\to F}\,E_{\mathrm{fwd}}(A)\,\delta\epsilon(A)" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="167pt" height="14pt" viewBox="0 0 167 14" version="1.1" role="img" aria-label="δEF ∝ GA→F · Efwd(A) · δε(A)" focusable="false">
  <title>δEF ∝ GA→F · Efwd(A) · δε(A)</title><defs>
  </defs>
  <g id="eq-15-figure_1">
@@ -1098,10 +1201,12 @@ draft: false
   </g>
  </g>
 </svg></div>
-  <p>互易性允许在对应的源与观测分量下交换源点和探测点：<var>GA→F=GF→A</var>。因此，在焦点放一个计算用的单位探针源，一次求解得到整片结构的场，就同时提供了许多位置到焦点的传递信息。正式伴随源再把目标函数的权重包含进去。辅助源仅用于设计计算，器件正常工作时仍采用原来的入射照明。</p>
-  <section class="lab" id="lab-adjoint" aria-labelledby="lab-adjoint-heading">
-  <p class="lab-kicker">互动示意 · 伴随计算 <span class="lab-disclaimer">传递关系示意，非电磁场仿真</span></p>
+
+<p>互易性允许在对应的源与观测分量下交换源点和探测点：<var>GA→F=GF→A</var>。因此，在焦点放一个计算用的单位探针源，一次求解得到整片结构的场，就同时提供了许多位置到焦点的传递信息。正式伴随源再把目标函数的权重包含进去。辅助源仅用于设计计算，器件正常工作时仍采用原来的入射照明。</p>
+
+<section class="metalens-lab not-prose" id="lab-adjoint" aria-labelledby="lab-adjoint-heading">
   <h3 id="lab-adjoint-heading">同一个器件，切换计算中的激励源</h3>
+  <p class="lab-context">互动示意 · 伴随计算 <span class="lab-disclaimer">传递关系示意，非电磁场仿真</span></p>
   <p class="lab-intro">在单频、标量、线性且互易的简化模型中，焦点 F 的单位探针源可同时提供 F 与 A、B、C 等位置的复数传递信息。正式伴随源再由目标函数赋予相应权重。</p>
   <div class="lab-buttons" role="group" aria-label="选择示意的计算类型"><button type="button" id="adjoint-forward" aria-pressed="true">正向：原入射源</button><button type="button" id="adjoint-probe" aria-pressed="false">辅助：焦点探针源</button></div>
   <div class="lab-figure"><svg class="lab-chart" id="adjoint-svg" role="img" aria-label="正向计算激发原光源并记录 A、B、C 和焦点 F 的场；辅助计算在 F 放置探针源并记录各处传递信息。"></svg></div>
@@ -1109,9 +1214,10 @@ draft: false
   <p class="lab-note">箭头表示源与观测位置之间的联系，不是实际光线。两次计算结果需要保留相位并组合，才能判断某处改动是否改善目标；探针返回较强不等于该处应增加材料。</p>
   <noscript>伴随法以正向场与由目标构造的伴随场计算梯度；辅助源只存在于设计仿真。</noscript>
 </section>
-  <details class="derivation"><summary>补充推导：目标强度如何决定伴随源的权重</summary>
+
+<details class="metalens-derivation"><summary>补充推导：目标强度如何决定伴随源的权重</summary>
     <p>对单点目标 <var>J=|EF|²</var>，一阶变化为：</p>
-    <div class="math" data-tex="\delta J\simeq 2\,\mathrm{Re}\left(E_F^\ast\,\delta E_F\right)" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="118pt" height="16pt" viewBox="0 0 118 16" version="1.1" role="img" aria-label="δJ≈2 Re(EF* δEF)" focusable="false">
+    <div class="metalens-equation" data-tex="\delta J\simeq 2\,\mathrm{Re}\left(E_F^\ast\,\delta E_F\right)" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="118pt" height="16pt" viewBox="0 0 118 16" version="1.1" role="img" aria-label="δJ≈2 Re(EF* δEF)" focusable="false">
  <title>δJ≈2 Re(EF* δEF)</title><defs>
  </defs>
  <g id="eq-16-figure_1">
@@ -1152,33 +1258,44 @@ draft: false
   </g>
  </g>
 </svg></div>
-    <p>同样大小的新增场，与原焦点场同相时可以增强目标，反相时则可能降低目标。因此，振幅和相位都必须参与判断。把 <var>EF*</var> 等目标权重吸收到焦点探针源，就得到一种伴随场定义；在这种定义下，局部敏感度由正向场与伴随场的复数乘积实部给出。其他文献可能使用厄米伴随场记号，公式中的共轭位置会相应变化，不能混用。<a class="cite no-styling" href="#ref-111">[参考文献 111，第 2 节；此处为简化标量解释]</a></p>
+    <p>同样大小的新增场，与原焦点场同相时可以增强目标，反相时则可能降低目标。因此，振幅和相位都必须参与判断。把 <var>EF*</var> 等目标权重吸收到焦点探针源，就得到一种伴随场定义；在这种定义下，局部敏感度由正向场与伴随场的复数乘积实部给出。其他文献可能使用厄米伴随场记号，公式中的共轭位置会相应变化，不能混用。<a class="metalens-citation" href="#ref-111">[参考文献 111，第 2 节；此处为简化标量解释]</a></p>
   </details>
-  <h3>拓扑与形状优化规定结构允许怎样改变</h3>
-  <div class="table-wrap" tabindex="0" role="region" aria-label="对照表，可横向滚动查看"><table><thead><tr><th>维度</th><th>拓扑优化</th><th>形状优化</th></tr></thead><tbody>
+
+### 拓扑与形状优化规定结构允许怎样改变
+
+<div class="metalens-table-wrap" tabindex="0" role="region" aria-label="对照表，可横向滚动查看"><table><thead><tr><th>维度</th><th>拓扑优化</th><th>形状优化</th></tr></thead><tbody>
     <tr><td>主要变量</td><td>设计区域的材料分布</td><td>已有结构的边界、尺寸或几何参数</td></tr>
     <tr><td>可发生的变化</td><td>孔洞、连接和分离关系可以改变</td><td>通常保留基本拓扑，移动现有边界</td></tr>
     <tr><td>常见优势</td><td>结构自由度高，可产生自由形状</td><td>便于利用已有设计与参数化约束</td></tr>
     <tr><td>需处理的问题</td><td>材料二值化、最小尺寸和制造约束</td><td>参数化范围、初值与局部最优</td></tr>
   </tbody></table></div>
-  <p>伴随是求梯度的方法，拓扑和形状则规定允许怎样修改结构。两者均受到目标、参数化、初值和模型精度影响。原文对具体优化流程的比较，不宜推广为“拓扑方法绝不能从二值设计出发”或“形状优化必然保证任意指标每步上升”。</p>
-  <figure class="paper-figure" id="figure-6"><button type="button" class="zoom-button" data-title="图 6 · 四个优化案例" aria-label="放大查看图 6 · 四个优化案例"><img src="/assets/wide-angle-metalens-reading/figure-6.png" loading="lazy" width="974" height="686" alt="图 6 · 四个优化案例" decoding="async" data-figure-key="6"><span class="zoom-hint" aria-hidden="true">点击放大 ↗</span></button><figcaption><strong>图 6 · 四个优化案例。</strong>A：随角度改变偏振的功能；B：大角度偏转器的拓扑优化；C：双波长超透镜的形状优化；D：耦合模模型与 FEM 的计算时间比较。各面板的研究对象和评价口径不同。<span class="figure-source">论文原图 · <a class="no-styling" href="#ref-review">[R1 p.9，图 6]</a> · 保留原图中的引文与来源标注。</span></figcaption></figure>
-  <h3>图 6 是四项不同研究，最适合先读 C，再读 D</h3>
-  <div class="table-wrap" tabindex="0" role="region" aria-label="对照表，可横向滚动查看"><table><thead><tr><th>分图</th><th>图中证据</th><th>能够支持的结论</th></tr></thead><tbody>
+
+<p>伴随是求梯度的方法，拓扑和形状则规定允许怎样修改结构。两者均受到目标、参数化、初值和模型精度影响。原文对具体优化流程的比较，不宜推广为“拓扑方法绝不能从二值设计出发”或“形状优化必然保证任意指标每步上升”。</p>
+
+<figure class="paper-figure" id="figure-6"><button type="button" class="zoom-button" data-title="图 6 · 四个优化案例" aria-label="放大查看图 6 · 四个优化案例"><img src="/assets/wide-angle-metalens-reading/figure-6.png" loading="lazy" width="974" height="686" alt="图 6 · 四个优化案例" decoding="async" data-figure-key="6"><span class="zoom-hint" aria-hidden="true">点击放大 ↗</span></button><figcaption><strong>图 6 · 四个优化案例。</strong>A：随角度改变偏振的功能；B：大角度偏转器的拓扑优化；C：双波长超透镜的形状优化；D：耦合模模型与 FEM 的计算时间比较。各面板的研究对象和评价口径不同。<span class="metalens-source">论文原图 · <a href="#ref-review">[R1 p.9，图 6]</a> · 保留原图中的引文与来源标注。</span></figcaption></figure>
+
+### 图 6 是四项不同研究，最适合先读 C，再读 D
+
+<div class="metalens-table-wrap" tabindex="0" role="region" aria-label="对照表，可横向滚动查看"><table><thead><tr><th>分图</th><th>图中证据</th><th>能够支持的结论</th></tr></thead><tbody>
     <tr><td><strong>A</strong></td><td>固定线偏振输入，输出偏振随入射角连续变化</td><td>自由形状设计可实现复杂的角度相关偏振功能</td></tr>
     <tr><td><strong>B</strong></td><td>75° 偏转器随拓扑优化提高效率，约 350 次迭代后约 81%</td><td>这里的 75° 是偏转角；曲线有回落，不能理解为每步单调改善</td></tr>
     <tr><td><strong>C</strong></td><td>780 nm 与 915 nm 下，平均聚焦效率约从 30% 提高到 50%</td><td>把柱间与层间作用纳入形状优化可以改善双波长目标；两个波长不等于全连续带宽</td></tr>
     <tr><td><strong>D</strong></td><td>黑线为一次 CMT+伴随迭代，红线为单次 FEM 仿真；双对数坐标</td><td>更快的响应模型扩大可处理规模；两条线不代表完成整个优化的同口径总时间</td></tr>
   </tbody></table></div>
-  <p class="source-note">依据综述图 6及 p.8–9；B 末端约 81% 为读图近似。D 所报告约 10⁴λ 与 200λ 的尺寸范围属于该研究算例与计算条件，不是所有计算机或求解器的普遍上限。</p>
-  <div class="insight"><span class="note-label">阅读分析</span><p>伴随方法使“从大量变量中找到局部改进方向”更有效率。最终结果仍依赖模型、目标与初始结构；器件变大，每次场计算也会更昂贵。它提供了处理耦合响应的工具，而不是把耦合从物理系统中消除。</p></div>
-</section>
-<section id="catenary" class="article-section">
-  <p class="section-kicker"><span class="chapter-num">08</span>设计方法之二</p>
-  <h2>悬链线：让局部方向连续地编码几何相位</h2>
-  <h3>几何相位作用于转换后的圆偏振分量</h3>
-  <p>本文的另一条路径是改变结构的组织方式。对于局部各向异性结构，设其面内主轴方向角为 <var>ξ</var>，入射圆偏振手性为 <var>σ=±1</var>。按照综述的符号约定，转换到相反圆偏振手性的输出分量获得 <strong>Pancharatnam–Berry 几何相位</strong>：</p>
-  <div class="math" data-tex="\phi_{\mathrm{PB}}=-2\sigma\xi" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="75pt" height="15pt" viewBox="0 0 75 15" version="1.1" role="img" aria-label="φPB=−2σξ" focusable="false">
+
+<p class="metalens-source">依据综述图 6及 p.8–9；B 末端约 81% 为读图近似。D 所报告约 10⁴λ 与 200λ 的尺寸范围属于该研究算例与计算条件，不是所有计算机或求解器的普遍上限。</p>
+
+<blockquote class="admonition bdm-note">
+<p class="bdm-title">阅读分析</p><p>伴随方法使“从大量变量中找到局部改进方向”更有效率。最终结果仍依赖模型、目标与初始结构；器件变大，每次场计算也会更昂贵。它提供了处理耦合响应的工具，而不是把耦合从物理系统中消除。</p>
+</blockquote>
+
+## <span id="catenary" data-metalens-chapter></span>悬链线：让局部方向连续地编码几何相位
+
+### 几何相位作用于转换后的圆偏振分量
+
+<p>本文的另一条路径是改变结构的组织方式。对于局部各向异性结构，设其面内主轴方向角为 <var>ξ</var>，入射圆偏振手性为 <var>σ=±1</var>。按照综述的符号约定，转换到相反圆偏振手性的输出分量获得 <strong>Pancharatnam–Berry 几何相位</strong>：</p>
+
+<div class="metalens-equation" data-tex="\phi_{\mathrm{PB}}=-2\sigma\xi" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="75pt" height="15pt" viewBox="0 0 75 15" version="1.1" role="img" aria-label="φPB=−2σξ" focusable="false">
  <title>φPB=−2σξ</title><defs>
  </defs>
  <g id="eq-17-figure_1">
@@ -1210,10 +1327,14 @@ draft: false
   </g>
  </g>
 </svg></div>
-  <p>这个关系把局部方向角与相位联系起来，但没有决定转换分量的振幅。<strong>方向角控制相位</strong>与<strong>多少光被成功转换</strong>需要分别评价。<a class="cite no-styling" href="#ref-review">[综述 §3.3.2，p.10]</a></p>
-  <h3>等强度悬链线的特殊之处是切线角</h3>
-  <p>原文式（4）采用等强度悬链线形式，而不是普通均匀悬链线的双曲余弦形式：</p>
-  <div class="math" data-tex="y(x)=\frac{\Lambda}{\pi}\ln\left|\sec\left(\frac{\pi x}{\Lambda}\right)\right|,\qquad -\frac{\Lambda}{2}&lt;x&lt;\frac{\Lambda}{2}" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="227pt" height="21pt" viewBox="0 0 227 21" version="1.1" role="img" aria-label="y(x)=(Λ/π) ln|sec(πx/Λ)|，−Λ/2&lt;x&lt;Λ/2" focusable="false">
+
+<p>这个关系把局部方向角与相位联系起来，但没有决定转换分量的振幅。<strong>方向角控制相位</strong>与<strong>多少光被成功转换</strong>需要分别评价。<a class="metalens-citation" href="#ref-review">[综述 §3.3.2，p.10]</a></p>
+
+### 等强度悬链线的特殊之处是切线角
+
+<p>原文式（4）采用等强度悬链线形式，而不是普通均匀悬链线的双曲余弦形式：</p>
+
+<div class="metalens-equation" data-tex="y(x)=\frac{\Lambda}{\pi}\ln\left|\sec\left(\frac{\pi x}{\Lambda}\right)\right|,\qquad -\frac{\Lambda}{2}&lt;x&lt;\frac{\Lambda}{2}" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="227pt" height="21pt" viewBox="0 0 227 21" version="1.1" role="img" aria-label="y(x)=(Λ/π) ln|sec(πx/Λ)|，−Λ/2&lt;x&lt;Λ/2" focusable="false">
  <title>y(x)=(Λ/π) ln|sec(πx/Λ)|，−Λ/2&lt;x&lt;Λ/2</title><defs>
  </defs>
  <g id="eq-18-figure_1">
@@ -1280,8 +1401,10 @@ draft: false
   </g>
  </g>
 </svg></div>
-  <p><strong>x、y 都是器件平面内的坐标</strong>，<var>y</var> 不表示柱高。<strong>ξ 是曲线的局部切线方位角</strong>，不表示入射角。对上式求导，在所列主区间内有：</p>
-  <div class="math" data-tex="\frac{dy}{dx}=\tan\left(\frac{\pi x}{\Lambda}\right),\qquad \xi(x)=\arctan\frac{dy}{dx}=\frac{\pi x}{\Lambda}" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="228pt" height="23pt" viewBox="0 0 228 23" version="1.1" role="img" aria-label="dy/dx=tan(πx/Λ)，ξ(x)=πx/Λ" focusable="false">
+
+<p><strong>x、y 都是器件平面内的坐标</strong>，<var>y</var> 不表示柱高。<strong>ξ 是曲线的局部切线方位角</strong>，不表示入射角。对上式求导，在所列主区间内有：</p>
+
+<div class="metalens-equation" data-tex="\frac{dy}{dx}=\tan\left(\frac{\pi x}{\Lambda}\right),\qquad \xi(x)=\arctan\frac{dy}{dx}=\frac{\pi x}{\Lambda}" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="228pt" height="23pt" viewBox="0 0 228 23" version="1.1" role="img" aria-label="dy/dx=tan(πx/Λ)，ξ(x)=πx/Λ" focusable="false">
  <title>dy/dx=tan(πx/Λ)，ξ(x)=πx/Λ</title><defs>
  </defs>
  <g id="eq-19-figure_1">
@@ -1351,7 +1474,8 @@ draft: false
   </g>
  </g>
 </svg></div>
-  <div class="math" data-tex="\phi_{\mathrm{PB}}(x)=-\frac{2\sigma\pi}{\Lambda}x,\qquad \frac{d\phi_{\mathrm{PB}}}{dx}=-\frac{2\sigma\pi}{\Lambda}" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="195pt" height="23pt" viewBox="0 0 195 23" version="1.1" role="img" aria-label="φPB(x)=−2σπx/Λ，dφPB/dx=−2σπ/Λ" focusable="false">
+
+<div class="metalens-equation" data-tex="\phi_{\mathrm{PB}}(x)=-\frac{2\sigma\pi}{\Lambda}x,\qquad \frac{d\phi_{\mathrm{PB}}}{dx}=-\frac{2\sigma\pi}{\Lambda}" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="195pt" height="23pt" viewBox="0 0 195 23" version="1.1" role="img" aria-label="φPB(x)=−2σπx/Λ，dφPB/dx=−2σπ/Λ" focusable="false">
  <title>φPB(x)=−2σπx/Λ，dφPB/dx=−2σπ/Λ</title><defs>
  </defs>
  <g id="eq-20-figure_1">
@@ -1410,10 +1534,12 @@ draft: false
   </g>
  </g>
 </svg></div>
-  <p><strong>曲线是弯曲的，切线角却随横坐标线性变化；这使几何相位也随横坐标线性变化。</strong>当 <var>x</var> 趋近理想端点 <var>±Λ/2</var> 时，轮廓发散，所以实际结构必须截断。一整圈 <var>2π</var> 的相位跨度对应理想端点极限，不能忽略实际截断。<a class="cite no-styling" href="#ref-review">[综述式（4）及后文；求导为补充步骤]</a></p>
-  <section class="lab" id="lab-catenary" aria-labelledby="lab-catenary-heading">
-  <p class="lab-kicker">互动实验 · 悬链线与几何相位 <span class="lab-disclaimer">解析轮廓与理想 PB 相位</span></p>
+
+<p><strong>曲线是弯曲的，切线角却随横坐标线性变化；这使几何相位也随横坐标线性变化。</strong>当 <var>x</var> 趋近理想端点 <var>±Λ/2</var> 时，轮廓发散，所以实际结构必须截断。一整圈 <var>2π</var> 的相位跨度对应理想端点极限，不能忽略实际截断。<a class="metalens-citation" href="#ref-review">[综述式（4）及后文；求导为补充步骤]</a></p>
+
+<section class="metalens-lab not-prose" id="lab-catenary" aria-labelledby="lab-catenary-heading">
   <h3 id="lab-catenary-heading">沿曲线移动，观察切线角怎样写入相位</h3>
+  <p class="lab-context">互动实验 · 悬链线与几何相位 <span class="lab-disclaimer">解析轮廓与理想 PB 相位</span></p>
   <p class="lab-intro">曲线位于器件的 x–y 平面内：y 不是结构高度。橙线为所选位置的切线；下方标尺显示相反圆偏振分量的几何相位。改变 σ 只翻转此相位项的符号。</p>
   <div class="lab-controls">
     <label class="lab-field"><span class="lab-label">曲线位置 x/Λ <output id="catenary-position-label">0.200</output></span><input id="catenary-position" type="range" min="-0.45" max="0.45" step="0.005" value="0.2"></label>
@@ -1424,30 +1550,44 @@ draft: false
   <p class="lab-note">采用 y/Λ = ln|sec(πx/Λ)|/π、ξ = πx/Λ、φ<sub>PB</sub> = −2σξ。图中只展示 |x/Λ| ≤ 0.45；理想端点 ±0.5 处发散，实际器件需要截断。此图不计算转换效率、传播相位或器件色差。</p>
   <noscript>切线角 ξ 随横坐标线性变化，交叉圆偏振的几何相位为 −2σξ。</noscript>
 </section>
-  <figure class="paper-figure" id="figure-7"><button type="button" class="zoom-button" data-title="图 7 · 悬链线、转换效率与流线" aria-label="放大查看图 7 · 悬链线、转换效率与流线"><img src="/assets/wide-angle-metalens-reading/figure-7.png" loading="lazy" width="799" height="1393" alt="图 7 · 悬链线、转换效率与流线" decoding="async" data-figure-key="7"><span class="zoom-hint" aria-hidden="true">点击放大 ↗</span></button><figcaption><strong>图 7 · 悬链线、转换效率与流线。</strong>A、B：连续与离散轮廓及单元近似；C：转换效率比较；D：把目标相位转化为局部主轴与连续结构轮廓。图内条长 s 与本文前述的焦点横坐标 s 含义不同。<span class="figure-source">论文原图 · <a class="no-styling" href="#ref-review">[R1 p.10，图 7]</a> · 保留原图中的引文与来源标注。</span></figcaption></figure>
-  <h3>图 7A–C 把结构连续性与转换效率联系起来</h3>
-  <p>A 中的连续轮廓在局部单元里对应贯穿周期的条带，条长等于周期 <var>p</var>；B 中的短杆长度小于 <var>p</var>。原图用 <var>s</var> 表示条长，本篇称为“条长”以免与前文焦点坐标 <var>s</var> 混淆。二者给定周期和宽度后的主要区别，在于条带是否在长度方向连续连接。</p>
-  <div class="table-wrap" tabindex="0" role="region" aria-label="对照表，可横向滚动查看"><table><thead><tr><th>图 7C 标记</th><th>结构参数</th><th>正确读法</th></tr></thead><tbody>
+
+<figure class="paper-figure" id="figure-7"><button type="button" class="zoom-button" data-title="图 7 · 悬链线、转换效率与流线" aria-label="放大查看图 7 · 悬链线、转换效率与流线"><img src="/assets/wide-angle-metalens-reading/figure-7.png" loading="lazy" width="799" height="1393" alt="图 7 · 悬链线、转换效率与流线" decoding="async" data-figure-key="7"><span class="zoom-hint" aria-hidden="true">点击放大 ↗</span></button><figcaption><strong>图 7 · 悬链线、转换效率与流线。</strong>A、B：连续与离散轮廓及单元近似；C：转换效率比较；D：把目标相位转化为局部主轴与连续结构轮廓。图内条长 s 与本文前述的焦点横坐标 s 含义不同。<span class="metalens-source">论文原图 · <a href="#ref-review">[R1 p.10，图 7]</a> · 保留原图中的引文与来源标注。</span></figcaption></figure>
+
+### 图 7A–C 把结构连续性与转换效率联系起来
+
+<p>A 中的连续轮廓在局部单元里对应贯穿周期的条带，条长等于周期 <var>p</var>；B 中的短杆长度小于 <var>p</var>。原图用 <var>s</var> 表示条长，本篇称为“条长”以免与前文焦点坐标 <var>s</var> 混淆。二者给定周期和宽度后的主要区别，在于条带是否在长度方向连续连接。</p>
+
+<div class="metalens-table-wrap" tabindex="0" role="region" aria-label="对照表，可横向滚动查看"><table><thead><tr><th>图 7C 标记</th><th>结构参数</th><th>正确读法</th></tr></thead><tbody>
     <tr><td>灰色区域</td><td>Cell A，p=100–400 nm，条长=p</td><td>不同周期的结果范围；不是统计误差带</td></tr>
     <tr><td>蓝色虚线</td><td>Cell B，p=400 nm，条长=350 nm</td><td>离散短杆的一种尺寸设计</td></tr>
     <tr><td>绿色实线</td><td>Cell B，p=400 nm，条长=300 nm</td><td>另一种短杆长度设计</td></tr>
     <tr><td>黑色菱形</td><td>Measurements</td><td>实验测量点</td></tr>
   </tbody></table></div>
-  <p>横轴为频率 THz。低频区域的灰带约在 50% 附近，而两种离散短杆响应较低；频率增大后，离散结构出现明显峰谷，连续结构的参数范围也会展开。这支持所比较结构在一定频段内的带宽优势，不能推广成所有频率、所有连续形状都优于离散结构。<a class="cite no-styling" href="#ref-126">[Pu 等，2015，原图 5；综述图 7A–C]</a></p>
-  <p>原研究的转换效率 <strong>η 以总透射功率为分母</strong>，表示目标调制／交叉圆偏振分量在透射光中的比例。若还要评价相对于入射功率的绝对利用率，需要同时知道总透射率。图中的百分比不能直接作为整片透镜的聚焦效率。<a class="cite no-styling" href="#ref-126">[原研究正文与补充式 S8的定义]</a></p>
-  <div class="note"><span class="note-label">“无色散”的范围</span><p>几何相位项 <var>−2σξ</var> 不显含波长，说明旋转引入的相位由几何方向决定。实际转换振幅、寄生传播相位、偏转角或焦距仍可能随波长改变。几何相位的这一性质，不能单独证明整片器件具有宽带消色差成像能力。</p></div>
-  <p>伴随优化与悬链线并非互斥：前者是求梯度和更新结构的方法，后者提供组织准连续相位的一类结构思路。综述也提到拓扑优化中出现类似悬链线形状的结果。下一步需要把“一个方向上具有线性相位”的曲线，推广到整个二维透镜。</p>
-</section>
-<section id="streamlines" class="article-section">
-  <p class="section-kicker"><span class="chapter-num">09</span>从几何相位到制造轮廓</p><h2>从目标相位到可加工流线：把图 7D 读完整</h2>
-  <p><strong>前面的等强度悬链线解决了恒定相位梯度；真正的透镜还需要把任意目标相位变成二维结构。</strong>论文在图 7D 中给出的做法，是先确定目标波前，再把每个位置需要的几何相位换算成局部结构主轴，最后沿这些主轴积分出连续轮廓。这一部分采用的是<strong>类悬链线流线设计</strong>，不要求整个器件都由同一条标准悬链线重复拼接。<a class="cite no-styling" href="#ref-review">[R1 §3.3.2, p10–11, Fig7D]</a> <a class="cite no-styling" href="#ref-82">[原文文献82]</a></p>
-  <figure class="paper-figure" id="figure-7d">
+
+<p>横轴为频率 THz。低频区域的灰带约在 50% 附近，而两种离散短杆响应较低；频率增大后，离散结构出现明显峰谷，连续结构的参数范围也会展开。这支持所比较结构在一定频段内的带宽优势，不能推广成所有频率、所有连续形状都优于离散结构。<a class="metalens-citation" href="#ref-126">[Pu 等，2015，原图 5；综述图 7A–C]</a></p>
+
+<p>原研究的转换效率 <strong>η 以总透射功率为分母</strong>，表示目标调制／交叉圆偏振分量在透射光中的比例。若还要评价相对于入射功率的绝对利用率，需要同时知道总透射率。图中的百分比不能直接作为整片透镜的聚焦效率。<a class="metalens-citation" href="#ref-126">[原研究正文与补充式 S8的定义]</a></p>
+
+<blockquote class="admonition bdm-note">
+<p class="bdm-title">“无色散”的范围</p><p>几何相位项 <var>−2σξ</var> 不显含波长，说明旋转引入的相位由几何方向决定。实际转换振幅、寄生传播相位、偏转角或焦距仍可能随波长改变。几何相位的这一性质，不能单独证明整片器件具有宽带消色差成像能力。</p>
+</blockquote>
+
+<p>伴随优化与悬链线并非互斥：前者是求梯度和更新结构的方法，后者提供组织准连续相位的一类结构思路。综述也提到拓扑优化中出现类似悬链线形状的结果。下一步需要把“一个方向上具有线性相位”的曲线，推广到整个二维透镜。</p>
+
+## <span id="streamlines" data-metalens-chapter></span>从目标相位到可加工流线：把图 7D 读完整
+
+<p><strong>前面的等强度悬链线解决了恒定相位梯度；真正的透镜还需要把任意目标相位变成二维结构。</strong>论文在图 7D 中给出的做法，是先确定目标波前，再把每个位置需要的几何相位换算成局部结构主轴，最后沿这些主轴积分出连续轮廓。这一部分采用的是<strong>类悬链线流线设计</strong>，不要求整个器件都由同一条标准悬链线重复拼接。<a class="metalens-citation" href="#ref-review">[R1 §3.3.2, p10–11, Fig7D]</a> <a class="metalens-citation" href="#ref-82">[原文文献82]</a></p>
+
+<figure class="paper-figure" id="figure-7d">
     <button type="button" class="zoom-button" data-title="图 7D · 目标场到结构流线" aria-label="放大查看图 7D · 目标场到结构流线"><img src="/assets/wide-angle-metalens-reading/figure-7d.png" loading="lazy" width="800" height="528" alt="图 7D · 目标场到结构流线" decoding="async" data-figure-key="7D">
-    <span class="zoom-hint" aria-hidden="true">点击放大 ↗</span></button><figcaption>图 7D：从目标电场的相位分布，构造局部主轴方向，再积分成实体结构的轮廓。蓝箭头、橙箭头和红曲线承担不同角色。来源：<a class="no-styling" href="#ref-review">[R1 p10, Fig7D]</a>，综述转引<a class="no-styling" href="#ref-82">[原文文献82]</a>。</figcaption>
+    <span class="zoom-hint" aria-hidden="true">点击放大 ↗</span></button><figcaption>图 7D：从目标电场的相位分布，构造局部主轴方向，再积分成实体结构的轮廓。蓝箭头、橙箭头和红曲线承担不同角色。来源：<a href="#ref-review">[R1 p10, Fig7D]</a>，综述转引<a href="#ref-82">[原文文献82]</a>。</figcaption>
   </figure>
-  <h3>先看三种对象：目标场、主轴方向、结构轮廓</h3>
-  <p><strong>原文方法。</strong>以所选圆偏振光聚焦为例，从目标焦点反向确定器件面上所需的相位 <em>φ(x,y)</em>。这里是在确定目标波前，并非再次计算上一节的优化梯度。对本文采用的手性和相位符号，局部主轴方位角取<strong>−φ/2</strong>；这样，交叉圆偏振分量通过 PB 几何相位获得所需的 φ。论文用辅助复向量来表达这个关系：<a class="cite no-styling" href="#ref-review">[R1 §3.3.2, p10, Eq5]</a></p>
-  <div class="math" data-tex="U_x=e^{i\phi/2},\qquad U_y=i e^{i\phi/2}" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="155pt" height="19pt" viewBox="0 0 155 19" version="1.1" role="img" aria-label="Ux = exp(iφ/2)，Uy = i exp(iφ/2)。" focusable="false">
+
+### 先看三种对象：目标场、主轴方向、结构轮廓
+
+<p><strong>原文方法。</strong>以所选圆偏振光聚焦为例，从目标焦点反向确定器件面上所需的相位 <em>φ(x,y)</em>。这里是在确定目标波前，并非再次计算上一节的优化梯度。对本文采用的手性和相位符号，局部主轴方位角取<strong>−φ/2</strong>；这样，交叉圆偏振分量通过 PB 几何相位获得所需的 φ。论文用辅助复向量来表达这个关系：<a class="metalens-citation" href="#ref-review">[R1 §3.3.2, p10, Eq5]</a></p>
+
+<div class="metalens-equation" data-tex="U_x=e^{i\phi/2},\qquad U_y=i e^{i\phi/2}" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="155pt" height="19pt" viewBox="0 0 155 19" version="1.1" role="img" aria-label="Ux = exp(iφ/2)，Uy = i exp(iφ/2)。" focusable="false">
  <title>Ux = exp(iφ/2)，Uy = i exp(iφ/2)。</title><defs>
  </defs>
  <g id="eq-21-figure_1">
@@ -1491,7 +1631,8 @@ draft: false
   </g>
  </g>
 </svg></div>
-  <div class="math" data-tex="\mathbf{v}=(\mathrm{Re}\,U_x,\mathrm{Re}\,U_y)=(\cos(\phi/2),-\sin(\phi/2))" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="269pt" height="16pt" viewBox="0 0 269 16" version="1.1" role="img" aria-label="取实部得到方向 v = (cos(φ/2), −sin(φ/2))。" focusable="false">
+
+<div class="metalens-equation" data-tex="\mathbf{v}=(\mathrm{Re}\,U_x,\mathrm{Re}\,U_y)=(\cos(\phi/2),-\sin(\phi/2))" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="269pt" height="16pt" viewBox="0 0 269 16" version="1.1" role="img" aria-label="取实部得到方向 v = (cos(φ/2), −sin(φ/2))。" focusable="false">
  <title>取实部得到方向 v = (cos(φ/2), −sin(φ/2))。</title><defs>
  </defs>
  <g id="eq-22-figure_1">
@@ -1560,8 +1701,10 @@ draft: false
   </g>
  </g>
 </svg></div>
-  <p><strong>理解辅助。</strong>可以把橙箭头理解成铺在平面上的“局部主轴指南”：每一小段结构应该沿着哪个方向延伸。<strong>红线的切线跟随这些主轴方向</strong>，所以它不是光线的传播轨迹，也不是相位梯度 ∇φ 的流线。等相位线要求沿线 φ 不变，而这里的要求是“沿线的切线角实现当地所需相位”，两种条件不同。由这个构造还可知：φ 增加 2π 会让箭头反向，却不改变同一根条状结构的主轴。</p>
-  <div class="math" data-tex="\frac{dy}{dx}=-\tan\!\left(\frac{\phi(x,y)}{2}\right)" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="105pt" height="23pt" viewBox="0 0 105 23" version="1.1" role="img" aria-label="流线斜率 dy/dx = −tan[φ(x,y)/2]。" focusable="false">
+
+<p><strong>理解辅助。</strong>可以把橙箭头理解成铺在平面上的“局部主轴指南”：每一小段结构应该沿着哪个方向延伸。<strong>红线的切线跟随这些主轴方向</strong>，所以它不是光线的传播轨迹，也不是相位梯度 ∇φ 的流线。等相位线要求沿线 φ 不变，而这里的要求是“沿线的切线角实现当地所需相位”，两种条件不同。由这个构造还可知：φ 增加 2π 会让箭头反向，却不改变同一根条状结构的主轴。</p>
+
+<div class="metalens-equation" data-tex="\frac{dy}{dx}=-\tan\!\left(\frac{\phi(x,y)}{2}\right)" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="105pt" height="23pt" viewBox="0 0 105 23" version="1.1" role="img" aria-label="流线斜率 dy/dx = −tan[φ(x,y)/2]。" focusable="false">
  <title>流线斜率 dy/dx = −tan[φ(x,y)/2]。</title><defs>
  </defs>
  <g id="eq-23-figure_1">
@@ -1612,10 +1755,11 @@ draft: false
   </g>
  </g>
 </svg></div>
-  <details class="derivation">
+
+<details class="metalens-derivation">
     <summary>展开：式（6）怎样一步一步画出红线</summary>
-    <p>从选定的起点出发，每一步沿方向 v 前进一个很小的长度。下面把原文的步长 <em>dr</em> 改记为 <strong>Δℓ</strong>，以免与透镜的径向坐标混淆：<a class="cite no-styling" href="#ref-review">[R1 p10–11, Eq6]</a></p>
-    <div class="math" data-tex="x_{m+1}=x_m+\cos\!\left(\frac{\phi(x_m,y_m)}{2}\right)\Delta\ell" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="180pt" height="23pt" viewBox="0 0 180 23" version="1.1" role="img" aria-label="下一点的 x 坐标 = 当前 x + cos(φ/2)Δℓ。" focusable="false">
+    <p>从选定的起点出发，每一步沿方向 v 前进一个很小的长度。下面把原文的步长 <em>dr</em> 改记为 <strong>Δℓ</strong>，以免与透镜的径向坐标混淆：<a class="metalens-citation" href="#ref-review">[R1 p10–11, Eq6]</a></p>
+    <div class="metalens-equation" data-tex="x_{m+1}=x_m+\cos\!\left(\frac{\phi(x_m,y_m)}{2}\right)\Delta\ell" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="180pt" height="23pt" viewBox="0 0 180 23" version="1.1" role="img" aria-label="下一点的 x 坐标 = 当前 x + cos(φ/2)Δℓ。" focusable="false">
  <title>下一点的 x 坐标 = 当前 x + cos(φ/2)Δℓ。</title><defs>
  </defs>
  <g id="eq-24-figure_1">
@@ -1674,7 +1818,7 @@ draft: false
   </g>
  </g>
 </svg></div>
-    <div class="math" data-tex="y_{m+1}=y_m-\sin\!\left(\frac{\phi(x_m,y_m)}{2}\right)\Delta\ell" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="177pt" height="23pt" viewBox="0 0 177 23" version="1.1" role="img" aria-label="下一点的 y 坐标 = 当前 y − sin(φ/2)Δℓ。" focusable="false">
+    <div class="metalens-equation" data-tex="y_{m+1}=y_m-\sin\!\left(\frac{\phi(x_m,y_m)}{2}\right)\Delta\ell" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="177pt" height="23pt" viewBox="0 0 177 23" version="1.1" role="img" aria-label="下一点的 y 坐标 = 当前 y − sin(φ/2)Δℓ。" focusable="false">
  <title>下一点的 y 坐标 = 当前 y − sin(φ/2)Δℓ。</title><defs>
  </defs>
  <g id="eq-25-figure_1">
@@ -1736,10 +1880,14 @@ draft: false
 </svg></div>
     <p>改变起点及终点，就能铺出不同密度的流线。这个向量步进形式也能越过竖直切线，而斜率表达式在相应位置会趋于无穷大。积分得到的是中心线或边界线，制造时还要给它宽度，成为金属条、孔隙或介质结构。</p>
   </details>
-  <h3>“等相位优化”校平的是传播相位</h3>
-  <p><strong>原文指出的实现问题。</strong>把流线变成介质结构后，局部间距和宽度会随位置变化，结构同时产生额外的传播相位。若这部分相位也在空间中变化，目标波前就会被附加的相位梯度扰动。金属结构则还要面对欧姆损耗；不同材料路线的代价并不相同。<a class="cite no-styling" href="#ref-review">[R1 §3.3.2, p11]</a></p>
-  <p>因此，<strong>等相位流线优化</strong>先建立“局部周期—线宽—传播相位”数据库，再随位置调整线宽，使传播相位尽量保持同一参考值。目标的空间相位变化仍由几何相位承担。它不是把整片透镜的总相位抹平，也不是要求每条红线上 φ 恒定。<a class="cite no-styling" href="#ref-review">[R1 §3.3.2, p11]</a> <a class="cite no-styling" href="#ref-82">[原文文献82]</a></p>
-  <div class="math" data-tex="\phi_{\mathrm{tot}}(x,y)=\phi_{\mathrm{PB}}(x,y)+\phi_{\mathrm{prop}}(x,y),\qquad \phi_{\mathrm{prop}}\approx C" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="290pt" height="16pt" viewBox="0 0 290 16" version="1.1" role="img" aria-label="总相位 = PB 几何相位 + 传播相位；设计中使传播相位近似等于常数 C。" focusable="false">
+
+### “等相位优化”校平的是传播相位
+
+<p><strong>原文指出的实现问题。</strong>把流线变成介质结构后，局部间距和宽度会随位置变化，结构同时产生额外的传播相位。若这部分相位也在空间中变化，目标波前就会被附加的相位梯度扰动。金属结构则还要面对欧姆损耗；不同材料路线的代价并不相同。<a class="metalens-citation" href="#ref-review">[R1 §3.3.2, p11]</a></p>
+
+<p>因此，<strong>等相位流线优化</strong>先建立“局部周期—线宽—传播相位”数据库，再随位置调整线宽，使传播相位尽量保持同一参考值。目标的空间相位变化仍由几何相位承担。它不是把整片透镜的总相位抹平，也不是要求每条红线上 φ 恒定。<a class="metalens-citation" href="#ref-review">[R1 §3.3.2, p11]</a> <a class="metalens-citation" href="#ref-82">[原文文献82]</a></p>
+
+<div class="metalens-equation" data-tex="\phi_{\mathrm{tot}}(x,y)=\phi_{\mathrm{PB}}(x,y)+\phi_{\mathrm{prop}}(x,y),\qquad \phi_{\mathrm{prop}}\approx C" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="290pt" height="16pt" viewBox="0 0 290 16" version="1.1" role="img" aria-label="总相位 = PB 几何相位 + 传播相位；设计中使传播相位近似等于常数 C。" focusable="false">
  <title>总相位 = PB 几何相位 + 传播相位；设计中使传播相位近似等于常数 C。</title><defs>
  </defs>
  <g id="eq-26-figure_1">
@@ -1808,34 +1956,44 @@ draft: false
   </g>
  </g>
 </svg></div>
-  <p><strong>我们的分析。</strong>这条路线把自由度分工得很清楚：<strong>轮廓方向规定需要的相位，线宽补偿实现它时多出来的相位。</strong>几何积分和局部数据库减少了反复求解整个大器件的需求，但仍需检查局部近似、制造尺寸和实际电磁响应；“不依赖大量整器件迭代”不等于完全不需要仿真。</p>
-</section>
-<section id="applications" class="article-section">
-  <p class="section-kicker"><span class="chapter-num">10</span>从原理到应用证据</p><h2>从成像到光场读出：同一套相位关系怎样变成应用</h2>
-  <p>第 4 节的应用可以沿着一条主线读：<strong>把光携带的方向或相位信息，转换为探测器容易测量的位置。</strong>成像把不同方向映射到不同像点，傅里叶测量把横向波矢映射到位置，反向使用则能控制出射方向；角动量检测把相位的角向变化映射到焦斑方位。下面的数据均为这篇综述及其所引研究的历史结果。<a class="cite no-styling" href="#ref-review">[R1 §4, p11–14]</a></p>
-  <h3>成像：视场数字必须和波段、光阑及效率口径一起读</h3>
-  <figure class="paper-figure" id="figure-8">
+
+<p><strong>我们的分析。</strong>这条路线把自由度分工得很清楚：<strong>轮廓方向规定需要的相位，线宽补偿实现它时多出来的相位。</strong>几何积分和局部数据库减少了反复求解整个大器件的需求，但仍需检查局部近似、制造尺寸和实际电磁响应；“不依赖大量整器件迭代”不等于完全不需要仿真。</p>
+
+## <span id="applications" data-metalens-chapter></span>从成像到光场读出：同一套相位关系怎样变成应用
+
+<p>第 4 节的应用可以沿着一条主线读：<strong>把光携带的方向或相位信息，转换为探测器容易测量的位置。</strong>成像把不同方向映射到不同像点，傅里叶测量把横向波矢映射到位置，反向使用则能控制出射方向；角动量检测把相位的角向变化映射到焦斑方位。下面的数据均为这篇综述及其所引研究的历史结果。<a class="metalens-citation" href="#ref-review">[R1 §4, p11–14]</a></p>
+
+### 成像：视场数字必须和波段、光阑及效率口径一起读
+
+<figure class="paper-figure" id="figure-8">
     <button type="button" class="zoom-button" data-title="图 8 · 宽视场成像应用" aria-label="放大查看图 8 · 宽视场成像应用"><img src="/assets/wide-angle-metalens-reading/figure-8.jpg" loading="lazy" width="1652" height="964" alt="图 8 · 宽视场成像应用" decoding="async" data-figure-key="8">
-    <span class="zoom-hint" aria-hidden="true">点击放大 ↗</span></button><figcaption>图 8：双超表面相机、热成像、指纹检测以及近红外室外和室内成像。图 C 包含概念展示图，不能仅凭图面判断实验精度。来源：<a class="no-styling" href="#ref-review">[R1 p11, Fig8]</a>。</figcaption>
+    <span class="zoom-hint" aria-hidden="true">点击放大 ↗</span></button><figcaption>图 8：双超表面相机、热成像、指纹检测以及近红外室外和室内成像。图 C 包含概念展示图，不能仅凭图面判断实验精度。来源：<a href="#ref-review">[R1 p11, Fig8]</a>。</figcaption>
   </figure>
-  <div class="table-wrap" tabindex="0" role="region" aria-label="对照表，可横向滚动查看"><table>
+
+<div class="metalens-table-wrap" tabindex="0" role="region" aria-label="对照表，可横向滚动查看"><table>
     <thead><tr><th>示例</th><th>波段与视场</th><th>读数必须附带的条件</th><th>原文定位</th></tr></thead>
     <tbody>
-      <tr><td>双超表面相机</td><td><strong>850 nm；60°×60°</strong></td><td>有效 NA <strong>0.49</strong>；综述报告聚焦效率约 <strong>70%</strong>；成像使用 <strong>850±5 nm</strong> 滤光。</td><td><a class="no-styling" href="#ref-review">[R1 §4.1, p11, Fig8A]</a> <a class="no-styling" href="#ref-93">[93]</a></td></tr>
-      <tr><td>长波红外热成像</td><td><strong>10.6 μm；大于140°×140°</strong></td><td>二次相位透镜直径 <strong>25.4 mm</strong>；报告约 <strong>90% 衍射效率</strong>，使用红外窄带滤光和非制冷探测器。</td><td><a class="no-styling" href="#ref-review">[R1 §4.1, p12, Fig8B]</a> <a class="no-styling" href="#ref-82">[82]</a></td></tr>
-      <tr><td>近距离指纹检测</td><td><strong>740 nm；约100°×100°</strong></td><td>激光照明下记录 <strong>5 mm×5 mm</strong> 指纹；约 <strong>14%</strong> 是文中所述的<strong>仿真聚焦效率</strong>。</td><td><a class="no-styling" href="#ref-review">[R1 §4.1, p12, Fig8C]</a> <a class="no-styling" href="#ref-83">[83]</a></td></tr>
-      <tr><td>空气间隔的室外相机</td><td><strong>800 nm</strong>；设计视场 <strong>40°×40°</strong></td><td>自然光成像文字描述为 <strong>±15°</strong>，使用 <strong>800±5 nm</strong> 滤光；最大衍射效率约 <strong>20%</strong>。</td><td><a class="no-styling" href="#ref-review">[R1 §4.1, p11–12, Fig8D]</a> <a class="no-styling" href="#ref-88">[88]</a></td></tr>
-      <tr><td>介质间隔的近红外相机</td><td><strong>940 nm；178°×178°</strong></td><td>报告衍射极限视场；使用 <strong>5 mm</strong> 二氧化硅间隔；日间被动成像配有 <strong>940±5 nm</strong> 滤光。</td><td><a class="no-styling" href="#ref-review">[R1 §4.1, p12, Fig8E]</a> <a class="no-styling" href="#ref-82">[82]</a></td></tr>
+      <tr><td>双超表面相机</td><td><strong>850 nm；60°×60°</strong></td><td>有效 NA <strong>0.49</strong>；综述报告聚焦效率约 <strong>70%</strong>；成像使用 <strong>850±5 nm</strong> 滤光。</td><td><a href="#ref-review">[R1 §4.1, p11, Fig8A]</a> <a href="#ref-93">[93]</a></td></tr>
+      <tr><td>长波红外热成像</td><td><strong>10.6 μm；大于140°×140°</strong></td><td>二次相位透镜直径 <strong>25.4 mm</strong>；报告约 <strong>90% 衍射效率</strong>，使用红外窄带滤光和非制冷探测器。</td><td><a href="#ref-review">[R1 §4.1, p12, Fig8B]</a> <a href="#ref-82">[82]</a></td></tr>
+      <tr><td>近距离指纹检测</td><td><strong>740 nm；约100°×100°</strong></td><td>激光照明下记录 <strong>5 mm×5 mm</strong> 指纹；约 <strong>14%</strong> 是文中所述的<strong>仿真聚焦效率</strong>。</td><td><a href="#ref-review">[R1 §4.1, p12, Fig8C]</a> <a href="#ref-83">[83]</a></td></tr>
+      <tr><td>空气间隔的室外相机</td><td><strong>800 nm</strong>；设计视场 <strong>40°×40°</strong></td><td>自然光成像文字描述为 <strong>±15°</strong>，使用 <strong>800±5 nm</strong> 滤光；最大衍射效率约 <strong>20%</strong>。</td><td><a href="#ref-review">[R1 §4.1, p11–12, Fig8D]</a> <a href="#ref-88">[88]</a></td></tr>
+      <tr><td>介质间隔的近红外相机</td><td><strong>940 nm；178°×178°</strong></td><td>报告衍射极限视场；使用 <strong>5 mm</strong> 二氧化硅间隔；日间被动成像配有 <strong>940±5 nm</strong> 滤光。</td><td><a href="#ref-review">[R1 §4.1, p12, Fig8E]</a> <a href="#ref-82">[82]</a></td></tr>
     </tbody>
   </table>
-  </div><p><strong>读表分析。</strong>这些效率不能直接排成性能榜：衍射效率、聚焦效率、仿真值和实验条件并不统一。综述还介绍了工作于 <strong>470–660 nm</strong> 的可见光双透镜，但明确指出焦距仍随波长变化。<strong>多个波长都能工作，并不等于这些波长在同一个像面清晰成像。</strong><a class="cite no-styling" href="#ref-review">[R1 §4.1, p12]</a> <a class="cite no-styling" href="#ref-92">[原文文献92]</a></p>
-  <h3>傅里叶测量与波束扫描：把正弦映射正着、反着用</h3>
-  <figure class="paper-figure" id="figure-9">
+  </div>
+
+<p><strong>读表分析。</strong>这些效率不能直接排成性能榜：衍射效率、聚焦效率、仿真值和实验条件并不统一。综述还介绍了工作于 <strong>470–660 nm</strong> 的可见光双透镜，但明确指出焦距仍随波长变化。<strong>多个波长都能工作，并不等于这些波长在同一个像面清晰成像。</strong><a class="metalens-citation" href="#ref-review">[R1 §4.1, p12]</a> <a class="metalens-citation" href="#ref-92">[原文文献92]</a></p>
+
+### 傅里叶测量与波束扫描：把正弦映射正着、反着用
+
+<figure class="paper-figure" id="figure-9">
     <button type="button" class="zoom-button" data-title="图 9 · 傅里叶测量与波束扫描" aria-label="放大查看图 9 · 傅里叶测量与波束扫描"><img src="/assets/wide-angle-metalens-reading/figure-9.png" loading="lazy" width="1722" height="1123" alt="图 9 · 傅里叶测量与波束扫描" decoding="async" data-figure-key="9">
-    <span class="zoom-hint" aria-hidden="true">点击放大 ↗</span></button><figcaption>图 9A/B 展示空间频率测量；C 是光学波束扫描仿真，D 是微波扫描的实测方向图。来源：<a class="no-styling" href="#ref-review">[R1 p13, Fig9]</a>。</figcaption>
+    <span class="zoom-hint" aria-hidden="true">点击放大 ↗</span></button><figcaption>图 9A/B 展示空间频率测量；C 是光学波束扫描仿真，D 是微波扫描的实测方向图。来源：<a href="#ref-review">[R1 p13, Fig9]</a>。</figcaption>
   </figure>
-  <p><strong>补充推导。</strong>沿用前文二次相位一节的入射相位 <em>−k<sub>0</sub>x sinθ</em>，横向波矢由相位对 x 的导数给出，因此 <strong>k<sub>x</sub>=−k<sub>0</sub>sinθ</strong>。把它代入焦点位移关系，就得到坐标与空间频率的线性对应；若换用另一套角度正方向，应同时改写入射项与位移式：</p>
-  <div class="math" data-tex="s=-f\sin\theta=\frac{f}{k_0}k_x" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="106pt" height="25pt" viewBox="0 0 106 25" version="1.1" role="img" aria-label="s = −f sinθ = (f/k₀)kx。" focusable="false">
+
+<p><strong>补充推导。</strong>沿用前文二次相位一节的入射相位 <em>−k<sub>0</sub>x sinθ</em>，横向波矢由相位对 x 的导数给出，因此 <strong>k<sub>x</sub>=−k<sub>0</sub>sinθ</strong>。把它代入焦点位移关系，就得到坐标与空间频率的线性对应；若换用另一套角度正方向，应同时改写入射项与位移式：</p>
+
+<div class="metalens-equation" data-tex="s=-f\sin\theta=\frac{f}{k_0}k_x" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="106pt" height="25pt" viewBox="0 0 106 25" version="1.1" role="img" aria-label="s = −f sinθ = (f/k₀)kx。" focusable="false">
  <title>s = −f sinθ = (f/k₀)kx。</title><defs>
  </defs>
  <g id="eq-27-figure_1">
@@ -1877,9 +2035,12 @@ draft: false
   </g>
  </g>
 </svg></div>
-  <p>综述报道了<strong>120°</strong> 视场的一维傅里叶测量，以及在<strong>9.3–10.6 μm</strong> 波段实现的<strong>178°×178°</strong> 二维傅里叶测量。后者用焦平面图样读取贝塞尔超透镜和超全息图的空间频率分布。探测器直接记录的是强度，不能只凭这张图就宣称恢复了完整复数角谱。<a class="cite no-styling" href="#ref-review">[R1 §4.2, p12–13, Fig9A/B]</a> <a class="cite no-styling" href="#ref-89">[89]</a> <a class="cite no-styling" href="#ref-82">[82]</a></p>
-  <p>利用<strong>互易性</strong>，把光源放在相应焦平面位置，便可反向产生指定方向的光束。在理想映射及本文符号下：</p>
-  <div class="math" data-tex="\theta=-\arcsin\!\left(\frac{s}{f}\right),\qquad |s|\leq f" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="157pt" height="21pt" viewBox="0 0 157 21" version="1.1" role="img" aria-label="θ = −arcsin(s/f)，数学定义域为 |s|≤f。" focusable="false">
+
+<p>综述报道了<strong>120°</strong> 视场的一维傅里叶测量，以及在<strong>9.3–10.6 μm</strong> 波段实现的<strong>178°×178°</strong> 二维傅里叶测量。后者用焦平面图样读取贝塞尔超透镜和超全息图的空间频率分布。探测器直接记录的是强度，不能只凭这张图就宣称恢复了完整复数角谱。<a class="metalens-citation" href="#ref-review">[R1 §4.2, p12–13, Fig9A/B]</a> <a class="metalens-citation" href="#ref-89">[89]</a> <a class="metalens-citation" href="#ref-82">[82]</a></p>
+
+<p>利用<strong>互易性</strong>，把光源放在相应焦平面位置，便可反向产生指定方向的光束。在理想映射及本文符号下：</p>
+
+<div class="metalens-equation" data-tex="\theta=-\arcsin\!\left(\frac{s}{f}\right),\qquad |s|\leq f" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="157pt" height="21pt" viewBox="0 0 157 21" version="1.1" role="img" aria-label="θ = −arcsin(s/f)，数学定义域为 |s|≤f。" focusable="false">
  <title>θ = −arcsin(s/f)，数学定义域为 |s|≤f。</title><defs>
  </defs>
  <g id="eq-28-figure_1">
@@ -1931,11 +2092,18 @@ draft: false
   </g>
  </g>
 </svg></div>
-  <aside class="reading-note" data-kind="derivation"><p><strong>原文校读：</strong>第 13 页扫描段落印为 −arcsin(f/s)，与前述位移式及 s=0 的情形不一致。这里采用直接反解所得的 s/f，并未将其称为作者确认的勘误。此处 s 是焦平面光源的位置，不是光阑后传播到透镜的落点。<a class="no-styling" href="#ref-review">[R1 §2.2, Eq2；§4.2, p13]</a></p></aside>
-  <p>图 9D 的<strong>19 GHz</strong> 微波实验展示了横向移动馈源进行扫描；综述还报告了红外波段大于<strong>170°×170°</strong> 的激光扫描。把它进一步组合为完整固态激光雷达，是作者提出的系统方向，不能与已经验证的扫描器件混为同一完成度。<a class="cite no-styling" href="#ref-review">[R1 §4.2, p13–14, Fig9D]</a> <a class="cite no-styling" href="#ref-91">[91]</a> <a class="cite no-styling" href="#ref-82">[82]</a></p>
-  <h3>角动量检测：再遇一次“二次项加线性项”</h3>
-  <p><strong>轨道角动量（OAM）</strong>涡旋光具有角向相位 <em>ℓϕ</em>，其中 ℓ 是拓扑荷。若器件加上<strong>方位角二次相位</strong>，配方后就把拓扑荷变成角向焦点位移。这里 ϕ 是完整方位角，应按 atan2 的象限约定理解。<a class="cite no-styling" href="#ref-review">[R1 §4.3, p14, Eq7]</a></p>
-  <div class="math" data-tex="\frac{\ell_0}{2}\varphi^2+\ell\varphi=\frac{\ell_0}{2}\left(\varphi+\frac{\ell}{\ell_0}\right)^2-\frac{\ell^2}{2\ell_0}" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="187pt" height="25pt" viewBox="0 0 187 25" version="1.1" role="img" aria-label="ℓ₀ϕ²/2 + ℓϕ = (ℓ₀/2)(ϕ+ℓ/ℓ₀)² − ℓ²/(2ℓ₀)。" focusable="false">
+
+<blockquote data-kind="derivation">
+<p><strong>原文校读：</strong>第 13 页扫描段落印为 −arcsin(f/s)，与前述位移式及 s=0 的情形不一致。这里采用直接反解所得的 s/f，并未将其称为作者确认的勘误。此处 s 是焦平面光源的位置，不是光阑后传播到透镜的落点。<a href="#ref-review">[R1 §2.2, Eq2；§4.2, p13]</a></p>
+</blockquote>
+
+<p>图 9D 的<strong>19 GHz</strong> 微波实验展示了横向移动馈源进行扫描；综述还报告了红外波段大于<strong>170°×170°</strong> 的激光扫描。把它进一步组合为完整固态激光雷达，是作者提出的系统方向，不能与已经验证的扫描器件混为同一完成度。<a class="metalens-citation" href="#ref-review">[R1 §4.2, p13–14, Fig9D]</a> <a class="metalens-citation" href="#ref-91">[91]</a> <a class="metalens-citation" href="#ref-82">[82]</a></p>
+
+### 角动量检测：再遇一次“二次项加线性项”
+
+<p><strong>轨道角动量（OAM）</strong>涡旋光具有角向相位 <em>ℓϕ</em>，其中 ℓ 是拓扑荷。若器件加上<strong>方位角二次相位</strong>，配方后就把拓扑荷变成角向焦点位移。这里 ϕ 是完整方位角，应按 atan2 的象限约定理解。<a class="metalens-citation" href="#ref-review">[R1 §4.3, p14, Eq7]</a></p>
+
+<div class="metalens-equation" data-tex="\frac{\ell_0}{2}\varphi^2+\ell\varphi=\frac{\ell_0}{2}\left(\varphi+\frac{\ell}{\ell_0}\right)^2-\frac{\ell^2}{2\ell_0}" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="187pt" height="25pt" viewBox="0 0 187 25" version="1.1" role="img" aria-label="ℓ₀ϕ²/2 + ℓϕ = (ℓ₀/2)(ϕ+ℓ/ℓ₀)² − ℓ²/(2ℓ₀)。" focusable="false">
  <title>ℓ₀ϕ²/2 + ℓϕ = (ℓ₀/2)(ϕ+ℓ/ℓ₀)² − ℓ²/(2ℓ₀)。</title><defs>
  </defs>
  <g id="eq-29-figure_1">
@@ -1990,8 +2158,10 @@ draft: false
   </g>
  </g>
 </svg></div>
-  <p>最后一项对方位角 ϕ 是常数，不改变相对相位；其余部分就是原来的二次相位沿角坐标平移。因此：</p>
-  <div class="math" data-tex="\varphi_\ell=-\frac{\ell}{\ell_0},\qquad \ell=-\ell_0\varphi_\ell" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="155pt" height="23pt" viewBox="0 0 155 23" version="1.1" role="img" aria-label="焦斑方位 ϕℓ = −ℓ/ℓ₀，反过来由方位读出拓扑荷 ℓ。" focusable="false">
+
+<p>最后一项对方位角 ϕ 是常数，不改变相对相位；其余部分就是原来的二次相位沿角坐标平移。因此：</p>
+
+<div class="metalens-equation" data-tex="\varphi_\ell=-\frac{\ell}{\ell_0},\qquad \ell=-\ell_0\varphi_\ell" tabindex="0" aria-label="公式，可横向滚动查看"><svg stroke-linejoin="round" stroke-linecap="butt" data-pagefind-ignore xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="155pt" height="23pt" viewBox="0 0 155 23" version="1.1" role="img" aria-label="焦斑方位 ϕℓ = −ℓ/ℓ₀，反过来由方位读出拓扑荷 ℓ。" focusable="false">
  <title>焦斑方位 ϕℓ = −ℓ/ℓ₀，反过来由方位读出拓扑荷 ℓ。</title><defs>
  </defs>
  <g id="eq-30-figure_1">
@@ -2029,27 +2199,41 @@ draft: false
   </g>
  </g>
 </svg></div>
-  <figure class="paper-figure" id="figure-10">
+
+<figure class="paper-figure" id="figure-10">
     <button type="button" class="zoom-button" data-title="图 10 · 自旋与轨道角动量检测" aria-label="放大查看图 10 · 自旋与轨道角动量检测"><img src="/assets/wide-angle-metalens-reading/figure-10.png" loading="lazy" width="799" height="991" alt="图 10 · 自旋与轨道角动量检测" decoding="async" data-figure-key="10">
-    <span class="zoom-hint" aria-hidden="true">点击放大 ↗</span></button><figcaption>图 10：OAM 映射为焦斑方位；结合自旋解耦设计后，不同手性的光落在不同半屏。来源：<a class="no-styling" href="#ref-review">[R1 p14, Fig10]</a>，转引<a class="no-styling" href="#ref-140">[原文文献140]</a>。</figcaption>
+    <span class="zoom-hint" aria-hidden="true">点击放大 ↗</span></button><figcaption>图 10：OAM 映射为焦斑方位；结合自旋解耦设计后，不同手性的光落在不同半屏。来源：<a href="#ref-review">[R1 p14, Fig10]</a>，转引<a href="#ref-140">[原文文献140]</a>。</figcaption>
   </figure>
-  <p>进一步结合几何相位和传播相位，<strong>自旋角动量（SAM）</strong>对应的两种圆偏振手性可分到不同半屏，方位角则读出 OAM；文中给出<strong>532 nm</strong> 的概念验证。我们的理解是：它延续了前面的坐标变换思路，但有限焦斑宽度、串扰和角度周期性仍会限制可分辨通道，配方本身不代表无限分辨能力。<a class="cite no-styling" href="#ref-review">[R1 §4.3, p14]</a> <a class="cite no-styling" href="#ref-140">[140]</a></p>
-</section>
-<section id="outlook" class="article-section">
-  <p class="section-kicker"><span class="chapter-num">11</span>2021 年的展望与本次研读分析</p><h2>读完之后：哪些问题解决了，哪些仍是设计取舍</h2>
-  <p><strong>时间边界。</strong>下面先整理作者在<strong>2021 年</strong>形成的展望，再给出本次研读的设计分析；其中的“纪录”“尚未解决”和计算能力判断都属于论文当时的语境。它们不构成对当前研究进度的更新。作者在结尾集中提出了带宽、有效 NA 与视场、以及超过 180° 的接收范围这几类问题。<a class="cite no-styling" href="#ref-review">[R1 §5, p15–16]</a></p>
-  <h3>作者提出的第一条边界：宽带工作与宽带消色差</h3>
-  <p><strong>原文观点。</strong>几何相位器件可以在较宽波段保持可用转换，却仍可能存在色差；光源带宽增加时，离轴成像尤其容易退化。作者讨论了色散工程、离散多波长设计，以及结合折射与衍射元件不同色散的混合系统。<a class="cite no-styling" href="#ref-review">[R1 §5, p15]</a></p>
-  <p><strong>我们的分析。</strong>评估这类结果，需要分别检查“有光通过”“能在某处聚焦”和“整个波段都在同一像面保持像质”。几个离散波长共焦，约束数量与连续宽带共焦不同；使用窄带滤光获得的漂亮图像也不能直接证明宽带性能。前面应用中反复出现的滤光片，正是在告诉读者实验解决的是哪一组条件。</p>
-  <h3>第二条边界：视场与有效 NA 的联合设计</h3>
-  <p><strong>原文观点。</strong>作者认为，许多方案采用近似角度无关的相位响应，因此扩大视场时仍须牺牲有效 NA；主动设计结构的角度色散，并结合光线追迹和电磁仿真，是可能增加自由度的方向。离散视场角上的好结果，仍需要扩展到连续角度范围。<a class="cite no-styling" href="#ref-review">[R1 §5, p15]</a></p>
-  <p><strong>我们的分析。</strong>“角度鲁棒”应理解为目标功能在角度变化时保持可用，不必一律理解成单元相位完全不变。二次相位近似方案希望保持特定波前规律；直接逼近理想广角相位的方案，则可能需要受控的角度依赖。两者最终都必须用跨视场的点扩散函数或调制传递函数检验，不能只检查几个角度的焦点位置。</p>
-  <h3>第三条边界：超过 180° 需要重新考虑系统几何</h3>
-  <p><strong>原文设想。</strong>作者讨论了分别控制透射场与反射场的可能性，并提出可借助曲面光学元件，把来自后侧的光引导到超透镜前方，再联合优化材料、曲率、相对位置和相位分布。这是系统架构上的进一步探索，不是仅把当前相位图再扩大一些。<a class="cite no-styling" href="#ref-review">[R1 §5, p15–16]</a></p>
-  <p><strong>我们的分析。</strong>超过 180° 时，首先要说清接收哪个方向范围、使用单侧还是双侧光路、像落在哪里。讨论完这些几何条件，再谈超表面的相位与偏振自由度，才不会把一个视场数值误读为完整相机能力。</p>
-  <h3>把这篇综述转化成自己的设计记录</h3>
-  <p>下面是本次研读提出的记录方式，<strong>不是原文给出的统一性能标准</strong>。它把论文分散出现的限制条件并列起来，便于核对一项设计到底优化了什么。</p>
-  <div class="table-wrap" tabindex="0" role="region" aria-label="对照表，可横向滚动查看"><table>
+
+<p>进一步结合几何相位和传播相位，<strong>自旋角动量（SAM）</strong>对应的两种圆偏振手性可分到不同半屏，方位角则读出 OAM；文中给出<strong>532 nm</strong> 的概念验证。我们的理解是：它延续了前面的坐标变换思路，但有限焦斑宽度、串扰和角度周期性仍会限制可分辨通道，配方本身不代表无限分辨能力。<a class="metalens-citation" href="#ref-review">[R1 §4.3, p14]</a> <a class="metalens-citation" href="#ref-140">[140]</a></p>
+
+## <span id="outlook" data-metalens-chapter></span>读完之后：哪些问题解决了，哪些仍是设计取舍
+
+<p><strong>时间边界。</strong>下面先整理作者在<strong>2021 年</strong>形成的展望，再给出本次研读的设计分析；其中的“纪录”“尚未解决”和计算能力判断都属于论文当时的语境。它们不构成对当前研究进度的更新。作者在结尾集中提出了带宽、有效 NA 与视场、以及超过 180° 的接收范围这几类问题。<a class="metalens-citation" href="#ref-review">[R1 §5, p15–16]</a></p>
+
+### 作者提出的第一条边界：宽带工作与宽带消色差
+
+<p><strong>原文观点。</strong>几何相位器件可以在较宽波段保持可用转换，却仍可能存在色差；光源带宽增加时，离轴成像尤其容易退化。作者讨论了色散工程、离散多波长设计，以及结合折射与衍射元件不同色散的混合系统。<a class="metalens-citation" href="#ref-review">[R1 §5, p15]</a></p>
+
+<p><strong>我们的分析。</strong>评估这类结果，需要分别检查“有光通过”“能在某处聚焦”和“整个波段都在同一像面保持像质”。几个离散波长共焦，约束数量与连续宽带共焦不同；使用窄带滤光获得的漂亮图像也不能直接证明宽带性能。前面应用中反复出现的滤光片，正是在告诉读者实验解决的是哪一组条件。</p>
+
+### 第二条边界：视场与有效 NA 的联合设计
+
+<p><strong>原文观点。</strong>作者认为，许多方案采用近似角度无关的相位响应，因此扩大视场时仍须牺牲有效 NA；主动设计结构的角度色散，并结合光线追迹和电磁仿真，是可能增加自由度的方向。离散视场角上的好结果，仍需要扩展到连续角度范围。<a class="metalens-citation" href="#ref-review">[R1 §5, p15]</a></p>
+
+<p><strong>我们的分析。</strong>“角度鲁棒”应理解为目标功能在角度变化时保持可用，不必一律理解成单元相位完全不变。二次相位近似方案希望保持特定波前规律；直接逼近理想广角相位的方案，则可能需要受控的角度依赖。两者最终都必须用跨视场的点扩散函数或调制传递函数检验，不能只检查几个角度的焦点位置。</p>
+
+### 第三条边界：超过 180° 需要重新考虑系统几何
+
+<p><strong>原文设想。</strong>作者讨论了分别控制透射场与反射场的可能性，并提出可借助曲面光学元件，把来自后侧的光引导到超透镜前方，再联合优化材料、曲率、相对位置和相位分布。这是系统架构上的进一步探索，不是仅把当前相位图再扩大一些。<a class="metalens-citation" href="#ref-review">[R1 §5, p15–16]</a></p>
+
+<p><strong>我们的分析。</strong>超过 180° 时，首先要说清接收哪个方向范围、使用单侧还是双侧光路、像落在哪里。讨论完这些几何条件，再谈超表面的相位与偏振自由度，才不会把一个视场数值误读为完整相机能力。</p>
+
+### 把这篇综述转化成自己的设计记录
+
+<p>下面是本次研读提出的记录方式，<strong>不是原文给出的统一性能标准</strong>。它把论文分散出现的限制条件并列起来，便于核对一项设计到底优化了什么。</p>
+
+<div class="metalens-table-wrap" tabindex="0" role="region" aria-label="对照表，可横向滚动查看"><table>
     <thead><tr><th>记录项</th><th>需要明确的内容</th><th>对应的设计判断</th></tr></thead>
     <tbody>
       <tr><td><strong>视场与像质</strong></td><td>全角还是半角、单轴还是二维；像质判据及视场采样。</td><td>能形成焦点与满足成像分辨率要求分开评价。</td></tr>
@@ -2058,141 +2242,148 @@ draft: false
       <tr><td><strong>效率与实现</strong></td><td>分母是入射功率还是透射功率；仿真或实测；局部模型与整器件结果。</td><td>比较之前统一口径，并检查制造后的性能。</td></tr>
     </tbody>
   </table>
-  </div><p><strong>本文最有价值的设计启发，是把相位公式、照明孔径、角度响应和结构实现连起来看。</strong>理想公式确定需要的波前，系统几何决定实际采样区域，微结构决定波前能否以足够效率实现；最后仍要回到目标应用的像质、带宽和探测条件。把这几层写在同一张设计记录里，比单独追求一个最大的视场数字更有解释力。</p>
-</section>
-<section id="reading-notes" class="article-section">
-  <p class="section-kicker"><span class="chapter-num">12</span>回查与校读</p>
-  <h2>符号、原图与几处需要停下来核对的地方</h2>
-  <h3>一张符号表，避免在不同段落中串用变量</h3>
-  <div class="table-wrap" tabindex="0" role="region" aria-label="对照表，可横向滚动查看"><table><thead><tr><th>符号</th><th>含义</th><th>容易混淆的对象</th></tr></thead><tbody>
+  </div>
+
+<p><strong>本文最有价值的设计启发，是把相位公式、照明孔径、角度响应和结构实现连起来看。</strong>理想公式确定需要的波前，系统几何决定实际采样区域，微结构决定波前能否以足够效率实现；最后仍要回到目标应用的像质、带宽和探测条件。把这几层写在同一张设计记录里，比单独追求一个最大的视场数字更有解释力。</p>
+
+## <span id="reading-notes" data-metalens-chapter></span>符号、原图与几处需要停下来核对的地方
+
+### 一张符号表，避免在不同段落中串用变量
+
+<div class="metalens-table-wrap" tabindex="0" role="region" aria-label="对照表，可横向滚动查看"><table><thead><tr><th>符号</th><th>含义</th><th>容易混淆的对象</th></tr></thead><tbody>
     <tr><td><strong>φₘ</strong></td><td>给定入射角下，理想透镜本身应提供的相位</td><td>不是入射波与器件相加后的出射总相位 Φout</td></tr>
     <tr><td><strong>s</strong></td><td>焦平面上的目标像点，或反向扫描中的光源位置</td><td>不是光阑后在透镜平面上的受照中心 xc；图 7 原图中 s 又表示条长</td></tr>
     <tr><td><strong>θᵢ、θt、ξ</strong></td><td>外部入射角、介质内折射角、结构面内主轴方向角</td><td>ξ 是轮廓切线的面内方位角，不是入射角</td></tr>
     <tr><td><strong>p、Λloc、N</strong></td><td>单元间距、局部相位周期、整数相位级数</td><td>Λloc/p 是采样密度估计；它不必为整数，也不等于可直接代入量化效率式的 N</td></tr>
     <tr><td><strong>φ、ϕ</strong></td><td>本文用 φ 表示相位，用 ϕ 表示 OAM 一节中的方位角</td><td>方位角上的二次相位是 φ(ϕ)，二者并非同一个量</td></tr>
   </tbody></table></div>
-  <h3>校读记录：说明推导依据，不替作者发布勘误</h3>
-  <p>下面是本次研读中发现的<strong>内部一致性问题</strong>。本文没有查到或采用作者确认的勘误，因此将“原文印刷形式”与“本文采用的处理”分开记录。</p>
-  <ol class="notes-list">
-    <li><strong>式（1）与式（2）的线性入射相位符号。</strong>两式分别出现 +k₀x sinθᵢ 与 −k₀x sinθᵢ。本文在理想相位热图和二次相位两个模块中分别说明局部约定；后续光阑、傅里叶映射和扫描段落均跟随式（2）的约定。这是坐标使用说明，不直接判定为原文错误。<a class="cite no-styling" href="#ref-review">[R1 §2.1–2.2]</a></li>
-    <li><strong>式（3）的根号与展开符号。</strong>原式根号内印为 R²+r²；对式中 R、Δn 为正的情况，左侧所列表达式的近轴展开，与右侧负二次项的符号不一致。本文采用明确假设下的对称双凸薄透镜推导，见前文可展开部分，不推测作者原本拟采用哪一处修订。<a class="cite no-styling" href="#ref-review">[R1 p.6，式（3）]</a></li>
-    <li><strong>扫描反解。</strong>第 13 页正文写为 −arcsin(f/s)。按此前 s=−f sinθ 的关系直接反解，应为 −arcsin(s/f)，且 |s|≤f。正文使用后者，并明确它是代数反解；s=0 的轴上情形也提供了简单的一致性检查。<a class="cite no-styling" href="#ref-review">[R1 §4.2，p.13]</a></li>
-    <li><strong>图 3 图注的构型索引。</strong>图注指向图 2C 和 2E，但介质间隔示意及正文对应的是图 2D。本文按实际结构与正文解读为图 2C、2D；原图保持原样。<a class="cite no-styling" href="#ref-review">[R1 图 2–3及 §2.2]</a></li>
+
+### 校读记录：说明推导依据，不替作者发布勘误
+
+<p>下面是本次研读中发现的<strong>内部一致性问题</strong>。本文没有查到或采用作者确认的勘误，因此将“原文印刷形式”与“本文采用的处理”分开记录。</p>
+
+<ol class="notes-list">
+    <li><strong>式（1）与式（2）的线性入射相位符号。</strong>两式分别出现 +k₀x sinθᵢ 与 −k₀x sinθᵢ。本文在理想相位热图和二次相位两个模块中分别说明局部约定；后续光阑、傅里叶映射和扫描段落均跟随式（2）的约定。这是坐标使用说明，不直接判定为原文错误。<a class="metalens-citation" href="#ref-review">[R1 §2.1–2.2]</a></li>
+    <li><strong>式（3）的根号与展开符号。</strong>原式根号内印为 R²+r²；对式中 R、Δn 为正的情况，左侧所列表达式的近轴展开，与右侧负二次项的符号不一致。本文采用明确假设下的对称双凸薄透镜推导，见前文可展开部分，不推测作者原本拟采用哪一处修订。<a class="metalens-citation" href="#ref-review">[R1 p.6，式（3）]</a></li>
+    <li><strong>扫描反解。</strong>第 13 页正文写为 −arcsin(f/s)。按此前 s=−f sinθ 的关系直接反解，应为 −arcsin(s/f)，且 |s|≤f。正文使用后者，并明确它是代数反解；s=0 的轴上情形也提供了简单的一致性检查。<a class="metalens-citation" href="#ref-review">[R1 §4.2，p.13]</a></li>
+    <li><strong>图 3 图注的构型索引。</strong>图注指向图 2C 和 2E，但介质间隔示意及正文对应的是图 2D。本文按实际结构与正文解读为图 2C、2D；原图保持原样。<a class="metalens-citation" href="#ref-review">[R1 图 2–3及 §2.2]</a></li>
   </ol>
-  <h3>原图索引</h3>
-  <p class="source-note">图像直接摘自所研读的 PDF，图 7D 另提供局部裁切。点击图像可以放大，再点击可切换到原始像素尺寸。图内的曲线与照片属于原研究；互动模块是本文依据公式另行编写的教学内容。</p>
-  <nav class="fig-index" aria-label="原论文图索引">
-    <a class="no-styling" href="#figure-1">图 1 · 理想相位</a><a class="no-styling" href="#figure-2">图 2 · 构型</a><a class="no-styling" href="#figure-3">图 3 · 角谱与落点</a><a class="no-styling" href="#figure-4">图 4 · 角度响应</a><a class="no-styling" href="#figure-5">图 5 · 模式与耦合</a><a class="no-styling" href="#figure-6">图 6 · 数值优化</a><a class="no-styling" href="#figure-7">图 7 · 悬链线</a><a class="no-styling" href="#figure-7d">图 7D · 流线</a><a class="no-styling" href="#figure-8">图 8 · 成像</a><a class="no-styling" href="#figure-9">图 9 · 傅里叶与扫描</a><a class="no-styling" href="#figure-10">图 10 · 角动量</a>
+
+### 原图索引
+
+<p class="metalens-source">图像直接摘自所研读的 PDF，图 7D 另提供局部裁切。点击图像可以放大，再点击可切换到原始像素尺寸。图内的曲线与照片属于原研究；互动模块是本文依据公式另行编写的教学内容。</p>
+
+<nav class="metalens-figure-links" aria-label="原论文图索引">
+    <a href="#figure-1">图 1 · 理想相位</a><a href="#figure-2">图 2 · 构型</a><a href="#figure-3">图 3 · 角谱与落点</a><a href="#figure-4">图 4 · 角度响应</a><a href="#figure-5">图 5 · 模式与耦合</a><a href="#figure-6">图 6 · 数值优化</a><a href="#figure-7">图 7 · 悬链线</a><a href="#figure-7d">图 7D · 流线</a><a href="#figure-8">图 8 · 成像</a><a href="#figure-9">图 9 · 傅里叶与扫描</a><a href="#figure-10">图 10 · 角动量</a>
   </nav>
-</section>
-    <section id="references" class="article-section">
-      <p class="section-kicker">文献与来源</p>
-      <h2>参考文献</h2>
-      <p class="reference-intro">本文以所附综述作为<strong>R1</strong>。正文中的<strong>p1–p20 均指综述的期刊印刷页码</strong>；“原文82”等编号保留综述末尾参考文献的原始编号。该综述于<strong>2021年12月2日在线发表</strong>，正式编入<strong>2022年《Nanophotonics》第11卷第1期</strong>，两种年份分别对应在线发表时间与正式卷期。以下列出本研读文章重点使用的文献，题名及DOI依据原论文或出版商页面核对。</p>
+
+## <span id="references" data-metalens-chapter></span>参考文献
+
+<p class="reference-intro">本文以所附综述作为<strong>R1</strong>。正文中的<strong>p1–p20 均指综述的期刊印刷页码</strong>；“原文82”等编号保留综述末尾参考文献的原始编号。该综述于<strong>2021年12月2日在线发表</strong>，正式编入<strong>2022年《Nanophotonics》第11卷第1期</strong>，两种年份分别对应在线发表时间与正式卷期。以下列出本研读文章重点使用的文献，题名及DOI依据原论文或出版商页面核对。</p>
+
 <ol class="reference-list">
   <li id="ref-review">
     <strong>[R1｜所读综述]</strong>
     X. Luo, F. Zhang, M. Pu, et al.
     <cite>Recent advances of wide-angle metalenses: principle, design, and applications</cite>.
     <em>Nanophotonics</em>, <strong>2022</strong>, 11(1), 1–20.
-    <a class="no-styling" href="https://doi.org/10.1515/nanoph-2021-0583" target="_blank" rel="noopener noreferrer">DOI: 10.1515/nanoph-2021-0583</a>.
+    <a href="https://doi.org/10.1515/nanoph-2021-0583" target="_blank" rel="noopener noreferrer">DOI: 10.1515/nanoph-2021-0583</a>.
   </li>
   <li id="ref-82">
     <strong>[原文82]</strong>
     F. Zhang, M. Pu, X. Li, et al.
     <cite>Extreme-Angle Silicon Infrared Optics Enabled by Streamlined Surfaces</cite>.
     <em>Advanced Materials</em>, <strong>2021</strong>, 33, 2008157.
-    <a class="no-styling" href="https://doi.org/10.1002/adma.202008157" target="_blank" rel="noopener noreferrer">DOI: 10.1002/adma.202008157</a>.
+    <a href="https://doi.org/10.1002/adma.202008157" target="_blank" rel="noopener noreferrer">DOI: 10.1002/adma.202008157</a>.
   </li>
   <li id="ref-83">
     <strong>[原文83]</strong>
     E. Lassalle, T. W. W. Mass, D. Eschimese, et al.
     <cite>Imaging Properties of Large Field-of-View Quadratic Metalenses and Their Applications to Fingerprint Detection</cite>.
     <em>ACS Photonics</em>, <strong>2021</strong>, 8(5), 1457–1468.
-    <a class="no-styling" href="https://doi.org/10.1021/acsphotonics.1c00237" target="_blank" rel="noopener noreferrer">DOI: 10.1021/acsphotonics.1c00237</a>.
+    <a href="https://doi.org/10.1021/acsphotonics.1c00237" target="_blank" rel="noopener noreferrer">DOI: 10.1021/acsphotonics.1c00237</a>.
   </li>
   <li id="ref-85">
     <strong>[原文85]</strong>
     A. Martins, K. Li, J. Li, et al.
     <cite>On Metalenses with Arbitrarily Wide Field of View</cite>.
     <em>ACS Photonics</em>, <strong>2020</strong>, 7(8), 2073–2079.
-    <a class="no-styling" href="https://doi.org/10.1021/acsphotonics.0c00479" target="_blank" rel="noopener noreferrer">DOI: 10.1021/acsphotonics.0c00479</a>.
+    <a href="https://doi.org/10.1021/acsphotonics.0c00479" target="_blank" rel="noopener noreferrer">DOI: 10.1021/acsphotonics.0c00479</a>.
   </li>
   <li id="ref-88">
     <strong>[原文88]</strong>
     J. Engelberg, C. Zhou, N. Mazurski, et al.
     <cite>Near-IR wide-field-of-view Huygens metalens for outdoor imaging applications</cite>.
     <em>Nanophotonics</em>, <strong>2020</strong>, 9(2), 361–370.
-    <a class="no-styling" href="https://doi.org/10.1515/nanoph-2019-0177" target="_blank" rel="noopener noreferrer">DOI: 10.1515/nanoph-2019-0177</a>.
+    <a href="https://doi.org/10.1515/nanoph-2019-0177" target="_blank" rel="noopener noreferrer">DOI: 10.1515/nanoph-2019-0177</a>.
   </li>
   <li id="ref-89">
     <strong>[原文89]</strong>
     W. Liu, Z. Li, H. Cheng, et al.
     <cite>Metasurface Enabled Wide-Angle Fourier Lens</cite>.
     <em>Advanced Materials</em>, <strong>2018</strong>, 30, 1706368.
-    <a class="no-styling" href="https://doi.org/10.1002/adma.201706368" target="_blank" rel="noopener noreferrer">DOI: 10.1002/adma.201706368</a>.
+    <a href="https://doi.org/10.1002/adma.201706368" target="_blank" rel="noopener noreferrer">DOI: 10.1002/adma.201706368</a>.
   </li>
   <li id="ref-91">
     <strong>[原文91]</strong>
     Y. Guo, X. Ma, M. Pu, et al.
     <cite>High-Efficiency and Wide-Angle Beam Steering Based on Catenary Optical Fields in Ultrathin Metalens</cite>.
     <em>Advanced Optical Materials</em>, <strong>2018</strong>, 6, 1800592.
-    <a class="no-styling" href="https://doi.org/10.1002/adom.201800592" target="_blank" rel="noopener noreferrer">DOI: 10.1002/adom.201800592</a>.
+    <a href="https://doi.org/10.1002/adom.201800592" target="_blank" rel="noopener noreferrer">DOI: 10.1002/adom.201800592</a>.
   </li>
   <li id="ref-92">
     <strong>[原文92]</strong>
     B. Groever, W. T. Chen, F. Capasso.
     <cite>Meta-Lens Doublet in the Visible Region</cite>.
     <em>Nano Letters</em>, <strong>2017</strong>, 17(8), 4902–4907.
-    <a class="no-styling" href="https://doi.org/10.1021/acs.nanolett.7b01888" target="_blank" rel="noopener noreferrer">DOI: 10.1021/acs.nanolett.7b01888</a>.
+    <a href="https://doi.org/10.1021/acs.nanolett.7b01888" target="_blank" rel="noopener noreferrer">DOI: 10.1021/acs.nanolett.7b01888</a>.
   </li>
   <li id="ref-93">
     <strong>[原文93]</strong>
     A. Arbabi, E. Arbabi, S. M. Kamali, et al.
     <cite>Miniature optical planar camera based on a wide-angle metasurface doublet corrected for monochromatic aberrations</cite>.
     <em>Nature Communications</em>, <strong>2016</strong>, 7, 13682.
-    <a class="no-styling" href="https://doi.org/10.1038/ncomms13682" target="_blank" rel="noopener noreferrer">DOI: 10.1038/ncomms13682</a>.
+    <a href="https://doi.org/10.1038/ncomms13682" target="_blank" rel="noopener noreferrer">DOI: 10.1038/ncomms13682</a>.
   </li>
   <li id="ref-111">
     <strong>[原文111]</strong>
     C. M. Lalau-Keraly, S. Bhargava, O. D. Miller, E. Yablonovitch.
     <cite>Adjoint shape optimization applied to electromagnetic design</cite>.
     <em>Optics Express</em>, <strong>2013</strong>, 21(18), 21693–21701.
-    <a class="no-styling" href="https://doi.org/10.1364/OE.21.021693" target="_blank" rel="noopener noreferrer">DOI: 10.1364/OE.21.021693</a>.
+    <a href="https://doi.org/10.1364/OE.21.021693" target="_blank" rel="noopener noreferrer">DOI: 10.1364/OE.21.021693</a>.
   </li>
   <li id="ref-114">
     <strong>[原文114]</strong>
     M. Zhou, D. Liu, S. W. Belling, et al.
     <cite>Inverse Design of Metasurfaces Based on Coupled-Mode Theory and Adjoint Optimization</cite>.
     <em>ACS Photonics</em>, <strong>2021</strong>, 8(8), 2265–2273.
-    <a class="no-styling" href="https://doi.org/10.1021/acsphotonics.1c00100" target="_blank" rel="noopener noreferrer">DOI: 10.1021/acsphotonics.1c00100</a>.
+    <a href="https://doi.org/10.1021/acsphotonics.1c00100" target="_blank" rel="noopener noreferrer">DOI: 10.1021/acsphotonics.1c00100</a>.
   </li>
   <li id="ref-126">
     <strong>[原文126]</strong>
     M. Pu, X. Li, X. Ma, et al.
     <cite>Catenary optics for achromatic generation of perfect optical angular momentum</cite>.
     <em>Science Advances</em>, <strong>2015</strong>, 1(9), e1500396.
-    <a class="no-styling" href="https://doi.org/10.1126/sciadv.1500396" target="_blank" rel="noopener noreferrer">DOI: 10.1126/sciadv.1500396</a>.
+    <a href="https://doi.org/10.1126/sciadv.1500396" target="_blank" rel="noopener noreferrer">DOI: 10.1126/sciadv.1500396</a>.
   </li>
   <li id="ref-140">
     <strong>[原文140]</strong>
     Y. Guo, S. Zhang, M. Pu, et al.
     <cite>Spin-decoupled metasurface for simultaneous detection of spin and orbital angular momenta via momentum transformation</cite>.
     <em>Light: Science &amp; Applications</em>, <strong>2021</strong>, 10, 63.
-    <a class="no-styling" href="https://doi.org/10.1038/s41377-021-00497-7" target="_blank" rel="noopener noreferrer">DOI: 10.1038/s41377-021-00497-7</a>.
+    <a href="https://doi.org/10.1038/s41377-021-00497-7" target="_blank" rel="noopener noreferrer">DOI: 10.1038/s41377-021-00497-7</a>.
   </li>
 </ol>
-    </section>
-    <footer class="footer">
+
+<footer class="metalens-footer">
       <p>图源：所研读论文的图 1–10，图 7D 另作局部裁切。原图中的曲线、照片与版权标注均保留。本文的公式重排、交互图及阅读分析用于解释原研究，不代表新增实验或全波仿真。</p>
       <p>页面的「打印 / PDF」会展开补充推导，并保留当前交互状态的图示。导出的 PDF 为静态阅读版。</p>
-      <nav class="footer-nav"><a class="no-styling" href="#metalens-top">回到开头 ↑</a><a class="no-styling" href="#reading-notes">回查符号与原图</a><a class="no-styling" href="#references">查看参考文献</a></nav>
+      <nav class="metalens-footer-links"><a href="#metalens-top">回到开头 ↑</a><a href="#reading-notes">回查符号与原图</a><a href="#references">查看参考文献</a></nav>
     </footer>
-  </div>
+
 <dialog class="figure-dialog" id="figure-dialog" aria-labelledby="dialog-title">
   <div class="dialog-bar"><p id="dialog-title">论文原图</p><button id="close-figure" type="button">关闭 · Esc</button></div>
-  <div class="dialog-image-wrap" id="dialog-image-wrap"><button type="button" class="dialog-image-toggle" aria-label="切换图片显示尺寸" aria-pressed="false"><img id="dialog-image" alt="放大的论文原图"></button></div>
+<div class="dialog-image-wrap" id="dialog-image-wrap"><button type="button" class="dialog-image-toggle" aria-label="切换图片显示尺寸" aria-pressed="false"><img id="dialog-image" src="/assets/wide-angle-metalens-reading/figure-1.png" loading="lazy" alt="放大的论文原图"></button></div>
 </dialog>
-</metalens-reader>
 
-<script type="module" src="/assets/wide-angle-metalens-reading/reader.js"></script>
+<script type="module" src="/assets/wide-angle-metalens-reading/reader.js?v=2"></script>
